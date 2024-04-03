@@ -25,7 +25,9 @@
   - Remote backend
 - `terraform refresh`
 - **Lab:** Upload an object to Azure storage and test `terraform refresh` state
+  
 **Break:**
+
 ### Configurations
 - Attributes
 - Variables
