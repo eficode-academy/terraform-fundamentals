@@ -1,36 +1,50 @@
 # terraform-fundamentals Training structure
 
-Training environment- cli on local env/ eficode provided training .
-
 Structure:
-check requirements- slide on how to setup tf an dhow to integrate with azure cli
-terrafrom and IaC - slide on how it is connected and how it works
-small hello world exs 
-slide on Terraform lifecycle
 
-IaC Providers- SLide on it
-show various providers available
-variables
-outputs
-short execersice to setup provider and small peice of code that creates something  on azure
-IaC Commands
-
-TF state
-short exs on how to write tf state
-
-Bigger exs on TF- create a fully functioning webapp
-
-Break for lunch
-
-TF functions
-small exs
-Modules
-exs
-Workspace
-exs
-import
-exs
-
-TF cloud /enterprise- slide
-TF CLoud integrations- Azure/aws/gcp (slide)
-Best practises- slide
+Infrastructure as a code
+  Introduction to IAC and Terraform
+Installation
+  Install/ check terraform cli and Azure cli
+Launch your first VM with Terrafform
+Terraform Basic Commands
+  Init
+  Plan
+  Apply
+Terraform Destroy
+  Lab: Destroy the Vm created
+Providers & Resources
+Lab:
+Understanding Statefiles
+  Current state vs Desired
+  Remote state
+  Remote backend
+Terraform refresh
+  Lab: upload a object to azure storage--
+    probably someything that is needed to host a static website
+    test terraform refresh
+    state
+10 mins Break
+Configurations
+  Attributes
+  Variables
+    tfvars file
+    precedence
+    datatypes
+  Output values
+  Count
+  Conditional Expressions
+  Functions
+  Dynamic Blocks
+  Lifecycle -Meta Arguments
+Lab:
+Lunch
+Quiz
+Terraform Modules 
+  lab
+Terraform Workspaces
+  lab
+10 mins Break
+Terraform Import
+Terraform Cloud/Enterprise Features
+Best Practises
