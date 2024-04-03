@@ -40,7 +40,7 @@
 - Lifecycle - Meta arguments
 - **Lab:** [Include lab details here]
 
-### Lunch
+### Break
 
 ### Quiz
 
