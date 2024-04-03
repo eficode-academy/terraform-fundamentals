@@ -1,50 +1,45 @@
-# terraform-fundamentals Training structure
+Terraform Fundamentals Training Structure
 
 Structure:
 
-Infrastructure as a code
-  Introduction to IAC and Terraform
+Infrastructure as Code
+Introduction to IAC and Terraform
 Installation
-  Install/ check terraform cli and Azure cli
-Launch your first VM with Terrafform
+Install/Check Terraform CLI and Azure CLI
+Launch your First VM with Terraform
 Terraform Basic Commands
-  Init
-  Plan
-  Apply
+terraform init
+terraform plan
+terraform apply
 Terraform Destroy
-  Lab: Destroy the Vm created
+Lab: Destroy the VM created
 Providers & Resources
-Lab:
-Understanding Statefiles
-  Current state vs Desired
-  Remote state
-  Remote backend
-Terraform refresh
-  Lab: upload a object to azure storage--
-    probably someything that is needed to host a static website
-    test terraform refresh
-    state
-10 mins Break
+Lab: Understanding Statefiles
+Current state vs Desired
+Remote state
+Remote backend
+terraform refresh
+Lab: Upload an object to Azure storage (e.g., for hosting a static website) and test terraform refresh state
 Configurations
-  Attributes
-  Variables
-    tfvars file
-    precedence
-    datatypes
-  Output values
-  Count
-  Conditional Expressions
-  Functions
-  Dynamic Blocks
-  Lifecycle -Meta Arguments
-Lab:
+Attributes
+Variables
+tfvars file
+Precedence
+Data types
+Output values
+Count
+Conditional expressions
+Functions
+Dynamic blocks
+Lifecycle - Meta arguments
+Lab: [Include lab details here]
 Lunch
 Quiz
-Terraform Modules 
-  lab
+Terraform Modules
+Lab: [Include lab details here]
 Terraform Workspaces
-  lab
-10 mins Break
+Lab: [Include lab details here]
 Terraform Import
+Terraform Testing Framework
 Terraform Cloud/Enterprise Features
-Best Practises
+Best Practices
