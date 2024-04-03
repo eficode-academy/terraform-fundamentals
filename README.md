@@ -19,7 +19,7 @@
 - **Lab:** Destroy the VM created
 
 ### Providers & Resources
-- **Lab:** Understanding Statefiles
+- Understanding Statefiles
   - Current state vs Desired
   - Remote state
   - Remote backend
