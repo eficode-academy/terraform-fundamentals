@@ -24,9 +24,11 @@
   - Remote state
   - Remote backend
 - `terraform refresh`
-- **Lab:** Upload an object to Azure storage and test `terraform refresh` state
   
-**Break**
+**Lab:** Setup remote backend
+
+  
+**10 Break**
 
 ### Configurations
 - Attributes
@@ -37,10 +39,16 @@
 - Output values
 - Count
 - Conditional expressions
+- **Lab**
 - Functions
+- **Lab**
 - Dynamic blocks
 - Lifecycle - Meta arguments
-- **Lab:** hosting a static website 
+- **Lab**
+### Lab
+hosting a static website
+  - Cretaing azure storage with unique name
+  - upload html file
 
 ### Break
 
@@ -61,3 +69,5 @@
 ### Terraform Cloud/Enterprise Features
 
 ### Best Practices
+ Managing Terraform and Azure
+ 
