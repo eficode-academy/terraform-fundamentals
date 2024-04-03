@@ -26,7 +26,7 @@
 - `terraform refresh`
 - **Lab:** Upload an object to Azure storage and test `terraform refresh` state
   
-**Break:**
+**Break**
 
 ### Configurations
 - Attributes
@@ -51,6 +51,8 @@
 
 ### Terraform Workspaces
 - **Lab:** [Include lab details here]
+
+**Break**
 
 ### Terraform Import
 
