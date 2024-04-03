@@ -24,8 +24,8 @@
   - Remote state
   - Remote backend
 - `terraform refresh`
-- **Lab:** Upload an object to Azure storage (e.g., for hosting a static website) and test `terraform refresh` state
-
+- **Lab:** Upload an object to Azure storage and test `terraform refresh` state
+**Break:**
 ### Configurations
 - Attributes
 - Variables
@@ -38,7 +38,7 @@
 - Functions
 - Dynamic blocks
 - Lifecycle - Meta arguments
-- **Lab:** [Include lab details here]
+- **Lab:** hosting a static website 
 
 ### Break
 
