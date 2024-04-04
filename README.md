@@ -37,11 +37,13 @@ This exercise should have `init`, `plan` and `apply` as well. They should not lo
   - Remote state
   - Remote backend
 - `terraform refresh`
-  
+
 **Lab:** Setup remote backend
 * Write HCL to create the backend where they can store their state file.
 * Resource block
-* State block
+* Add a remote backend block to store the state file.
+* Optionally use AZ cli to see the state file in the state (or UI)
+* If possible: make a manual change (CLI/UI) and execute `terraform refresh` to see that the state and current config has diverged.
   
 **10 Break**
 
@@ -54,12 +56,15 @@ This exercise should have `init`, `plan` and `apply` as well. They should not lo
 - Output values
 - Count
 - Conditional expressions
-- **Lab**
+
+**Lab**
 - Functions
-- **Lab**
+
+**Lab**
 - Dynamic blocks
 - Lifecycle - Meta arguments
-- **Lab**
+
+**Lab**
 ### Lab
 hosting a static website
   - Cretaing azure storage with unique name
