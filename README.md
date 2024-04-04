@@ -10,13 +10,26 @@
 
 ### Launch your First VM with Terraform
 
+Premade HCL configuration creating an app-service with an application.
+This exercise should have `init`, `plan` and `apply` as well. They should not look into the code itself.
+
+* See the URL as output of the terraform command
+* Look at the website through a browser
+* Use AZ cli to list the app-service as well to see that it is created (OR the UI of Azure if we can do it).
+* Maybe: Apply again, to see that nothing is changing?
+
 ### Terraform Basic Commands
 - `terraform init`
 - `terraform plan`
 - `terraform apply`
+- `terraform destroy`
 
 ### Terraform Destroy
-- **Lab:** Destroy the VM created
+- **Lab:** Destroy the app-service created
+
+### Basic intro to HCL language
+- Overview (why create another language)
+- Basic types/usages
 
 ### Providers & Resources
 - Understanding Statefiles
@@ -26,7 +39,9 @@
 - `terraform refresh`
   
 **Lab:** Setup remote backend
-
+* Write HCL to create the backend where they can store their state file.
+* Resource block
+* State block
   
 **10 Break**
 
