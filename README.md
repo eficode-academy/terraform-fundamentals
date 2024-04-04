@@ -4,6 +4,9 @@
 
 ### Infrastructure as Code
 - Introduction to IAC and Terraform
+- Tool landscape (pulumi/crossplane etc)
+- Intro to hahsicorp
+- Terraform
 
 ### Installation
 - Install/Check Terraform CLI and Azure CLI
