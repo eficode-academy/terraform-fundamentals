@@ -26,6 +26,11 @@ override.tf.json
 # Include override files you do wish to add to version control using negated pattern
 # !example_override.tf
 
+# Delete files used to store local secrets
+secret.auto.tfvars
+secrets.auto.tfvars
+
+
 # Include tfplan files to ignore the plan output of command: terraform plan -out=tfplan
 # example: *tfplan*
 
@@ -35,3 +40,4 @@ terraform.rc
 
 # Ignore python virtual environments
 .venv/
+
