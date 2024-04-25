@@ -1,4 +1,17 @@
-# Terraform Fundamentals Training Structure
+# Terraform Fundamentals Katas
+
+Welcome to the Terraform Fundamentals Katas! This repository is designed to help new users master Terraform through practical exercises hosted on the Azure cloud. Each kata focuses on essential concepts and skills, providing a hands-on approach to learning infrastructure as code with Terraform. Whether you're starting from scratch or looking to deepen your understanding, these challenges will guide you through creating, modifying, and managing Azure resources effectively. Dive in and start your journey to becoming proficient with Terraform!
+
+## About Terraform
+
+Terraform serves as an infrastructure as code (IaC) tool designed to automate the provisioning and management of cloud resources. Users define their desired infrastructure configuration using HashiCorp Configuration Language (HCL), allowing for the creation, modification, and scaling of resources across various cloud platforms such as AWS, Azure, and Google Cloud. Its core functionalities include:
+
+- **Declarative Syntax**: Define the desired state of your infrastructure, and Terraform will make it happen.
+- **Modular Design**: Reusable components called modules help in managing complex systems with simplicity.
+- **Execution Plan**: Terraform calculates and shows the actions needed to achieve the desired state before making any changes.
+
+Terraform enhances collaboration, ensures infrastructure consistency, and supports a version-controlled, collaborative approach to managing cloud environments.
+
 
 ## Structure:
 
