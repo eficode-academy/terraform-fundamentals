@@ -123,7 +123,7 @@ Learn to secure Terraform configurations and follow best practices.
 - (Topics related to best practices and security measures in Terraform)
 
 
-#DO_NOT_REMOVE below content
+# DO_NOT_REMOVE below content
 
 
 ## Structure:
