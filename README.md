@@ -67,11 +67,7 @@ Understand how to utilize built-in functions and master other Terraform commands
 
 ### Topics Covered
 - Introduction to Functions
-- Types of Built-in Functions:
-  - String
-  - Numeric & Collection
-  - Filesystem
-  - Date & Time
+- Types of Built-in Functions
 - Other Terraform Commands:
   - `state`
   - `taint`/`untaint`
