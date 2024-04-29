@@ -86,8 +86,7 @@ Understand how to utilize built-in functions and master other Terraform commands
   - `console`
   - `graph`
   - `test`
-- Inspecting and modifying state:
-  - Terraform state
+  - `import`
 
 ## Module 6: Advanced Configuration
 
