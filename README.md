@@ -25,6 +25,7 @@ Understand the concept and benefits of Infrastructure as Code (IaC).
 - What is IaC?
 - Benefits of using IaC.
 - Overview of IaC tools with a focus on Terraform.
+- Install/Check Terraform CLI and Azure CLI
 
 ## Module 2: Terraform Basics
 
