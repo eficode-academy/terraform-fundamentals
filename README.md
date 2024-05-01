@@ -84,15 +84,10 @@ Understand how to utilize built-in functions and master other Terraform commands
   - `graph`
   - `test`
   - `import`
-
-## Module 6: Advanced Configuration
-
-### Objective
-Master advanced Terraform configurations.
-
-### Topics Covered
-- Terraform modules
-- Dynamic blocks
+- Terrafrom Provisioners 
+  -Local-exec
+  -Remote-exec
+- Local Block 
 - Conditional expressions
 - For expressions
 - Meta-Arguments:
@@ -100,6 +95,16 @@ Master advanced Terraform configurations.
   - `count`
   - `for_each`
   - `lifecycle`
+
+## Module 6: Advanced Configuration
+
+### Objective
+Master advanced Terraform configurations.
+
+### Topics Covered
+
+-  Dynamic blocks
+- Terraform modules
 - Terraform Workspaces
 
 ## Module 7: Terraform Cloud and Enterprise
