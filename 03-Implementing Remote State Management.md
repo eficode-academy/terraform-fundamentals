@@ -118,4 +118,4 @@ To avoid incurring unnecessary charges:
 
 ### YAAAAYYYYYYYY 🎆
 
-By completing this module, you have successfully slearned how to manage Terraform state remotely using Azure as the backend enhancing your project's security and collaboration capabilities. This setup not only ensures that your state file is secure and accessible but also facilitates teamwork by maintaining a single source of truth for your Terraform state.
+By completing this module, you have successfully learned how to manage Terraform state remotely using Azure as the backend enhancing your project's security and collaboration capabilities. This setup not only ensures that your state file is secure and accessible but also facilitates teamwork by maintaining a single source of truth for your Terraform state.
