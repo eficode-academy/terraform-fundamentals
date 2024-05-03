@@ -208,7 +208,7 @@ This exercise should have `init`, `plan` and `apply` as well. They should not lo
 **Lab**
 ### Lab
 hosting a static website
-  - Cretaing azure storage with unique name
+  - Creating Azure storage with unique name
   - upload html file
 
 ### Break
