@@ -37,6 +37,8 @@ Learn the fundamental concepts of Terraform.
 - Installing and setting up Terraform.
 - Basic commands: `init`, `plan`, `apply`, `destroy`.
 
+### Lab Exercise: Terraform basic commands
+
 ## Module 3: Terraform Core Concepts
 
 ### Objective
@@ -44,10 +46,13 @@ Deep dive into Terraform’s core components.
 
 ### Topics Covered
 - Providers
+  - Terraform providers
 - Resources
 - Data sources
 - Outputs
 - Variables
+
+### Lab Exercise: Create and Manage Resources with Terraform
 
 ## Module 4: Terraform State Management
 
@@ -60,6 +65,9 @@ Understand how Terraform manages state.
 - Locking state
 - Inspecting and modifying state:
   - Terraform state
+  - Terraform refresh
+
+### Lab Exercise: Implementing Remote State Management
 
 ## Module 5: Terraform Functions and Advanced Commands
 
@@ -70,9 +78,6 @@ Understand how to utilize built-in functions and master other Terraform commands
 - Introduction to Functions
 - Types of Built-in Functions
 - Other Terraform Commands:
-  - `state`
-  - `taint`/`untaint`
-  - `refresh`
   - `validate`
   - `fmt`
   - `output`
@@ -96,6 +101,10 @@ Understand how to utilize built-in functions and master other Terraform commands
   - `for_each`
   - `lifecycle`
 
+### Lab Exercise: Using Terraform Functions and Advanced Commands
+
+### Lab Exercise: Deploy a Multi-Tier Application using terrafrom
+
 ## Module 6: Advanced Configuration
 
 ### Objective
@@ -106,6 +115,8 @@ Master advanced Terraform configurations.
 -  Dynamic blocks
 - Terraform modules
 - Terraform Workspaces
+
+### Lab Exercise: Applying Modules and workspaces in Terrafrom
 
 ## Module 7: Terraform Cloud and Enterprise
 

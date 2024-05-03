@@ -26,7 +26,7 @@ resource "azurerm_storage_account" "storage_account" {
   }
 }
 
-resource "azurerm_storage_blob" "example" {
+resource "azurerm_storage_blob" "index" {
   name                   = "index.html"
   storage_account_name   = azurerm_storage_account.storage_account.name
   storage_container_name = "$web"
@@ -35,3 +35,11 @@ resource "azurerm_storage_blob" "example" {
   source                 = "index.html"
 }
 
+resource "azurerm_storage_blob" "image" {
+  name                   = "image.jpg"
+  storage_account_name   = azurerm_storage_account.storage_account.name
+  storage_container_name = azurerm_storage_container.web.name
+  type                   = "Block"
+  content_type           = "image/jpeg"
+  source                 = "../web/image.jpg" 
+}
