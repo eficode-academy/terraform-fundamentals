@@ -8,7 +8,6 @@ This module is designed to deepen your understanding of Terraform's capabilities
 
 - Master the use of Terraform's built-in functions to perform data manipulation and formatting directly within Terraform configurations.
 - Utilize the Terraform console for interactive exploration of function capabilities.
--
 
 ## Step-by-Step Instructions
 
@@ -19,7 +18,8 @@ Before experimenting with the functions, make sure you have a working Terraform 
 - **Navigate** to your Terraform project directory.
 - **Open** a terminal in this directory.
 - **Run** the Terraform console command:
-  ```bash
+
+  ```
   terraform console
   ```
   This opens an interactive console where you can type Terraform expressions and see their evaluated results.
