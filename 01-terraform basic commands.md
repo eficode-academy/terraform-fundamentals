@@ -4,7 +4,9 @@
 - Execute the basic Terraform commands: `terraform init`, `terraform plan`, and `terraform apply`, and observe how they function in managing infrastructure.
 
 ## Introduction
-This exercise provides an introduction to the basics commands of Terraform through the setup and deployment of a Flask application. You will directly apply the basic Terraform commands, observe the changes each command makes, and understand their roles in the workflow of infrastructure as code.
+This exercise provides an introduction to the basics commands of Terraform through the setup and deployment of a Flask application. 
+
+You will directly apply the basic Terraform commands, observe the changes each command makes, and understand their roles in the workflow of infrastructure as code.
 
 ## Pre-requisites
 - Terraform CLI installed on your machine.
@@ -12,19 +14,28 @@ This exercise provides an introduction to the basics commands of Terraform throu
 - Basic knowledge of command line interfaces and text editors.
 
 ### Flask Application
-The application consists of three components: frontend, backend, and a database.
-The frontend and backend are small python Flask webservers that listen for HTTP requests. For persistent storage, a postgresql database is used.
-The basic functionality of the application can be achieved by deploying the frontend alone. The frontend listens for HTTP requests on port 5000 (the default for Flask).
+The application consists of three components: `frontend`, `backend`, and a `database`.
+
+The frontend and backend are small python Flask webservers that listen for HTTP requests. 
+
+For persistent storage, a postgresql database is used.
+
+The basic functionality of the application can be achieved by deploying the frontend alone. 
+
+The frontend listens for HTTP requests on port `5000` (the default for Flask).
 
 ### Terraform Configuration
-The Terraform configuration in the `terraform basic commands` directory is set to define and provision the necessary cloud infrastructure to run the Flask application, which typically includes server setup, networking, and security settings.
+The Terraform configuration in the [terraform basic commands](terraform%20basic%20commands) directory is set to define and provision the necessary cloud infrastructure to run the Flask application.
+
+It typically includes server setup, networking, and security settings.
+
 In this case, we will only be deploying the frontend of the Flask app.
 
 ## Step-by-Step Instructions
 
 ### 1. Initialize Your Terraform Workspace
 
-Navigate to the `terraform` directory within your project
+Navigate to the `terraform basic commands` directory within your project
 
 Initialize the Terraform workspace to prepare your environment:
 
