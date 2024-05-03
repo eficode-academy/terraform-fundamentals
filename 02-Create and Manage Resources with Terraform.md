@@ -2,16 +2,17 @@
 
 ## Learning Goals
 - Deploy an Azure storage account using Terraform to host a static website.
-- Understand the process of configuring Terraform resource blocks,providers block, data sources, outputs,variables.
+- Understand the process of configuring Terraform resource blocks, providers block, data sources, outputs, and variables.
 - Learn to manage Azure resources effectively with Terraform.
 
 ## Introduction
-This exercise will guide you through the process of using Terraform to deploy a static website to Azure . You will learn how to write, plan, and apply Terraform configurations to create an Azure storage account, enable the static website feature, and upload content.
+This exercise will guide you through the process of using Terraform to deploy a static website to Azure. 
+You will learn how to write, plan, and apply Terraform configurations to create an Azure storage account, enable the static website feature, and upload content.
 
 ## Pre-requisites
 - Terraform installed on your local machine.
 - Azure CLI installed and authenticated to your Azure account.
-- A basic static website (e.g., HTMLs) ready for deployment
+- A basic static website (e.g., HTMLs) ready for deployment.
 
 **Note:** 
 The `web` directory contains all static files for your website.
@@ -86,7 +87,7 @@ required_providers {
 }
 ```
 
-After adding the two options to the terraform block you should have something like shown below.
+After adding the two options to the `terraform` block you should have something like shown below.
 
 ```hcl
 terraform {
@@ -120,7 +121,7 @@ provider "azurerm" {
 ```
 
 **Note:**
-The `features {}` block must be included as it's required by the Azure provider, although it's empty in this case because the Azure provider doesn't require any features to be explicitly enabled.
+The `features {}` block must be included, as it's required by the Azure provider, although it's empty in this case, because the Azure provider doesn't require any features to be explicitly enabled.
 
 Your `providers.tf` should look something like below:
 
@@ -389,4 +390,4 @@ This command will prompt you to review and confirm the destruction of the resour
 
 # Congratulations 🎉
 
-Following these instructions, you've successfully configured, deployed, and cleaned up a static website hosted on Azure using Terraform. This process not only automates your deployments but also helps manage infrastructure as code efficiently.
+Following these instructions, you've successfully configured, deployed, and cleaned up a static website hosted on Azure using Terraform. This process not only automates your deployments, but also helps manage infrastructure as code efficiently.
