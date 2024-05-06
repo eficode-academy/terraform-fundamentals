@@ -25,7 +25,6 @@ Understand the concept and benefits of Infrastructure as Code (IaC).
 - What is IaC?
 - Benefits of using IaC.
 - Overview of IaC tools with a focus on Terraform.
-- Install/Check Terraform CLI and Azure CLI
 
 ## Module 2: Terraform Basics
 
@@ -35,6 +34,7 @@ Learn the fundamental concepts of Terraform.
 ### Topics Covered
 - What is Terraform?
 - Installing and setting up Terraform.
+- Login to Azure CLI
 - Basic commands: `init`, `plan`, `apply`, `destroy`.
 
 ### Lab Exercise: Terraform basic commands
