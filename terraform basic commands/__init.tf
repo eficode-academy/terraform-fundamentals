@@ -31,7 +31,7 @@ provider "azurerm" {
 }
 
 module "exerciseconfiguration" {
-  source = "../configuration"
+  source = "../../modules_internals/configuration"
 }
 
 data "azurerm_resource_group" "studentrg" {
