@@ -1,9 +1,3 @@
-resource "azurerm_resource_group" "example" {
-  count    = var.number_of_students
-  name     = "rg-workstation${count.index + 1}"
-  location = "West Europe"
-}
-
 resource "azurerm_role_assignment" "example" {
   count                = var.number_of_students
   scope                = azurerm_resource_group.example[count.index].id
