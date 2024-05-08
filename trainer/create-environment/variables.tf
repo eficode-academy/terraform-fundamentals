@@ -1,6 +1,6 @@
 variable "number_of_students" {
   type        = number
-  default     = 2
+  default     = 5
   description = "How many students"
   validation {
     condition     = tonumber(var.number_of_students) == floor(var.number_of_students)

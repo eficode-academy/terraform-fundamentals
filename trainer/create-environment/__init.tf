@@ -24,7 +24,7 @@ terraform {
     container_name       = "tf-training-env-state"
     key                  = "create-users.tfstate"
     use_azuread_auth     = true
-  }
+   }
 }
 
 provider "azurerm" {
@@ -33,6 +33,9 @@ provider "azurerm" {
       purge_soft_delete_on_destroy          = false
       purge_soft_deleted_secrets_on_destroy = false
       purge_soft_deleted_keys_on_destroy    = false
+    }
+    resource_group {
+      prevent_deletion_if_contains_resources = false
     }
   }
   tenant_id       = "ce98c903-f521-4028-89dc-13227927e323"

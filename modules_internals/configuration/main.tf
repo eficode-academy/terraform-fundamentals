@@ -1,11 +1,10 @@
-output studentname {
-    value = "${lower(local.studentname)}"
+output "studentname" {
+  value = lower(var.workstationname)
+}
+output "rgname" {
+  value = "rg-${lower(var.workstationname)}"
 }
 
-output rgname {
-    value = "rg-${lower(local.studentname)}"
-}
-
-output location {
-    value = "rg-${lower(local.location)}"
+output "location" {
+  value = lower(local.location)
 }

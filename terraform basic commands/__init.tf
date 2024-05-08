@@ -1,5 +1,5 @@
 terraform {
-  required_version = "~> 1.6.1"
+  required_version = "> 1.6.1"
 
   required_providers {
     azurerm = {
@@ -30,10 +30,19 @@ provider "azurerm" {
   subscription_id = "769d8f7e-e398-4cbf-8014-0019e1fdee59"
 }
 
-module "exerciseconfiguration" {
-  source = "../../modules_internals/configuration"
+variable "SHORT_HOSTNAME" {
+  type     = string
+  nullable = true
 }
 
+#Get the resource group where to deploy
+module "exerciseconfiguration" {
+  source = "../modules_internals/configuration"
+  #If SHORT_HOSTNAME is not set (or env TF_VAR_SHORT_HOSTNAME) use the module default
+  workstationname = try(var.SHORT_HOSTNAME, false)
+}
+
+# Make the resource group data available in terraform
 data "azurerm_resource_group" "studentrg" {
-  name     = module.exerciseconfiguration.rgname
+  name = module.exerciseconfiguration.rgname
 }

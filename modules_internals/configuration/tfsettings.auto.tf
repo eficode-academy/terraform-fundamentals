@@ -1,4 +1,4 @@
 locals {
-    studentname = "student1"
-    location = "West Europe"
+  location = "West Europe"
 }
+
