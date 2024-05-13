@@ -1,0 +1,13 @@
+data:
+  client1:
+    size: "Standard_B1ls"
+    public_ip: true
+    subnet: client
+  client2:
+    size: "Standard_B1ls"
+    public_ip: true
+    subnet: client
+  server:
+    size: "Standard_B1ls"
+    public_ip: false
+    subnet: server
