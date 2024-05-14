@@ -1,6 +1,6 @@
 resource "azuread_user" "example" {
   count               = var.number_of_students
-  user_principal_name = "workstation-${count.index + 1}@eficodetraining.onmicrosoft.com"
-  display_name        = "Workstation ${count.index + 1}"
+  user_principal_name = "${local.userid[count.index]}@eficodetraining.onmicrosoft.com"
+  display_name        = "Workstation ${count.index}"
   password            = var.password
 }

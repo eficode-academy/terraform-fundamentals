@@ -30,7 +30,7 @@ Terraform v1.8.2
 
    In the integrated terminal on your workstation and type the following command to log in to Azure with your credentials.
 
- `$ az login -u [username] -p [password]`
+ `$ az login -u [username]`
 
    Replace [username] and [password] with the credentials provided. This command authenticates your session with Azure, allowing you to manage resources.
 

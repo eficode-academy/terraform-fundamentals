@@ -45,3 +45,7 @@ provider "azurerm" {
 provider "azuread" {
   tenant_id = "ce98c903-f521-4028-89dc-13227927e323"
 }
+
+locals {
+  userid = [for id in range(0, var.number_of_students) : "workstation-${id}" ]
+}
