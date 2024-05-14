@@ -1,0 +1,5 @@
+exercise                = "exercise6"
+instances_configuration = "configuration/instances.yaml"
+network_configuration   = "configuration/network.yaml"
+admin_password          = "aflk89!nknvlknglkvgew"
+admin_username          = "adminuser"

@@ -23,19 +23,19 @@ resource "azurerm_network_interface" "server" {
     # TODO: make public_ip depends on the input var
     public_ip_address_id = azurerm_public_ip.server.id
   }
-  depends_on = [ azurerm_subnet.server ]
+  depends_on = [azurerm_subnet.server]
 }
 
 resource "azurerm_linux_virtual_machine" "server" {
   name                            = "vm-server"
-  location            = data.azurerm_resource_group.studentrg.location
-  resource_group_name = data.azurerm_resource_group.studentrg.name
+  location                        = data.azurerm_resource_group.studentrg.location
+  resource_group_name             = data.azurerm_resource_group.studentrg.name
   size                            = "Standard_B1ls" #Standard_B1s
-  admin_username                  = "adminuser"
+  admin_username                  = var.admin_username
   disable_password_authentication = false
-  admin_password                  = "aflk89!nknvlknglkvgew"
+  admin_password                  = var.admin_password
   #custom_data                     = data.cloudinit_config.ca-config.rendered
-  network_interface_ids           = [azurerm_network_interface.server.id]
+  network_interface_ids = [azurerm_network_interface.server.id]
   identity {
     type = "SystemAssigned"
   }
@@ -46,10 +46,10 @@ resource "azurerm_linux_virtual_machine" "server" {
 
   # az vm image list --publisher Canonical
   source_image_reference {
-    publisher = "Canonical"
-    offer     = "0001-com-ubuntu-server-jammy"
-    sku       = "22_04-lts-gen2"
-    version   = "latest"
+    publisher = var.source_image_reference.publisher
+    offer     = var.source_image_reference.offer
+    sku       = var.source_image_reference.sku
+    version   = var.source_image_reference.version
   }
 
   os_disk {
@@ -60,5 +60,5 @@ resource "azurerm_linux_virtual_machine" "server" {
 
 
 output "server_connection_string" {
-  value = "ssh ${azurerm_linux_virtual_machine.server.admin_username}@${azurerm_linux_virtual_machine.server.private_ip_address}"  
+  value = "ssh ${azurerm_linux_virtual_machine.server.admin_username}@${azurerm_linux_virtual_machine.server.private_ip_address}"
 }
