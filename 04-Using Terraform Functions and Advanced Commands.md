@@ -15,7 +15,7 @@ This module is designed to deepen your understanding of Terraform's capabilities
 
 Before experimenting with the functions, make sure you have a working Terraform setup.
 
-- **Navigate** to your Terraform project directory.
+- **Navigate** to `using terraform functions and commands` directory.
 - **Open** a terminal in this directory.
 - **Run** the Terraform console command:
 
