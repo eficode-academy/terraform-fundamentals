@@ -9,11 +9,6 @@
 This exercise will guide you through the process of using Terraform to deploy a static website to Azure. 
 You will learn how to write, plan, and apply Terraform configurations to create an Azure storage account, enable the static website feature, and upload content.
 
-## Pre-requisites
-- Terraform installed on your local machine.
-- Azure CLI installed and authenticated to your Azure account.
-- A basic static website (e.g., HTMLs) ready for deployment.
-
 **Note:** 
 The `web` directory contains all static files for your website.
 

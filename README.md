@@ -14,6 +14,11 @@ Terraform serves as an infrastructure as code (IaC) tool designed to automate th
 
 Terraform enhances collaboration, ensures infrastructure consistency, and supports a version-controlled, collaborative approach to managing cloud environments.
 
+## Pre-requisites
+- Terraform CLI installed on your machine.
+- Access to a cloud provider account with permissions to create and manage resources.
+- Basic knowledge of command line interfaces and text editors.
+
 # Terraform Course Outline
 
 ## Module 1: Introduction to Infrastructure as Code (IaC)
@@ -126,7 +131,7 @@ Utilize Terraform in a team setting with Terraform Cloud.
 ### Topics Covered
 - Benefits of Using Terraform Cloud
 
-## Module 8: Best Practices and Security
+## Module 8: Best Practices
 
 ### Objective
 Learn to secure Terraform configurations and follow best practices.
