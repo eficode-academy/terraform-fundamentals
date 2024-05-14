@@ -3,11 +3,11 @@ locals {
 }
 
 resource "azurerm_public_ip" "client" {
-  for_each = local.clients
+  for_each            = local.clients
   name                = "${each.key}-public-ip"
   location            = data.azurerm_resource_group.studentrg.location
   resource_group_name = data.azurerm_resource_group.studentrg.name
-  allocation_method   = "Static"
+  allocation_method   = "Dynamic"
 
   tags = {
     environment = "Production"
@@ -15,7 +15,7 @@ resource "azurerm_public_ip" "client" {
 }
 
 resource "azurerm_network_interface" "client" {
-  for_each = local.clients
+  for_each            = local.clients
   name                = "nic-${each.key}"
   location            = data.azurerm_resource_group.studentrg.location
   resource_group_name = data.azurerm_resource_group.studentrg.name
@@ -29,20 +29,20 @@ resource "azurerm_network_interface" "client" {
     # TODO: make public_ip depends on the input var
     public_ip_address_id = azurerm_public_ip.client[each.key].id
   }
-  depends_on = [ azurerm_subnet.client ]
+  depends_on = [azurerm_subnet.client]
 }
 
 resource "azurerm_linux_virtual_machine" "client" {
-  for_each = local.clients
+  for_each                        = local.clients
   name                            = "vm-${each.key}"
-  location            = data.azurerm_resource_group.studentrg.location
-  resource_group_name = data.azurerm_resource_group.studentrg.name
+  location                        = data.azurerm_resource_group.studentrg.location
+  resource_group_name             = data.azurerm_resource_group.studentrg.name
   size                            = "Standard_B1ls" #Standard_B1s
-  admin_username                  = "adminuser"
+  admin_username                  = var.admin_username
   disable_password_authentication = false
-  admin_password                  = "aflk89!nknvlknglkvgew"
+  admin_password                  = var.admin_password
   #custom_data                     = data.cloudinit_config.ca-config.rendered
-  network_interface_ids           = [azurerm_network_interface.client[each.key].id]
+  network_interface_ids = [azurerm_network_interface.client[each.key].id]
   identity {
     type = "SystemAssigned"
   }
@@ -53,10 +53,10 @@ resource "azurerm_linux_virtual_machine" "client" {
 
   # az vm image list --publisher Canonical
   source_image_reference {
-    publisher = "Canonical"
-    offer     = "0001-com-ubuntu-server-jammy"
-    sku       = "22_04-lts-gen2"
-    version   = "latest"
+    publisher = var.source_image_reference.publisher
+    offer     = var.source_image_reference.offer
+    sku       = var.source_image_reference.sku
+    version   = var.source_image_reference.version
   }
 
   os_disk {
@@ -71,6 +71,6 @@ output "client_connection_string" {
 }
 */
 output "client_connection_string" {
-  value = { for client in local.clients: client => "ssh ${azurerm_linux_virtual_machine.client[client].admin_username}@${azurerm_public_ip.client[client].ip_address}"
+  value = { for client in local.clients : client => "ssh ${azurerm_linux_virtual_machine.client[client].admin_username}@${azurerm_public_ip.client[client].ip_address}"
   }
 }
