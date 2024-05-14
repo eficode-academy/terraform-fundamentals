@@ -34,7 +34,26 @@ Terraform v1.8.2
 
    Replace [username] and [password] with the credentials provided. This command authenticates your session with Azure, allowing you to manage resources.
 
-**paste output**
+```
+coder@workstation-3 ~/terraform-fundamentals (main)
+$ az login -u workstation-3@eficodetraining.onmicrosoft.com -p devops-is-awesome-1
+[
+  {
+    "cloudName": "AzureCloud",
+    "homeTenantId": "ce98c903-f521-4028-89dc-13227927e323",
+    "id": "769d8f7e-e398-4cbf-8014-0019e1fdee59",
+    "isDefault": true,
+    "managedByTenants": [],
+    "name": "Eficode Training Subscription",
+    "state": "Enabled",
+    "tenantId": "ce98c903-f521-4028-89dc-13227927e323",
+    "user": {
+      "name": "workstation-3@eficodetraining.onmicrosoft.com",
+      "type": "user"
+    }
+  }
+]
+```
 
 3. **Verify Azure Account Details:**
 
@@ -43,3 +62,22 @@ After successfully logging in, verify your account details by running the follow
 `az account show`
 
 The output should resemble the example shown below.
+
+```
+$ az account show
+{
+  "environmentName": "AzureCloud",
+  "homeTenantId": "ce98c903-f521-4028-89dc-13227927e323",
+  "id": "769d8f7e-e398-4cbf-8014-0019e1fdee59",
+  "isDefault": true,
+  "managedByTenants": [],
+  "name": "Eficode Training Subscription",
+  "state": "Enabled",
+  "tenantId": "ce98c903-f521-4028-89dc-13227927e323",
+  "user": {
+    "name": "workstation-3@eficodetraining.onmicrosoft.com",
+    "type": "user"
+  }
+}
+
+```

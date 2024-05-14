@@ -11,8 +11,8 @@ resource "random_string" "storage_account_name" {
 }
 
 resource "azurerm_storage_account" "storage_account" {
-  resource_group_name = var.resource_group_name
-  location            = var.resource_group_location
+  resource_group_name = data.azurerm_resource_group.studentrg.name
+  location            = data.azurerm_resource_group.studentrg.location
 
   name = random_string.storage_account_name.result
 
@@ -38,7 +38,7 @@ resource "azurerm_storage_blob" "index" {
 resource "azurerm_storage_blob" "image" {
   name                   = "image.jpg"
   storage_account_name   = azurerm_storage_account.storage_account.name
-  storage_container_name = azurerm_storage_container.web.name
+  storage_container_name = "$web"
   type                   = "Block"
   content_type           = "image/jpeg"
   source                 = "../web/image.jpg" 

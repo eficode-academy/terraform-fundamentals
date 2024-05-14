@@ -43,7 +43,44 @@ Initialize the Terraform workspace to prepare your environment:
 
 The output should resemble the example shown below.
 
+
 ```
+coder@workstation-3 ~/terraform-fundamentals/terraform basic commands (main *)
+$ terraform init
+
+Initializing the backend...
+
+Successfully configured the backend "local"! Terraform will automatically
+use this backend unless the backend configuration changes.
+Initializing modules...
+- exerciseconfiguration in ../modules_internals/configuration
+
+Initializing provider plugins...
+- Finding hashicorp/local versions matching "~> 2.4.0"...
+- Finding latest version of hashicorp/random...
+- Finding hashicorp/azurerm versions matching "~> 3.98.0"...
+- Installing hashicorp/random v3.6.1...
+- Installed hashicorp/random v3.6.1 (signed by HashiCorp)
+- Installing hashicorp/azurerm v3.98.0...
+- Installed hashicorp/azurerm v3.98.0 (signed by HashiCorp)
+- Installing hashicorp/local v2.4.1...
+- Installed hashicorp/local v2.4.1 (signed by HashiCorp)
+
+Terraform has created a lock file .terraform.lock.hcl to record the provider
+selections it made above. Include this file in your version control repository
+so that Terraform can guarantee to make the same selections by default when
+you run "terraform init" in the future.
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+
 ```
 
 This command sets up Terraform, installing any required provider plugins and setting up the backend for state management.
@@ -57,6 +94,109 @@ Generate an execution plan to preview the actions Terraform will take based on t
 The output should resemble the example shown below.
 
 ```
+coder@workstation-3 ~/terraform-fundamentals/terraform basic commands (main *)
+$ terraform plan
+data.azurerm_resource_group.studentrg: Reading...
+data.azurerm_resource_group.studentrg: Read complete after 0s [id=/subscriptions/769d8f7e-e398-4cbf-8014-0019e1fdee59/resourceGroups/rg-workstation-3]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # azurerm_linux_web_app.webapp will be created
+  + resource "azurerm_linux_web_app" "webapp" {
+      + client_affinity_enabled                        = false
+      + client_certificate_enabled                     = false
+      + client_certificate_mode                        = "Required"
+      + custom_domain_verification_id                  = (sensitive value)
+      + default_hostname                               = (known after apply)
+      + enabled                                        = true
+      + ftp_publish_basic_authentication_enabled       = true
+      + hosting_environment_id                         = (known after apply)
+      + https_only                                     = true
+      + id                                             = (known after apply)
+      + key_vault_reference_identity_id                = (known after apply)
+      + kind                                           = (known after apply)
+      + location                                       = "westeurope"
+      + name                                           = (known after apply)
+      + outbound_ip_address_list                       = (known after apply)
+      + outbound_ip_addresses                          = (known after apply)
+      + possible_outbound_ip_address_list              = (known after apply)
+      + possible_outbound_ip_addresses                 = (known after apply)
+      + public_network_access_enabled                  = true
+      + resource_group_name                            = "rg-workstation-3"
+      + service_plan_id                                = (known after apply)
+      + site_credential                                = (sensitive value)
+      + webdeploy_publish_basic_authentication_enabled = true
+      + zip_deploy_file                                = (known after apply)
+
+      + site_config {
+          + always_on                               = false
+          + container_registry_use_managed_identity = false
+          + default_documents                       = (known after apply)
+          + detailed_error_logging_enabled          = (known after apply)
+          + ftps_state                              = "Disabled"
+          + health_check_eviction_time_in_min       = (known after apply)
+          + http2_enabled                           = false
+          + ip_restriction_default_action           = "Allow"
+          + linux_fx_version                        = (known after apply)
+          + load_balancing_mode                     = "LeastRequests"
+          + local_mysql_enabled                     = false
+          + managed_pipeline_mode                   = "Integrated"
+          + minimum_tls_version                     = "1.2"
+          + remote_debugging_enabled                = false
+          + remote_debugging_version                = (known after apply)
+          + scm_ip_restriction_default_action       = "Allow"
+          + scm_minimum_tls_version                 = "1.2"
+          + scm_type                                = (known after apply)
+          + scm_use_main_ip_restriction             = false
+          + use_32_bit_worker                       = true
+          + vnet_route_all_enabled                  = false
+          + websockets_enabled                      = false
+          + worker_count                            = (known after apply)
+
+          + application_stack {
+              + docker_image_name        = "eficode-academy/quotes-flask-frontend:release"
+              + docker_registry_password = (sensitive value)
+              + docker_registry_url      = "https://ghcr.io"
+              + docker_registry_username = (known after apply)
+            }
+        }
+    }
+
+  # azurerm_service_plan.example will be created
+  + resource "azurerm_service_plan" "example" {
+      + id                           = (known after apply)
+      + kind                         = (known after apply)
+      + location                     = "westeurope"
+      + maximum_elastic_worker_count = (known after apply)
+      + name                         = "example"
+      + os_type                      = "Linux"
+      + per_site_scaling_enabled     = false
+      + reserved                     = (known after apply)
+      + resource_group_name          = "rg-workstation-3"
+      + sku_name                     = "F1"
+      + worker_count                 = (known after apply)
+    }
+
+  # random_integer.ri will be created
+  + resource "random_integer" "ri" {
+      + id     = (known after apply)
+      + max    = 99999
+      + min    = 10000
+      + result = (known after apply)
+    }
+
+Plan: 3 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + app_url = (known after apply)
+
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+Note: You didn't use the -out option to save this plan, so Terraform can't guarantee to take exactly these actions if you run "terraform apply" now.
+
 ```
 
 This plan details which resources Terraform will create, modify, or destroy, allowing you to review before making any changes to the actual infrastructure.
@@ -70,11 +210,142 @@ Execute the plan to create the infrastructure:
 The output should resemble the example shown below.
 
 ```
+coder@workstation-3 ~/terraform-fundamentals/terraform basic commands (main *)
+$ terraform apply
+data.azurerm_resource_group.studentrg: Reading...
+data.azurerm_resource_group.studentrg: Read complete after 0s [id=/subscriptions/769d8f7e-e398-4cbf-8014-0019e1fdee59/resourceGroups/rg-workstation-3]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # azurerm_linux_web_app.webapp will be created
+  + resource "azurerm_linux_web_app" "webapp" {
+      + client_affinity_enabled                        = false
+      + client_certificate_enabled                     = false
+      + client_certificate_mode                        = "Required"
+      + custom_domain_verification_id                  = (sensitive value)
+      + default_hostname                               = (known after apply)
+      + enabled                                        = true
+      + ftp_publish_basic_authentication_enabled       = true
+      + hosting_environment_id                         = (known after apply)
+      + https_only                                     = true
+      + id                                             = (known after apply)
+      + key_vault_reference_identity_id                = (known after apply)
+      + kind                                           = (known after apply)
+      + location                                       = "westeurope"
+      + name                                           = (known after apply)
+      + outbound_ip_address_list                       = (known after apply)
+      + outbound_ip_addresses                          = (known after apply)
+      + possible_outbound_ip_address_list              = (known after apply)
+      + possible_outbound_ip_addresses                 = (known after apply)
+      + public_network_access_enabled                  = true
+      + resource_group_name                            = "rg-workstation-3"
+      + service_plan_id                                = (known after apply)
+      + site_credential                                = (sensitive value)
+      + webdeploy_publish_basic_authentication_enabled = true
+      + zip_deploy_file                                = (known after apply)
+
+      + site_config {
+          + always_on                               = false
+          + container_registry_use_managed_identity = false
+          + default_documents                       = (known after apply)
+          + detailed_error_logging_enabled          = (known after apply)
+          + ftps_state                              = "Disabled"
+          + health_check_eviction_time_in_min       = (known after apply)
+          + http2_enabled                           = false
+          + ip_restriction_default_action           = "Allow"
+          + linux_fx_version                        = (known after apply)
+          + load_balancing_mode                     = "LeastRequests"
+          + local_mysql_enabled                     = false
+          + managed_pipeline_mode                   = "Integrated"
+          + minimum_tls_version                     = "1.2"
+          + remote_debugging_enabled                = false
+          + remote_debugging_version                = (known after apply)
+          + scm_ip_restriction_default_action       = "Allow"
+          + scm_minimum_tls_version                 = "1.2"
+          + scm_type                                = (known after apply)
+          + scm_use_main_ip_restriction             = false
+          + use_32_bit_worker                       = true
+          + vnet_route_all_enabled                  = false
+          + websockets_enabled                      = false
+          + worker_count                            = (known after apply)
+
+          + application_stack {
+              + docker_image_name        = "eficode-academy/quotes-flask-frontend:release"
+              + docker_registry_password = (sensitive value)
+              + docker_registry_url      = "https://ghcr.io"
+              + docker_registry_username = (known after apply)
+            }
+        }
+    }
+
+  # azurerm_service_plan.example will be created
+  + resource "azurerm_service_plan" "example" {
+      + id                           = (known after apply)
+      + kind                         = (known after apply)
+      + location                     = "westeurope"
+      + maximum_elastic_worker_count = (known after apply)
+      + name                         = "example"
+      + os_type                      = "Linux"
+      + per_site_scaling_enabled     = false
+      + reserved                     = (known after apply)
+      + resource_group_name          = "rg-workstation-3"
+      + sku_name                     = "F1"
+      + worker_count                 = (known after apply)
+    }
+
+  # random_integer.ri will be created
+  + resource "random_integer" "ri" {
+      + id     = (known after apply)
+      + max    = 99999
+      + min    = 10000
+      + result = (known after apply)
+    }
+
+Plan: 3 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + app_url = (known after apply)
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: 
+
 ```
 
 You will be prompted to approve the action. Once confirmed, Terraform will apply the specified configurations, provisioning the necessary resources for the Flask application.
 
+The output should resemble the example shown below.
+
+```
+random_integer.ri: Creating...
+random_integer.ri: Creation complete after 0s [id=91989]
+azurerm_service_plan.example: Creating...
+azurerm_service_plan.example: Still creating... [10s elapsed]
+azurerm_service_plan.example: Creation complete after 18s [id=/subscriptions/769d8f7e-e398-4cbf-8014-0019e1fdee59/resourceGroups/rg-workstation-3/providers/Microsoft.Web/serverFarms/example]
+azurerm_linux_web_app.webapp: Creating...
+azurerm_linux_web_app.webapp: Still creating... [10s elapsed]
+azurerm_linux_web_app.webapp: Still creating... [20s elapsed]
+azurerm_linux_web_app.webapp: Still creating... [30s elapsed]
+azurerm_linux_web_app.webapp: Still creating... [40s elapsed]
+azurerm_linux_web_app.webapp: Still creating... [50s elapsed]
+azurerm_linux_web_app.webapp: Creation complete after 59s [id=/subscriptions/769d8f7e-e398-4cbf-8014-0019e1fdee59/resourceGroups/rg-workstation-3/providers/Microsoft.Web/sites/webapp-workstation-3-91989]
+
+Apply complete! Resources: 3 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+app_url = "webapp-workstation-3-91989.azurewebsites.net"
+```
+
 ### 4. Visit the application in the browser
+
+You willo get an app url when you applied the configurations as part of the output logs copy the url and paste in your browser.
+
 
 You should see something like this:
 
@@ -86,5 +357,193 @@ Execute the following command to remove all resources and clean up the infrastru
 `terraform destroy`
 
 This command will prompt you to review and confirm the destruction of the resources defined in your Terraform configuration. Once confirmed, Terraform will proceed to safely remove all the resources, effectively cleaning up the deployed infrastructure. This step helps prevent unnecessary costs and ensures that the environment is reset for future exercises.
+
+```
+coder@workstation-3 ~/terraform-fundamentals/terraform basic commands (main *)
+$ terraform destroy
+random_integer.ri: Refreshing state... [id=91989]
+data.azurerm_resource_group.studentrg: Reading...
+data.azurerm_resource_group.studentrg: Read complete after 0s [id=/subscriptions/769d8f7e-e398-4cbf-8014-0019e1fdee59/resourceGroups/rg-workstation-3]
+azurerm_service_plan.example: Refreshing state... [id=/subscriptions/769d8f7e-e398-4cbf-8014-0019e1fdee59/resourceGroups/rg-workstation-3/providers/Microsoft.Web/serverFarms/example]
+azurerm_linux_web_app.webapp: Refreshing state... [id=/subscriptions/769d8f7e-e398-4cbf-8014-0019e1fdee59/resourceGroups/rg-workstation-3/providers/Microsoft.Web/sites/webapp-workstation-3-91989]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  - destroy
+
+Terraform will perform the following actions:
+
+  # azurerm_linux_web_app.webapp will be destroyed
+  - resource "azurerm_linux_web_app" "webapp" {
+      - app_settings                                   = {} -> null
+      - client_affinity_enabled                        = false -> null
+      - client_certificate_enabled                     = false -> null
+      - client_certificate_mode                        = "Required" -> null
+      - custom_domain_verification_id                  = (sensitive value) -> null
+      - default_hostname                               = "webapp-workstation-3-91989.azurewebsites.net" -> null
+      - enabled                                        = true -> null
+      - ftp_publish_basic_authentication_enabled       = true -> null
+      - https_only                                     = true -> null
+      - id                                             = "/subscriptions/769d8f7e-e398-4cbf-8014-0019e1fdee59/resourceGroups/rg-workstation-3/providers/Microsoft.Web/sites/webapp-workstation-3-91989" -> null
+      - key_vault_reference_identity_id                = "SystemAssigned" -> null
+      - kind                                           = "app,linux,container" -> null
+      - location                                       = "westeurope" -> null
+      - name                                           = "webapp-workstation-3-91989" -> null
+      - outbound_ip_address_list                       = [
+          - "20.23.22.176",
+          - "20.23.22.178",
+          - "20.23.22.190",
+          - "20.23.22.231",
+          - "20.23.22.233",
+          - "20.23.22.255",
+          - "20.238.171.124",
+          - "20.238.172.122",
+          - "20.238.172.126",
+          - "20.238.172.224",
+          - "20.238.172.233",
+          - "20.238.171.20",
+          - "20.105.232.27",
+        ] -> null
+      - outbound_ip_addresses                          = "20.23.22.176,20.23.22.178,20.23.22.190,20.23.22.231,20.23.22.233,20.23.22.255,20.238.171.124,20.238.172.122,20.238.172.126,20.238.172.224,20.238.172.233,20.238.171.20,20.105.232.27" -> null
+      - possible_outbound_ip_address_list              = [
+          - "20.23.22.176",
+          - "20.23.22.178",
+          - "20.23.22.190",
+          - "20.23.22.231",
+          - "20.23.22.233",
+          - "20.23.22.255",
+          - "20.238.171.124",
+          - "20.238.172.122",
+          - "20.238.172.126",
+          - "20.238.172.224",
+          - "20.238.172.233",
+          - "20.238.171.20",
+          - "20.238.172.245",
+          - "20.238.172.246",
+          - "20.238.172.251",
+          - "20.31.127.102",
+          - "20.238.172.255",
+          - "20.13.70.253",
+          - "20.13.71.41",
+          - "20.13.71.98",
+          - "20.126.227.11",
+          - "20.23.21.90",
+          - "20.23.22.132",
+          - "20.23.22.173",
+          - "20.23.22.176",
+          - "20.23.22.178",
+          - "20.23.22.190",
+          - "20.23.22.231",
+          - "20.23.22.233",
+          - "20.23.22.255",
+          - "20.23.22.197",
+          - "20.23.23.33",
+          - "20.23.23.58",
+          - "20.23.23.90",
+          - "20.23.23.125",
+          - "20.23.23.157",
+          - "20.105.232.27",
+        ] -> null
+      - possible_outbound_ip_addresses                 = "20.23.22.176,20.23.22.178,20.23.22.190,20.23.22.231,20.23.22.233,20.23.22.255,20.238.171.124,20.238.172.122,20.238.172.126,20.238.172.224,20.238.172.233,20.238.171.20,20.238.172.245,20.238.172.246,20.238.172.251,20.31.127.102,20.238.172.255,20.13.70.253,20.13.71.41,20.13.71.98,20.126.227.11,20.23.21.90,20.23.22.132,20.23.22.173,20.23.22.176,20.23.22.178,20.23.22.190,20.23.22.231,20.23.22.233,20.23.22.255,20.23.22.197,20.23.23.33,20.23.23.58,20.23.23.90,20.23.23.125,20.23.23.157,20.105.232.27" -> null
+      - public_network_access_enabled                  = true -> null
+      - resource_group_name                            = "rg-workstation-3" -> null
+      - service_plan_id                                = "/subscriptions/769d8f7e-e398-4cbf-8014-0019e1fdee59/resourceGroups/rg-workstation-3/providers/Microsoft.Web/serverFarms/example" -> null
+      - site_credential                                = (sensitive value) -> null
+      - tags                                           = {} -> null
+      - webdeploy_publish_basic_authentication_enabled = true -> null
+        # (4 unchanged attributes hidden)
+
+      - site_config {
+          - always_on                                     = false -> null
+          - auto_heal_enabled                             = false -> null
+          - container_registry_use_managed_identity       = false -> null
+          - default_documents                             = [
+              - "Default.htm",
+              - "Default.html",
+              - "Default.asp",
+              - "index.htm",
+              - "index.html",
+              - "iisstart.htm",
+              - "default.aspx",
+              - "index.php",
+              - "hostingstart.html",
+            ] -> null
+          - detailed_error_logging_enabled                = false -> null
+          - ftps_state                                    = "Disabled" -> null
+          - health_check_eviction_time_in_min             = 0 -> null
+          - http2_enabled                                 = false -> null
+          - ip_restriction_default_action                 = "Allow" -> null
+          - linux_fx_version                              = "DOCKER|ghcr.io/eficode-academy/quotes-flask-frontend:release" -> null
+          - load_balancing_mode                           = "LeastRequests" -> null
+          - local_mysql_enabled                           = false -> null
+          - managed_pipeline_mode                         = "Integrated" -> null
+          - minimum_tls_version                           = "1.2" -> null
+          - remote_debugging_enabled                      = false -> null
+          - remote_debugging_version                      = "VS2019" -> null
+          - scm_ip_restriction_default_action             = "Allow" -> null
+          - scm_minimum_tls_version                       = "1.2" -> null
+          - scm_type                                      = "None" -> null
+          - scm_use_main_ip_restriction                   = false -> null
+          - use_32_bit_worker                             = true -> null
+          - vnet_route_all_enabled                        = false -> null
+          - websockets_enabled                            = false -> null
+          - worker_count                                  = 1 -> null
+            # (5 unchanged attributes hidden)
+
+          - application_stack {
+              - docker_image_name        = "eficode-academy/quotes-flask-frontend:release" -> null
+              - docker_registry_url      = "https://ghcr.io" -> null
+                # (13 unchanged attributes hidden)
+            }
+        }
+    }
+
+  # azurerm_service_plan.example will be destroyed
+  - resource "azurerm_service_plan" "example" {
+      - id                           = "/subscriptions/769d8f7e-e398-4cbf-8014-0019e1fdee59/resourceGroups/rg-workstation-3/providers/Microsoft.Web/serverFarms/example" -> null
+      - kind                         = "linux" -> null
+      - location                     = "westeurope" -> null
+      - maximum_elastic_worker_count = 1 -> null
+      - name                         = "example" -> null
+      - os_type                      = "Linux" -> null
+      - per_site_scaling_enabled     = false -> null
+      - reserved                     = true -> null
+      - resource_group_name          = "rg-workstation-3" -> null
+      - sku_name                     = "F1" -> null
+      - tags                         = {} -> null
+      - worker_count                 = 1 -> null
+      - zone_balancing_enabled       = false -> null
+        # (1 unchanged attribute hidden)
+    }
+
+  # random_integer.ri will be destroyed
+  - resource "random_integer" "ri" {
+      - id     = "91989" -> null
+      - max    = 99999 -> null
+      - min    = 10000 -> null
+      - result = 91989 -> null
+    }
+
+Plan: 0 to add, 0 to change, 3 to destroy.
+
+Changes to Outputs:
+  - app_url = "webapp-workstation-3-91989.azurewebsites.net" -> null
+
+Do you really want to destroy all resources?
+  Terraform will destroy all your managed infrastructure, as shown above.
+  There is no undo. Only 'yes' will be accepted to confirm.
+
+  Enter a value: yes
+
+azurerm_linux_web_app.webapp: Destroying... [id=/subscriptions/769d8f7e-e398-4cbf-8014-0019e1fdee59/resourceGroups/rg-workstation-3/providers/Microsoft.Web/sites/webapp-workstation-3-91989]
+azurerm_linux_web_app.webapp: Still destroying... [id=/subscriptions/769d8f7e-e398-4cbf-8014-...t.Web/sites/webapp-workstation-3-91989, 10s elapsed]
+azurerm_linux_web_app.webapp: Destruction complete after 10s
+random_integer.ri: Destroying... [id=91989]
+azurerm_service_plan.example: Destroying... [id=/subscriptions/769d8f7e-e398-4cbf-8014-0019e1fdee59/resourceGroups/rg-workstation-3/providers/Microsoft.Web/serverFarms/example]
+random_integer.ri: Destruction complete after 0s
+azurerm_service_plan.example: Destruction complete after 5s
+
+Destroy complete! Resources: 3 destroyed.
+
+```
 
 **Congratulations!** **🎉** You have successfully deployed a web app on Azure using Terraform with basic Terraform commands.

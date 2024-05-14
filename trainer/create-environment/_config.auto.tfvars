@@ -1,1 +1,1 @@
-number_of_students = 5
+number_of_students = 20
