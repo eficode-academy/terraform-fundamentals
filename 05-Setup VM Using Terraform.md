@@ -22,6 +22,91 @@ Step-by-Step Instructions
 
 A virtual network allows VMs and other resources to communicate with each other. The setup includes defining the network and subnet configurations to ensure proper isolation and address allocation.
 
+### Define Variables in `variables.tf`
+
+Before setting up your network configurations, it is essential to define the variables that will be used throughout your Terraform configurations. This will help in managing configurations effectively and maintaining modularity.
+
+**Variable Declarations and Descriptions:**
+
+```
+variable "exercise" {
+  type        = string
+  description = "This is the exercise number. It is used to make the name of some the resources unique"
+}
+
+variable "network" {
+  type = object({
+    ranges = list(string)
+  })
+  default = {
+    ranges = [
+      "10.0.0.0/16"
+    ]
+  }
+  description = "Subnet and address range for clients"
+}
+
+variable "client_subnet" {
+  type = object({
+    name   = string
+    ranges = list(string)
+  })
+  default = {
+    name = "client"
+    ranges = [
+      "10.0.0.0/24"
+    ]
+  }
+  description = "Subnet and address range for clients"
+}
+
+variable "server_subnet" {
+  type = object({
+    name   = string
+    ranges = list(string)
+  })
+  default = {
+    name = "server"
+    ranges = [
+      "10.0.3.0/24"
+    ]
+  }
+  description = "Subnet and address range for servers"
+}
+
+variable "admin_password" {
+  type        = string
+  sensitive   = true
+  description = "default password to connect to the servers we deploy"
+}
+
+variable "admin_username" {
+  type        = string
+  sensitive   = false
+  description = "default admin user to connect to the servers we deploy"
+}
+
+variable "source_image_reference" {
+  type = object({
+    publisher = string
+    offer     = string
+    sku       = string
+    version   = string
+  })
+  default = {
+    publisher = "Canonical"
+    offer     = "0001-com-ubuntu-server-jammy"
+    sku       = "22_04-lts-gen2"
+    version   = "latest"
+  }
+  description = <<EOT
+    "SKU details for the image to be deployed"
+    EOT
+}
+```
+
+**Using `variables.tf`:** Place this file in your Terraform project directory alongside your main configuration files. Reference these variables in your configurations using `var.<variable_name>` to dynamically configure resources based on defined values.
+
 ### 2\. Configure Network and Subnets
 
 #### Creating `00_create_network.tf`:
