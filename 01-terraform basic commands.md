@@ -30,7 +30,7 @@ In this case, we will only be deploying the frontend of the Flask app.
 
 ### 1. Initialize Your Terraform Workspace
 
-Navigate to the `terraform basic commands` directory within your project
+Navigate to the `terraform basic commands` directory within your project.
 
 Initialize the Terraform workspace to prepare your environment:
 
