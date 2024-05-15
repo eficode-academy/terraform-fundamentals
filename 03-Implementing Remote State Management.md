@@ -46,7 +46,7 @@ Inside, you will find the `start` subdirectory. All necessary configurations and
    }
    ```
 
-  ❗**Important**: Replace `unique-key-name` with the name of your workstation to prevent conflicts and ensure your state file is distinctly identifiable.
+  ❗**Important**: Replace `unique-key-name` with the name of your workstation to prevent conflicts and ensure your state file is distinctly identifiable. ❗
 
 **Explanation of Parameters**:
    - `resource_group_name`: The name of the resource group containing the storage account.
@@ -59,7 +59,7 @@ Inside, you will find the `start` subdirectory. All necessary configurations and
 Visit this link to know more about the azurerm backend:
 [Backend type azurem](https://developer.hashicorp.com/terraform/language/settings/backends/azurerm)
 
-💡 Save the File by pressing Ctrl + S
+💡 Save the File by pressing Ctrl + S 💡
 
 ### 3. Initializing Terraform with Remote Backend
 
