@@ -3,7 +3,7 @@
 ## Learning Goals
 - Deploy an Azure storage account using Terraform to host a static website.
 - Understand the process of configuring Terraform resource blocks, providers block, data sources, outputs, and variables.
-- Learn to manage Azure resources effectively with Terraform.
+- Learn to manage Azure resources with Terraform.
 
 ## Introduction
 This exercise will guide you through the process of using Terraform to deploy a static website to Azure. 
