@@ -3,7 +3,7 @@
 ## Learning Goals
 - Deploy an Azure storage account using Terraform to host a static website.
 - Understand the process of configuring Terraform resource blocks, providers block, data sources, outputs, and variables.
-- Learn to manage Azure resources with Terraform.
+- Learn to manage Azure resources effectively with Terraform.
 
 ## Introduction
 This exercise will guide you through the process of using Terraform to deploy a static website to Azure. 
@@ -14,31 +14,20 @@ The `web` directory contains all static files for your website.
 
 ### Step-by-Step Instructions:
 
-Navigate to the directory `Create and Manage Resources with Terraform`.
-
-Inside, you will find the `start` directory, which contains the following empty Terraform files:
-
-**main.tf** - Defines the required resources for hosting a static website on Azure.
-
-**providers.tf** - Specifies the required version of Terraform and the providers you plan to use.
-
-**outputs.tf** - Contains output blocks that display the results of the resources created.
-
-**variables.tf** - Lists the variables used in the configuration.
-
-
 ### 1. Prepare Your Terraform Configuration
 
 Navigate to the directory `Create and Manage Resources with Terraform`.
 
-Inside, you will find the `start` directory, which contains the following empty Terraform files:
+Inside, you will find the `start` directory , which contains the following empty Terraform files:
 
 - **main.tf** - Defines the required resources for hosting a static website on Azure.
 - **providers.tf** - Specifies the required version of Terraform and the providers you plan to use.
 - **outputs.tf** - Contains output blocks that display the results of the resources created.
 - **variables.tf** - Lists the variables used in the configuration.
 
-Let's begin by configuring the Terraform settings and provider configurations in the `providers.tf` file.
+Let's begin by configuring the Terraform settings and provider configurations in the `providers.tf` file. 
+
+In the `providers.tf` file paste the following configuration.
 
 **What is a Terraform Block?**
 
@@ -139,13 +128,15 @@ terraform {
 
 provider "azurerm" {
   features {}
+  tenant_id       = "ce98c903-f521-4028-89dc-13227927e323"
+  subscription_id = "769d8f7e-e398-4cbf-8014-0019e1fdee59"
 }
 ```
 ----
 
 ### 2. Configure the main.tf File for Azure Resources
 
-In the `main.tf` file, we define the necessary resources to host a static website on Azure. This setup includes creating a uniquely named storage account and configuring it to serve static content.
+In the `main.tf` file, we will define the necessary resources to host a static website on Azure. This setup includes creating a uniquely named storage account and configuring it to serve static content.
 
 **Starting with Data and Resource Blocks**
 
@@ -183,8 +174,8 @@ In the `main.tf` file, we define the necessary resources to host a static websit
 
    ```hcl
    resource "azurerm_storage_account" "storage_account" {
-     resource_group_name = var.resource_group_name
-     location            = var.resource_group_location
+    resource_group_name = data.azurerm_resource_group.studentrg.name
+    location            = data.azurerm_resource_group.studentrg.location
 
      name = random_string.storage_account_name.result
 
@@ -204,7 +195,7 @@ In the `main.tf` file, we define the necessary resources to host a static websit
 
 4. **Resource Block - Azure Storage Blob**
    
-   Uploads the `index.html` file into the Azure storage account, placing it in the `$web` container used for static website hosting.
+   Uploads the `index.html` file and`image.jpg`into the Azure storage account, placing it in the `$web` container used for static website hosting.
 
 ```hcl
 resource "azurerm_storage_blob" "index" {
@@ -220,7 +211,7 @@ resource "azurerm_storage_blob" "index" {
 resource "azurerm_storage_blob" "image" {
   name                   = "image.jpg"
   storage_account_name   = azurerm_storage_account.storage_account.name
-  storage_container_name = azurerm_storage_container.web.name
+  storage_container_name = "$web"
   type                   = "Block"
   content_type           = "image/jpeg"
   source                 = "../web/image.jpg" 
@@ -251,8 +242,8 @@ resource "random_string" "storage_account_name" {
 }
 
 resource "azurerm_storage_account" "storage_account" {
-  resource_group_name = var.resource_group_name
-  location            = var.resource_group_location
+  resource_group_name = data.azurerm_resource_group.studentrg.name
+  location            = data.azurerm_resource_group.studentrg.location
 
   name = random_string.storage_account_name.result
 
@@ -269,7 +260,7 @@ resource "azurerm_storage_account" "storage_account" {
 resource "azurerm_storage_blob" "index" {
   name                   = "index.html"
   storage_account_name   = azurerm_storage_account.storage_account.name
-  storage_container_name = "$web"
+  storage_container_name = var.container_name
   type                   = "Block"
   content_type           = "text/html"
   source                 = "index.html"
@@ -278,7 +269,7 @@ resource "azurerm_storage_blob" "index" {
 resource "azurerm_storage_blob" "image" {
   name                   = "image.jpg"
   storage_account_name   = azurerm_storage_account.storage_account.name
-  storage_container_name = azurerm_storage_container.web.name
+  storage_container_name = var.container_name
   type                   = "Block"
   content_type           = "image/jpeg"
   source                 = "../web/image.jpg" 
@@ -316,26 +307,14 @@ The `variables.tf` file is used to define variables that will be used throughout
 Insert the code below into `outputs.tf` and save the file.
 
 ```hcl
-variable "resource_group_location" {
+variable "container_name" {
   type        = string
-  description = "Location of the resource group."
-  default     = "eastus"
-}
-
-variable "resource_group_name_prefix" {
-  type        = string
-  description = "Prefix of the resource group name that's combined with a random ID so name is unique in your Azure subscription."
-  default     = "rg"
-}
-
-variable "resource_group_name" {
-  type        = string
-  description = "Prefix of the resource group name that's combined with a random ID so name is unique in your Azure subscription."
-  default     = "rg-testexercise"
+  description = "name of the container in the storage account."
+  default     = "$web"
 }
 ```
 
-These variables allow you to specify the resource group name and location, which can be overridden at runtime if needed.
+This variable allow you to specify the name of the soniter inside storage account, which can be overridden at runtime if needed.
 
 
 ### 5. Running Terraform Commands
