@@ -32,7 +32,7 @@ resource "azurerm_storage_blob" "index" {
   storage_container_name = "$web"
   type                   = "Block"
   content_type           = "text/html"
-  source                 = "index.html"
+  source                 = "${path.root}/web/index.html"
 }
 
 resource "azurerm_storage_blob" "image" {
@@ -41,5 +41,5 @@ resource "azurerm_storage_blob" "image" {
   storage_container_name = "$web"
   type                   = "Block"
   content_type           = "image/jpeg"
-  source                 = "../web/image.jpg" 
+  source                 = "${path.root}//web/image.jpg" 
 }
