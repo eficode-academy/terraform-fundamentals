@@ -8,11 +8,6 @@ This exercise provides an introduction to the basics commands of Terraform throu
 
 You will directly apply the basic Terraform commands, observe the changes each command makes, and understand their roles in the workflow of infrastructure as code.
 
-## Pre-requisites
-- Terraform CLI installed on your machine.
-- Access to a cloud provider account with permissions to create and manage resources.
-- Basic knowledge of command line interfaces and text editors.
-
 ### Flask Application
 The application consists of three components: `frontend`, `backend`, and a `database`.
 
@@ -358,6 +353,8 @@ Execute the following command to remove all resources and clean up the infrastru
 
 This command will prompt you to review and confirm the destruction of the resources defined in your Terraform configuration. Once confirmed, Terraform will proceed to safely remove all the resources, effectively cleaning up the deployed infrastructure. This step helps prevent unnecessary costs and ensures that the environment is reset for future exercises.
 
+The output will somewhat resemble the example shown below.
+
 ```
 coder@workstation-3 ~/terraform-fundamentals/terraform basic commands (main *)
 $ terraform destroy
@@ -388,140 +385,9 @@ Terraform will perform the following actions:
       - kind                                           = "app,linux,container" -> null
       - location                                       = "westeurope" -> null
       - name                                           = "webapp-workstation-3-91989" -> null
-      - outbound_ip_address_list                       = [
-          - "20.23.22.176",
-          - "20.23.22.178",
-          - "20.23.22.190",
-          - "20.23.22.231",
-          - "20.23.22.233",
-          - "20.23.22.255",
-          - "20.238.171.124",
-          - "20.238.172.122",
-          - "20.238.172.126",
-          - "20.238.172.224",
-          - "20.238.172.233",
-          - "20.238.171.20",
-          - "20.105.232.27",
-        ] -> null
-      - outbound_ip_addresses                          = "20.23.22.176,20.23.22.178,20.23.22.190,20.23.22.231,20.23.22.233,20.23.22.255,20.238.171.124,20.238.172.122,20.238.172.126,20.238.172.224,20.238.172.233,20.238.171.20,20.105.232.27" -> null
-      - possible_outbound_ip_address_list              = [
-          - "20.23.22.176",
-          - "20.23.22.178",
-          - "20.23.22.190",
-          - "20.23.22.231",
-          - "20.23.22.233",
-          - "20.23.22.255",
-          - "20.238.171.124",
-          - "20.238.172.122",
-          - "20.238.172.126",
-          - "20.238.172.224",
-          - "20.238.172.233",
-          - "20.238.171.20",
-          - "20.238.172.245",
-          - "20.238.172.246",
-          - "20.238.172.251",
-          - "20.31.127.102",
-          - "20.238.172.255",
-          - "20.13.70.253",
-          - "20.13.71.41",
-          - "20.13.71.98",
-          - "20.126.227.11",
-          - "20.23.21.90",
-          - "20.23.22.132",
-          - "20.23.22.173",
-          - "20.23.22.176",
-          - "20.23.22.178",
-          - "20.23.22.190",
-          - "20.23.22.231",
-          - "20.23.22.233",
-          - "20.23.22.255",
-          - "20.23.22.197",
-          - "20.23.23.33",
-          - "20.23.23.58",
-          - "20.23.23.90",
-          - "20.23.23.125",
-          - "20.23.23.157",
-          - "20.105.232.27",
-        ] -> null
-      - possible_outbound_ip_addresses                 = "20.23.22.176,20.23.22.178,20.23.22.190,20.23.22.231,20.23.22.233,20.23.22.255,20.238.171.124,20.238.172.122,20.238.172.126,20.238.172.224,20.238.172.233,20.238.171.20,20.238.172.245,20.238.172.246,20.238.172.251,20.31.127.102,20.238.172.255,20.13.70.253,20.13.71.41,20.13.71.98,20.126.227.11,20.23.21.90,20.23.22.132,20.23.22.173,20.23.22.176,20.23.22.178,20.23.22.190,20.23.22.231,20.23.22.233,20.23.22.255,20.23.22.197,20.23.23.33,20.23.23.58,20.23.23.90,20.23.23.125,20.23.23.157,20.105.232.27" -> null
-      - public_network_access_enabled                  = true -> null
-      - resource_group_name                            = "rg-workstation-3" -> null
-      - service_plan_id                                = "/subscriptions/769d8f7e-e398-4cbf-8014-0019e1fdee59/resourceGroups/rg-workstation-3/providers/Microsoft.Web/serverFarms/example" -> null
-      - site_credential                                = (sensitive value) -> null
-      - tags                                           = {} -> null
-      - webdeploy_publish_basic_authentication_enabled = true -> null
-        # (4 unchanged attributes hidden)
-
-      - site_config {
-          - always_on                                     = false -> null
-          - auto_heal_enabled                             = false -> null
-          - container_registry_use_managed_identity       = false -> null
-          - default_documents                             = [
-              - "Default.htm",
-              - "Default.html",
-              - "Default.asp",
-              - "index.htm",
-              - "index.html",
-              - "iisstart.htm",
-              - "default.aspx",
-              - "index.php",
-              - "hostingstart.html",
-            ] -> null
-          - detailed_error_logging_enabled                = false -> null
-          - ftps_state                                    = "Disabled" -> null
-          - health_check_eviction_time_in_min             = 0 -> null
-          - http2_enabled                                 = false -> null
-          - ip_restriction_default_action                 = "Allow" -> null
-          - linux_fx_version                              = "DOCKER|ghcr.io/eficode-academy/quotes-flask-frontend:release" -> null
-          - load_balancing_mode                           = "LeastRequests" -> null
-          - local_mysql_enabled                           = false -> null
-          - managed_pipeline_mode                         = "Integrated" -> null
-          - minimum_tls_version                           = "1.2" -> null
-          - remote_debugging_enabled                      = false -> null
-          - remote_debugging_version                      = "VS2019" -> null
-          - scm_ip_restriction_default_action             = "Allow" -> null
-          - scm_minimum_tls_version                       = "1.2" -> null
-          - scm_type                                      = "None" -> null
-          - scm_use_main_ip_restriction                   = false -> null
-          - use_32_bit_worker                             = true -> null
-          - vnet_route_all_enabled                        = false -> null
-          - websockets_enabled                            = false -> null
-          - worker_count                                  = 1 -> null
-            # (5 unchanged attributes hidden)
-
-          - application_stack {
-              - docker_image_name        = "eficode-academy/quotes-flask-frontend:release" -> null
-              - docker_registry_url      = "https://ghcr.io" -> null
-                # (13 unchanged attributes hidden)
-            }
-        }
+    
     }
 
-  # azurerm_service_plan.example will be destroyed
-  - resource "azurerm_service_plan" "example" {
-      - id                           = "/subscriptions/769d8f7e-e398-4cbf-8014-0019e1fdee59/resourceGroups/rg-workstation-3/providers/Microsoft.Web/serverFarms/example" -> null
-      - kind                         = "linux" -> null
-      - location                     = "westeurope" -> null
-      - maximum_elastic_worker_count = 1 -> null
-      - name                         = "example" -> null
-      - os_type                      = "Linux" -> null
-      - per_site_scaling_enabled     = false -> null
-      - reserved                     = true -> null
-      - resource_group_name          = "rg-workstation-3" -> null
-      - sku_name                     = "F1" -> null
-      - tags                         = {} -> null
-      - worker_count                 = 1 -> null
-      - zone_balancing_enabled       = false -> null
-        # (1 unchanged attribute hidden)
-    }
-
-  # random_integer.ri will be destroyed
-  - resource "random_integer" "ri" {
-      - id     = "91989" -> null
-      - max    = 99999 -> null
-      - min    = 10000 -> null
-      - result = 91989 -> null
-    }
 
 Plan: 0 to add, 0 to change, 3 to destroy.
 
