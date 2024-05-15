@@ -64,13 +64,13 @@ Visit this link to know more about the azurerm backend:
 
 ### 3. Initializing Terraform with Remote Backend
 
-- Run the following command to initialize the Terraform configuration with your Azure backend:
+Run the following command to initialize the Terraform configuration with your Azure backend:
 
-  ```bash
-  terraform init
-  ```
+```bash
+terraform init
+```
 
-  This command prepares your directory for Terraform operations with the specified backend. It ensures that Terraform is configured to manage your infrastructure remotely.
+This command prepares your directory for Terraform operations with the specified backend. It ensures that Terraform is configured to manage your infrastructure remotely.
 
 ### 4. Verify and Apply Configuration
 
