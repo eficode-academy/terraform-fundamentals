@@ -9,11 +9,11 @@ This module provides an opportunity to master the use of Terraform modules and w
 Objectives
 ----------
 
-1.  Understand the use of Terraform modules for resource deployment.
-2.  Learn to interpret and apply configurations from YAML files.
-3.  Deploy three virtual machines using the `for_each` construct to loop over configurations.
-4.  Utilize Terraform workspaces to manage different deployment environments or stages.
-5.  Clean up resources to prevent unnecessary Azure charges.
+*  Understand the use of Terraform modules for resource deployment.
+*  Learn to interpret and apply configurations from YAML files.
+*  Deploy three virtual machines using the `for_each` construct to loop over configurations.
+*  Utilize Terraform workspaces to manage different deployment environments or stages.
+* Clean up resources to prevent unnecessary Azure charges.
 
 Step-by-Step Instructions
 -------------------------
