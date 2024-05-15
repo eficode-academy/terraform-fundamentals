@@ -24,9 +24,13 @@ A virtual network allows VMs and other resources to communicate with each other.
 
 ### 2\. Configure Network and Subnets
 
-**Create `00_create_network.tf`**:
+#### Creating `00_create_network.tf`:
 
-Define your virtual network and subnets in Azure using the following configurations:
+This configuration sets up the virtual network and associated subnets. This is crucial as it forms the foundational network infrastructure in which the VMs will operate.
+
+**Configuration Explained:**
+
+**Resource Block: Virtual Network**
 
 ```
 resource "azurerm_virtual_network" "exercise5" {
@@ -35,14 +39,26 @@ resource "azurerm_virtual_network" "exercise5" {
   location            = data.azurerm_resource_group.studentrg.location
   address_space       = var.network.ranges
 }
+```
 
+*This defines the virtual network in Azure where all your network resources will reside. It specifies the name, associated resource group, geographic location, and address space for the network.*
+
+**Resource Block: Client Subnet**
+
+```
 resource "azurerm_subnet" "client" {
   name                 = var.client_subnet.name
   resource_group_name  = data.azurerm_resource_group.studentrg.name
   virtual_network_name = azurerm_virtual_network.exercise5.name
   address_prefixes     = var.client_subnet.ranges
 }
+```
 
+*This configures a subnet within the virtual network specifically for client VMs, detailing the subnet name, the resource group, which virtual network it belongs to, and the IP address range.*
+
+**Resource Block: Server Subnet**
+
+```
 resource "azurerm_subnet" "server" {
   name                 = var.server_subnet.name
   resource_group_name  = data.azurerm_resource_group.studentrg.name
@@ -51,33 +67,47 @@ resource "azurerm_subnet" "server" {
 }
 ```
 
-Before applying any changes, initialize your Terraform environment:
+*Similar to the client subnet, this configures a subnet for server VMs, specifying its unique characteristics within the same virtual network.*
 
-`terraform init`
+**Initialize Terraform**: Prepares your project for Terraform operations.
 
-This command sets up your Terraform to work with the specified providers and modules.
+ ```
+terraform init
+ ```
 
-Next, plan your deployment to see what Terraform will do:
+```
+terraform plan
+```
 
-`terraform plan`
+**Apply Configuration**: Executes the plan to create resources.
 
-This command shows the changes that will be made to your infrastructure.
-
-Apply configuration
-
-`terraform apply`
+```
+terraform apply
+```
 
 ### 3\. Deploy Client VMs
 
-**Create `01-deployclients.tf`**:
+#### Creating `01-deployclients.tf`:
 
-Deploy client VMs with dynamic public IPs. Use the following Terraform configurations:
+**Purpose of Configuration:**
+
+This file handles the deployment of client VMs. Dynamic public IPs are assigned to these VMs, allowing external access and connectivity tests.
+
+**Configuration Explained:**
+
+**Local Value: Clients**
 
 ```
 locals {
   clients = toset(["client1", "client2"])
 }
+```
 
+*Defines a local variable `clients` that stores the identifiers for the client VMs, facilitating their management through the `for_each` construct.*
+
+**Resource Block: Public IP**
+
+```
 resource "azurerm_public_ip" "client" {
   for_each            = local.clients
   name                = "${each.key}-public-ip"
@@ -88,7 +118,13 @@ resource "azurerm_public_ip" "client" {
     environment = "Production"
   }
 }
+```
 
+*Creates a dynamic public IP for each client VM. It uses the `for_each` method to iterate over the `clients` local variable, ensuring each VM has its own public IP.*
+
+**Resource Block: Network Interface**
+
+```
 resource "azurerm_network_interface" "client" {
   for_each            = local.clients
   name                = "nic-${each.key}"
@@ -102,7 +138,13 @@ resource "azurerm_network_interface" "client" {
   }
   depends_on = [azurerm_subnet.client]
 }
+```
 
+*Defines a network interface for each client VM, which includes settings for internal networking, IP allocation, and association with the previously created public IP.*
+
+**Resource Block: Virtual Machine**
+
+```
 resource "azurerm_linux_virtual_machine" "client" {
   for_each                        = local.clients
   name                            = "vm-${each.key}"
@@ -128,15 +170,19 @@ resource "azurerm_linux_virtual_machine" "client" {
 }
 ```
 
-Apply configuration
-
-`terraform apply`
+*Deploys a Linux virtual machine for each client using the network interface defined above. It specifies VM properties such as size, user credentials, associated network interfaces, and OS image details.*
 
 ### 4\. Deploy Server VM
 
-**Create `01-deployserver.tf`**:
+#### Creating `01-deployserver.tf`:
 
-Set up a server VM with a static public IP and verify the configurations as follows:
+**Purpose of Configuration:**
+
+This configuration sets up a server VM with a static public IP, ensuring that it has a fixed entry point for network communications, which is essential for server roles.
+
+**Configuration Explained:**
+
+**Resource Block: Public IP**
 
 ```
 resource "azurerm_public_ip" "server" {
@@ -148,7 +194,13 @@ resource "azurerm_public_ip" "server" {
     environment = "Production"
   }
 }
+```
 
+*Creates a static public IP for the server VM, ensuring it remains consistent across restarts and redeployments.*
+
+**Resource Block: Network Interface**
+
+```
 resource "azurerm_network_interface" "server" {
   name                = "nic-server"
   location            = data.azurerm_resource_group.studentrg.location
@@ -161,7 +213,13 @@ resource "azurerm_network_interface" "server" {
   }
   depends_on = [azurerm_subnet.server]
 }
+```
 
+*Configures the network interface for the server VM, linking it to the static public IP and ensuring it's part of the server subnet.*
+
+**Resource Block: Virtual Machine**
+
+```
 resource "azurerm_linux_virtual_machine" "server" {
   name                            = "vm-server"
   location                        = data.azurerm_resource_group.studentrg.location
@@ -186,9 +244,7 @@ resource "azurerm_linux_virtual_machine" "server" {
 }
 ```
 
-Apply configuration
-
-`terraform apply`
+*Deploys the server VM, ensuring it is configured with the necessary credentials and linked to the network interface created earlier.*
 
 ### 5\. Verify Connectivity and Clean Up
 
