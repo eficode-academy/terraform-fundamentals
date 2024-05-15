@@ -1,4 +1,3 @@
-
 06-Applying Modules and Workspaces in Terraform.md
 ==================================================
 
@@ -23,24 +22,112 @@ Step-by-Step Instructions
 
 Terraform modules allow you to encapsulate and reuse code for creating groups of related resources. Workspaces enable you to maintain state files separately for the same configuration, providing a way to manage different environments (like staging and production) from the same configuration.
 
-### 2\. Prepare Configuration Files
+### 2\. Define Variables in `variables.tf`
+
+Before diving into the actual Terraform configurations, it's crucial to define the variables that will be used throughout your project. This setup enhances modularity and flexibility, allowing parameters to be easily adjusted or reused across different environments.
+
+**Variable Definitions:**
+
+```
+variable "exercise" {
+  type        = string
+  description = "This is the exercise number. It is used to make the name of some the resources unique"
+}
+
+variable "instances_configuration" {
+  type        = string
+  description = <<EOT
+        "Should point to a yaml file, structured as:"
+        data:
+            VMNAME:
+                size: "VM SKU"
+                public_ip: true/false
+                subnet: client
+            client2:
+                size: "VM SKU"
+                public_ip: true
+                subnet: client
+            server:
+                size: "VM SKU"
+                public_ip: false
+                subnet: server
+        EOT
+}
+
+variable "network_configuration" {
+  type        = string
+  description = <<EOT
+        "Should point to a yaml file, structured as:"
+            data:
+            ranges:
+            - 10.0.0.0/16
+            subnets:
+                client:
+                    ranges:
+                    - 10.0.0.0/24
+                server:
+                    ranges:
+                    - 10.0.1.0/24
+        EOT
+}
+
+variable "admin_password" {
+  type        = string
+  sensitive   = true
+  description = "default password to connect to the servers we deploy"
+}
+
+variable "admin_username" {
+  type        = string
+  sensitive   = true
+  description = "default admin user to connect to the servers we deploy"
+}
+```
+
+### 3\. Prepare Configuration Files
 
 Ensure you have the YAML configuration files ready as described:
 
--   **instances.yaml** - Specifies the details of the virtual machines to deploy.
--   **network.yaml** - Defines the network configurations such as address spaces and subnets.
+#### `instances.yaml`
+
+```
+data:
+  client1:
+    size: "Standard_B1ls"
+    public_ip: true
+    subnet: client
+  client2:
+    size: "Standard_B1ls"
+    public_ip: true
+    subnet: client
+  server:
+    size: "Standard_B1ls"
+    public_ip: false
+    subnet: server
+```
+
+#### `network.yaml`
+
+```
+data:
+  ranges:
+  - 10.0.0.0/16
+  subnets:
+    client:
+      ranges:
+      - 10.0.0.0/24
+    server:
+      ranges:
+      - 10.0.1.0/24
+```
 
 These files are located in the `configuration` folder.
 
-### 3\. Create Network Resources
+### 4\. Create Network Resources
 
 #### Creating `00_createnetwork.tf`:
 
-**Purpose of Configuration:**
-
 This file sets up the virtual network and associated subnets using data from `network.yaml`, laying the foundation for the VM deployments.
-
-**Configuration Explained:**
 
 **Local Block: Network Data**
 
@@ -50,8 +137,6 @@ locals {
   network           = local.yaml_network_data["data"]
 }
 ```
-
-*This local block decodes the YAML file containing network configurations, making it accessible for Terraform resources.*
 
 **Resource Block: Virtual Network**
 
@@ -64,12 +149,9 @@ resource "azurerm_virtual_network" "main" {
 }
 ```
 
-*Sets up the virtual network with the specified name, location, and address space. It uses variables and local data to dynamically set properties.*
-
 **Resource Block: Subnet**
 
-```
-resource "azurerm_subnet" "main" {
+```resource "azurerm_subnet" "main" {
   for_each            = local.network.subnets
   name                = each.key
   resource_group_name = data.azurerm_resource_group.studentrg.name
@@ -78,31 +160,21 @@ resource "azurerm_subnet" "main" {
 }
 ```
 
-*Dynamically creates subnets based on the data defined in the `network.yaml` file. The `for_each` method loops through each subnet entry, setting up subnets with appropriate configurations.*
-
-### 4\. Initialize and Plan Deployment
+### 5\. Initialize and Plan Deployment
 
 **Initialize your Terraform environment to prepare the backend and install required providers:**
 
-```
-terraform init
-```
+```terraform init```
 
 **Review the planned actions by Terraform without applying them:**
 
-```
-terraform plan
-```
+```terraform plan```
 
-### 5\. Deploy Virtual Machines
+### 6\. Deploy Virtual Machines
 
 #### Creating `01_createinstances.tf`:
 
-**Purpose of Configuration:**
-
-Deploys VMs based on configurations specified in `instances.yaml`. This file uses a module to standardize and simplify the VM creation process.
-
-**Configuration Explained:**
+This file deploys VMs based on configurations specified in `instances.yaml` using a Terraform module for VM creation.
 
 **Local Block: VM Instances**
 
@@ -110,15 +182,13 @@ Deploys VMs based on configurations specified in `instances.yaml`. This file use
 locals {
   yaml_vms_data = yamldecode(file("${path.root}/${var.instances_configuration}"))
   instances     = local.yaml_vms_data["data"]
-}
-```
-
-*Decodes the `instances.yaml` file to extract VM configurations, storing them in a local variable for easy access.*
+}`
 
 **Resource Block: Public IP**
 
-```
-resource "azurerm_public_ip" "pip" {
+hcl
+
+`resource "azurerm_public_ip" "pip" {
   for_each = { for vm, config in local.instances : vm => config if config.public_ip }
   name                = "${each.key}-public-ip"
   location            = data.azurerm_resource_group.studentrg.location
@@ -129,8 +199,6 @@ resource "azurerm_public_ip" "pip" {
   }
 }
 ```
-
-*Creates public IP addresses for VMs that require external access, applying them dynamically based on the instance settings.*
 
 **Module Block: Virtual Machine**
 
@@ -171,19 +239,15 @@ module "virtual-machine" {
 }
 ```
 
-*This module block deploys each VM according to the settings specified in the YAML file, linking it with the network configurations such as subnets and public IPs.*
+### 7\. Verify and Clean Up
 
-### 6\. Verify and Clean Up
+After deploying the resources, verify the VMs' functionality by accessing them as needed. Ensure they are operating within the correct network and accessible per your configuration
 
-**After deploying the resources, verify the VMs' functionality by accessing them as needed. Ensure they are operating within the correct network and accessible per your configurations.**
+To manage costs effectively and avoid unnecessary charges in Azure:
 
-**To manage costs effectively and avoid unnecessary charges in Azure:**
+```terraform destroy```
 
-```
-terraform destroy
-```
-
-*This command cleans up all resources deployed during this exercise.*
+This command cleans up all resources deployed during this exercise.
 
 Conclusion
 ----------
