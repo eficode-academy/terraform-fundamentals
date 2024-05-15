@@ -7,46 +7,42 @@ variable "network" {
   type = object({
     ranges = list(string)
   })
-  default = [
-    {
+  default = {
       ranges = [
         "10.0.0.0/16"
       ]
     }
-  ]
+  
   description = "Subnet and address range for clients"
 }
 
 
 variable "client_subnet" {
   type = object({
-    name   = number
+    name   = string
     ranges = list(string)
   })
-  default = [
-    {
-      name = "client"
-      ranges = [
-        "10.0.0.0/24"
-      ]
-    }
-  ]
+  default = {
+    name = "client"
+    ranges = [
+      "10.0.0.0/24"
+    ]
+  }
+
   description = "Subnet and address range for clients"
 }
 
 variable "server_subnet" {
   type = object({
-    name   = number
+    name   = string
     ranges = list(string)
   })
-  default = [
-    {
-      name = "server"
-      ranges = [
-        "10.0.3.0/24"
-      ]
-    }
-  ]
+  default = {
+    name = "server"
+    ranges = [
+      "10.0.3.0/24"
+    ]
+  }
   description = "Subnet and address range for servers"
 }
 
@@ -58,17 +54,24 @@ variable "admin_password" {
 
 variable "admin_username" {
   type        = string
-  sensitive   = true
+  sensitive   = false
   description = "default admin user to connect to the servers we deploy"
 }
 
 variable "source_image_reference" {
   type = object({
+    publisher = string
+    offer     = string
+    sku       = string
+    version   = string
+  })
+  default = {
     publisher = "Canonical"
     offer     = "0001-com-ubuntu-server-jammy"
     sku       = "22_04-lts-gen2"
     version   = "latest"
-  })
+  }
+
   description = <<EOT
     "SKU details for the image to be deployed"
     EOT
