@@ -9,11 +9,11 @@ In this module, you will gain hands-on experience with Terraform to provision a 
 Objectives
 ----------
 
-1.  Create and configure a virtual network and subnets using Terraform.
-2.  Deploy multiple client VMs with dynamic public IPs.
-3.  Set up a server VM with a static public IP.
-4.  Verify connectivity among deployed resources.
-5.  Learn to clean up resources to avoid unnecessary charges.
+* Create and configure a virtual network and subnets using Terraform.
+* Deploy multiple client VMs with dynamic public IPs.
+* Set up a server VM with a static public IP.
+* Verify connectivity among deployed resources.
+* Learn to clean up resources to avoid unnecessary charges.
 
 Step-by-Step Instructions
 -------------------------
