@@ -1,4 +1,4 @@
-# Using Terraform Functions and Advanced Commands
+# 04-Using Terraform Functions and Advanced Commands
 
 ## Learning Goals
 

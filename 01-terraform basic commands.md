@@ -1,4 +1,4 @@
-# Terraform Basic commands
+# 01-Terraform Basic commands
 
 ## Learning Goals
 - Execute the basic Terraform commands: `terraform init`, `terraform plan`, and `terraform apply`, and observe how they function in managing infrastructure.
