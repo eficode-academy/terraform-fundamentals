@@ -341,11 +341,9 @@ app_url = "webapp-workstation-3-91989.azurewebsites.net"
 
 ### 4. Visit the application in the browser
 
-You willo get an app url when you applied the configurations as part of the output logs copy the url and paste in your browser.
-
+You will get an app url when you applied the configurations as part of the output logs. Copy the url and paste in your browser.
 
 You should see something like this:
-
 
 ## Cleanup
 
