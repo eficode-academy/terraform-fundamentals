@@ -41,5 +41,5 @@ resource "azurerm_storage_blob" "image" {
   storage_container_name = "$web"
   type                   = "Block"
   content_type           = "image/jpeg"
-  source                 = "${path.root}//web/image.jpg" 
+  source                 = "${path.root}/web/image.jpg" 
 }

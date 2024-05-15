@@ -71,6 +71,6 @@ output "client_connection_string" {
 }
 */
 output "client_connection_string" {
-  value = { for client in local.clients : client => "ssh ${azurerm_linux_virtual_machine.client[client].admin_username}@${azurerm_public_ip.client[client].ip_address}"
+  value = { for client in local.clients : client => "ssh ${azurerm_linux_virtual_machine.client[client].admin_username}@${azurerm_linux_virtual_machine.client[client].public_ip_address}"
   }
 }

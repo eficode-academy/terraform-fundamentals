@@ -8,11 +8,11 @@ variable "network" {
     ranges = list(string)
   })
   default = {
-      ranges = [
-        "10.0.0.0/16"
-      ]
-    }
-  
+    ranges = [
+      "10.0.0.0/16"
+    ]
+  }
+
   description = "Subnet and address range for clients"
 }
 
