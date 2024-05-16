@@ -24,7 +24,7 @@ The Terraform configuration in the [terraform basic commands](https://github.com
 
 It typically includes server setup, networking, and security settings.
 
-In this case, we will only be deploying the frontend of the Flask app.
+In this exercise, we will only be deploying the frontend of the Flask app.
 
 ## Step-by-Step Instructions
 
@@ -32,7 +32,7 @@ In this case, we will only be deploying the frontend of the Flask app.
 
 Navigate to the `terraform basic commands` directory within your project.
 
-`cd terraform-fundamentals/terraform\ basic\ commands/`
+`cd terraform-basic-commands/`
 
 Initialize the Terraform workspace to prepare your environment:
 
@@ -42,7 +42,7 @@ The output should resemble the example shown below.
 
 
 ```
-coder@workstation-3 ~/terraform-fundamentals/terraform basic commands (main *)
+coder@workstation-3 ~/terraform-fundamentals/terraform-basic-commands (main *)
 $ terraform init
 
 Initializing the backend...
@@ -91,7 +91,7 @@ Generate an execution plan to preview the actions Terraform will take based on t
 The output should resemble the example shown below.
 
 ```
-coder@workstation-3 ~/terraform-fundamentals/terraform basic commands (main *)
+coder@workstation-3 ~/terraform-fundamentals/terraform-basic-commands (main *)
 $ terraform plan
 data.azurerm_resource_group.studentrg: Reading...
 data.azurerm_resource_group.studentrg: Read complete after 0s [id=/subscriptions/769d8f7e-e398-4cbf-8014-0019e1fdee59/resourceGroups/rg-workstation-3]
@@ -356,7 +356,7 @@ This command will prompt you to review and confirm the destruction of the resour
 The output will somewhat resemble the example shown below.
 
 ```
-coder@workstation-3 ~/terraform-fundamentals/terraform basic commands (main *)
+coder@workstation-3 ~/terraform-fundamentals/terraform-basic-commands (main *)
 $ terraform destroy
 random_integer.ri: Refreshing state... [id=91989]
 data.azurerm_resource_group.studentrg: Reading...
