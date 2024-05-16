@@ -331,11 +331,30 @@ resource "azurerm_linux_virtual_machine" "server" {
 
 *Deploys the server VM, ensuring it is configured with the necessary credentials and linked to the network interface created earlier.*
 
-### 5\. Verify Connectivity and Clean Up
+### 5. Verify Connectivity and Clean Up
 
 After deploying the resources, verify connectivity by accessing the client VMs using SSH and ensure they can connect to the server VM. Utilize the output connection strings provided in the Terraform output.
 
 To avoid incurring unnecessary charges, use the command `terraform destroy` to clean up all resources once you complete the exercises.
+
+Certainly! To provide clear instructions for generating and visualizing the Terraform dependency graph, you can frame it as an optional additional task within your documentation like this:
+
+**Extra Task: Visualizing the Terraform Dependency Graph**:
+
+For those interested in visualizing how Terraform manages dependencies within your configuration, you can generate and view the dependency graph using the following commands:
+
+1. Generate the graph in DOT format and save it to a file:
+   ```bash
+   terraform graph > graph.dot
+   ```
+
+2. Use GraphViz to convert the DOT file to a PNG image:
+   ```bash
+   dot -Tpng graph.dot -o graph.png
+   ```
+
+This will create a `graph.png` file, which visually represents the structure of your Terraform configuration. Open this file to review the relationships and dependencies between your resources.
+
 
 Conclusion
 ----------

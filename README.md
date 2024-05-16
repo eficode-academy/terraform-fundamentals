@@ -137,4 +137,4 @@ Utilize Terraform in a team setting with Terraform Cloud.
 Learn to secure Terraform configurations and follow best practices.
 
 ### Topics Covered
-- (Topics related to best practices and security measures in Terraform)
+- (Topics related to best practices in Terraform)

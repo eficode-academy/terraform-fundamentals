@@ -26,7 +26,42 @@ The Azure backend stores state as a blob in a specified container on an Azure St
 
 Navigate to the directory `Implementing Remote state management`.
 
-Inside, you will find the `start` subdirectory. All necessary configurations and files for hosting the static website on azure are present. An empty file named `backend.tf` is present among them . This file will be used to configure your remote backend.
+
+Inside, you will find both the `01start` and `00start` subdirectories.
+
+**Prepare the Backend**:
+Before configuring your remote backend, proceed to the `00start` subdirectory. Here, execute the following Terraform commands to create a storage account that will house your state file:
+
+
+1. Initialize the Terraform environment:
+
+   `terraform init`
+
+During this initialization, observe the local state file that is created.Note that storing sensitive information in local state files can be risky as these files can easily be exposed to unauthorized access if not properly secured.
+
+2. Generate and review the execution plan:
+
+  `terrafom plan`
+
+3. Apply the configuration (you will be prompted to approve the plan):
+
+  `terraform apply`
+
+Now exit the subdirectory `00start` and go the to subdriectoyr `01start`. All necessary configurations and files for hosting the static website on azure are present. An empty file named `backend.tf` is present among them . This file will be used to configure your remote backend.
+
+**Copy the Storage Account and Container Names**:
+After successfully applying the Terraform configuration, pay close attention to the output. The names of the storage account and the container where the Terraform state will be stored are displayed. Ensure you copy these names accurately for later use.
+
+- **Storage Account Name**: This is the Azure Storage Account name displayed in the output. You will need this to configure the `storage_account_name` field in your `backend.tf`.
+  
+- **Container Name**: This is the name of the container within the Azure Storage Account displayed in the output. This will be used to configure the `container_name` field in your `backend.tf`.
+
+These details are critical for setting up the remote backend correctly, so it's important to ensure they are noted precisely.
+
+
+**Configure the Backend:**
+
+After setting up the necessary resources, exit the 00start subdirectory and enter the 01start subdirectory. This location contains all necessary configurations and files for hosting the static website on Azure, including an empty file named backend.tf. This file will be used to set up your remote backend.
 
 
 **Add Backend Configuration**:
@@ -36,9 +71,9 @@ Inside, you will find the `start` subdirectory. All necessary configurations and
    ```hcl
    terraform {
      backend "azurerm" {
-       resource_group_name   = "rg-testexercise"
-       storage_account_name  = "efitfstate"
-       container_name        = "tfstate"
+       resource_group_name   = "<resource-group-name>"
+       storage_account_name  = "<name of the storage account>"
+       container_name        = "<name of teh conatiner>"
        key                   = "unique-key-name.terraform.tfstate"
        tenant_id             = "ce98c903-f521-4028-89dc-13227927e323"
        subscription_id       = "769d8f7e-e398-4cbf-8014-0019e1fdee59"
@@ -46,7 +81,13 @@ Inside, you will find the `start` subdirectory. All necessary configurations and
    }
    ```
 
-  ❗**Important**: Replace `unique-key-name` with the name of your workstation to prevent conflicts and ensure your state file is distinctly identifiable. ❗
+  ❗**Important**:
+- Replace `<resource group name>` with the name of the Azure Resource Group you have prepared for this configuration. This must be an existing resource group where you have permissions to create resources.
+- Replace `<storage account name>` with the name of your Azure Storage Account. Ensure that the storage account name is unique within Azure and that it follows Azure naming conventions.
+- Replace `<name of container>` with the name of the container in your Azure Blob Storage where you intend to store the Terraform state files. The container should be created beforehand if it does not already exist.
+- Replace `<unique-key-name>` with a unique name to prevent conflicts and ensure your state file is distinctly identifiable. This can be the name of your workstation.
+- Verify that `tenant_id` and `subscription_id` are correctly set to match your Azure tenant and subscription details where you want to manage resources.
+
 
 **Explanation of Parameters**:
    - `resource_group_name`: The name of the resource group containing the storage account.
@@ -59,7 +100,7 @@ Inside, you will find the `start` subdirectory. All necessary configurations and
 Visit this link to know more about the azurerm backend:
 [Backend type azurem](https://developer.hashicorp.com/terraform/language/settings/backends/azurerm)
 
-💡 Save the File by pressing Ctrl + S 💡
+💡 Save the File 💡
 
 ### 3. Initializing Terraform with Remote Backend
 
@@ -100,14 +141,14 @@ This command applies the configurations. Terraform will prompt you to approve th
 ### 6. Verify the State File in Azure
 
 - Log in to your Azure Portal.
-- Navigate to the specified Storage Account (`efitfstate`).
+- Navigate to the specified Storage Account .
 - Look into the `tfstate` container to verify that the state file (`unique-training-key.terraform.tfstate`) is present.
 
 ### 7. Cleanup Resources
 
 To avoid incurring unnecessary charges:
 
-- Run the following command:
+- Run the following command in both the `00start` & `01start` sub directiories :
 
   ```bash
   terraform destroy

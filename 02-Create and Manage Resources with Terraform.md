@@ -204,17 +204,16 @@ resource "azurerm_storage_blob" "index" {
   storage_container_name = "$web"
   type                   = "Block"
   content_type           = "text/html"
-  source                 = "index.html"
+  source                 = "${path.root}/web/index.html"
 }
 
-# Resource block for the image.jpg file
 resource "azurerm_storage_blob" "image" {
   name                   = "image.jpg"
   storage_account_name   = azurerm_storage_account.storage_account.name
   storage_container_name = "$web"
   type                   = "Block"
   content_type           = "image/jpeg"
-  source                 = "../web/image.jpg" 
+  source                 = "${path.root}/web/image.jpg" 
 }
 
 ```
@@ -260,19 +259,19 @@ resource "azurerm_storage_account" "storage_account" {
 resource "azurerm_storage_blob" "index" {
   name                   = "index.html"
   storage_account_name   = azurerm_storage_account.storage_account.name
-  storage_container_name = var.container_name
+  storage_container_name = "$web"
   type                   = "Block"
   content_type           = "text/html"
-  source                 = "index.html"
+  source                 = "${path.root}/web/index.html"
 }
 
 resource "azurerm_storage_blob" "image" {
   name                   = "image.jpg"
   storage_account_name   = azurerm_storage_account.storage_account.name
-  storage_container_name = var.container_name
+  storage_container_name = "$web"
   type                   = "Block"
   content_type           = "image/jpeg"
-  source                 = "../web/image.jpg" 
+  source                 = "${path.root}/web/image.jpg" 
 }
 ```
 ----
@@ -304,7 +303,7 @@ These outputs will provide easy access to the storage account name and the URL o
 
 The `variables.tf` file is used to define variables that will be used throughout your Terraform configurations, allowing for parameterization and reusability.
 
-Insert the code below into `outputs.tf` and save the file.
+Insert the code below into `variables.tf` and save the file.
 
 ```hcl
 variable "container_name" {

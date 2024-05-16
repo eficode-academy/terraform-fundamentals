@@ -1,5 +1,5 @@
 variable "container_name" {
   type        = string
-  description = "Location of the resource group."
+  description = "name of the container in the storage account."
   default     = "$web"
 }
