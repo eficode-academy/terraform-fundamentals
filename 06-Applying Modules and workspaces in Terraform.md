@@ -28,7 +28,7 @@ Before diving into the actual Terraform configurations, it's crucial to define t
 
 **Variable Definitions:**
 
-```
+``` hcl
 variable "exercise" {
   type        = string
   description = "This is the exercise number. It is used to make the name of some the resources unique"
@@ -90,7 +90,7 @@ Ensure you have the YAML configuration files ready as described:
 
 #### `instances.yaml`
 
-```
+``` yaml
 data:
   client1:
     size: "Standard_B1ls"
@@ -108,7 +108,7 @@ data:
 
 #### `network.yaml`
 
-```
+``` yaml
 data:
   ranges:
   - 10.0.0.0/16
@@ -131,7 +131,7 @@ This file sets up the virtual network and associated subnets using data from `ne
 
 **Local Block: Network Data**
 
-```
+``` hcl
 locals {
   yaml_network_data = yamldecode(file("${path.root}/${var.network_configuration}"))
   network           = local.yaml_network_data["data"]
@@ -140,7 +140,7 @@ locals {
 
 **Resource Block: Virtual Network**
 
-```
+``` hcl
 resource "azurerm_virtual_network" "main" {
   name                = "vnet-${var.exercise}"
   resource_group_name = data.azurerm_resource_group.studentrg.name
@@ -151,7 +151,8 @@ resource "azurerm_virtual_network" "main" {
 
 **Resource Block: Subnet**
 
-```resource "azurerm_subnet" "main" {
+```hcl
+resource "azurerm_subnet" "main" {
   for_each            = local.network.subnets
   name                = each.key
   resource_group_name = data.azurerm_resource_group.studentrg.name
@@ -178,7 +179,7 @@ This file deploys VMs based on configurations specified in `instances.yaml` usin
 
 **Local Block: VM Instances**
 
-```
+```hcl
 locals {
   yaml_vms_data = yamldecode(file("${path.root}/${var.instances_configuration}"))
   instances     = local.yaml_vms_data["data"]
@@ -186,9 +187,8 @@ locals {
 
 **Resource Block: Public IP**
 
-hcl
-
-`resource "azurerm_public_ip" "pip" {
+``` hcl
+resource "azurerm_public_ip" "pip" {
   for_each = { for vm, config in local.instances : vm => config if config.public_ip }
   name                = "${each.key}-public-ip"
   location            = data.azurerm_resource_group.studentrg.location
@@ -202,7 +202,7 @@ hcl
 
 **Module Block: Virtual Machine**
 
-```
+``` hcl
 module "virtual-machine" {
   for_each = local.instances
 
