@@ -28,7 +28,7 @@ Before setting up your network configurations, it is essential to define the var
 
 **Variable Declarations and Descriptions:**
 
-```
+``` hcl
 variable "exercise" {
   type        = string
   description = "This is the exercise number. It is used to make the name of some the resources unique"
@@ -117,7 +117,7 @@ This configuration sets up the virtual network and associated subnets. This is c
 
 **Resource Block: Virtual Network**
 
-```
+``` hcl
 resource "azurerm_virtual_network" "exercise5" {
   name                = "vnet-exercise5"
   resource_group_name = data.azurerm_resource_group.studentrg.name
@@ -130,7 +130,7 @@ resource "azurerm_virtual_network" "exercise5" {
 
 **Resource Block: Client Subnet**
 
-```
+``` hcl
 resource "azurerm_subnet" "client" {
   name                 = var.client_subnet.name
   resource_group_name  = data.azurerm_resource_group.studentrg.name
@@ -143,7 +143,7 @@ resource "azurerm_subnet" "client" {
 
 **Resource Block: Server Subnet**
 
-```
+``` hcl
 resource "azurerm_subnet" "server" {
   name                 = var.server_subnet.name
   resource_group_name  = data.azurerm_resource_group.studentrg.name
@@ -182,7 +182,7 @@ This file handles the deployment of client VMs. Dynamic public IPs are assigned 
 
 **Local Value: Clients**
 
-```
+``` hcl
 locals {
   clients = toset(["client1", "client2"])
 }
@@ -192,7 +192,7 @@ locals {
 
 **Resource Block: Public IP**
 
-```
+``` hcl
 resource "azurerm_public_ip" "client" {
   for_each            = local.clients
   name                = "${each.key}-public-ip"
@@ -209,7 +209,7 @@ resource "azurerm_public_ip" "client" {
 
 **Resource Block: Network Interface**
 
-```
+``` hcl
 resource "azurerm_network_interface" "client" {
   for_each            = local.clients
   name                = "nic-${each.key}"
@@ -229,7 +229,7 @@ resource "azurerm_network_interface" "client" {
 
 **Resource Block: Virtual Machine**
 
-```
+``` hcl
 resource "azurerm_linux_virtual_machine" "client" {
   for_each                        = local.clients
   name                            = "vm-${each.key}"
@@ -269,7 +269,7 @@ This configuration sets up a server VM with a static public IP, ensuring that it
 
 **Resource Block: Public IP**
 
-```
+``` hcl
 resource "azurerm_public_ip" "server" {
   name                = "server-public-ip"
   location            = data.azurerm_resource_group.studentrg.location
@@ -285,7 +285,7 @@ resource "azurerm_public_ip" "server" {
 
 **Resource Block: Network Interface**
 
-```
+``` hcl
 resource "azurerm_network_interface" "server" {
   name                = "nic-server"
   location            = data.azurerm_resource_group.studentrg.location
@@ -304,7 +304,7 @@ resource "azurerm_network_interface" "server" {
 
 **Resource Block: Virtual Machine**
 
-```
+``` hcl
 resource "azurerm_linux_virtual_machine" "server" {
   name                            = "vm-server"
   location                        = data.azurerm_resource_group.studentrg.location
