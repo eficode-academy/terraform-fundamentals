@@ -36,7 +36,7 @@ Terraform v1.8.2
 
 ```
 coder@workstation-3 ~/terraform-fundamentals (main)
-$ az login -u workstation-3@eficodetraining.onmicrosoft.com -p devops-is-awesome-1
+$ az login -u workstation-3@eficodetraining.onmicrosoft.com -p <your provided password>
 [
   {
     "cloudName": "AzureCloud",
