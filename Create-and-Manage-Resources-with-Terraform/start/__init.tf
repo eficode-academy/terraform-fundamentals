@@ -5,7 +5,7 @@ variable "SHORT_HOSTNAME" {
 
 #Get the resource group where to deploy
 module "exerciseconfiguration" {
-  source = "../modules_internals/configuration"
+  source = "../../modules_internals/configuration"
   #If SHORT_HOSTNAME is not set (or env TF_VAR_SHORT_HOSTNAME) use the module default
   workstationname = try(var.SHORT_HOSTNAME, false)
 }
