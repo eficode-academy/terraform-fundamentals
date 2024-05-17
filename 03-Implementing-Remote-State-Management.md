@@ -157,7 +157,7 @@ This command applies the configurations. Terraform will prompt you to approve th
 
 - **Visit** this URL in your web browser to view your deployed static website.
 
- - [ ] ADD SCREENSHOT
+ - [ ] add screenshot
 
 ### 6. Verify the State File in Azure
 
