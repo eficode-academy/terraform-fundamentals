@@ -28,12 +28,13 @@ Before setting up your network configurations, it is essential to define the var
 
 **Variable Declarations and Descriptions:**
 
-``` hcl
+``` 
 variable "exercise" {
   type        = string
   description = "This is the exercise number. It is used to make the name of some the resources unique"
 }
-
+```
+```
 variable "network" {
   type = object({
     ranges = list(string)
@@ -45,7 +46,8 @@ variable "network" {
   }
   description = "Subnet and address range for clients"
 }
-
+```
+```
 variable "client_subnet" {
   type = object({
     name   = string
@@ -59,7 +61,8 @@ variable "client_subnet" {
   }
   description = "Subnet and address range for clients"
 }
-
+```
+```
 variable "server_subnet" {
   type = object({
     name   = string
@@ -73,19 +76,22 @@ variable "server_subnet" {
   }
   description = "Subnet and address range for servers"
 }
-
+```
+```
 variable "admin_password" {
   type        = string
   sensitive   = true
   description = "default password to connect to the servers we deploy"
 }
-
+```
+```
 variable "admin_username" {
   type        = string
   sensitive   = false
   description = "default admin user to connect to the servers we deploy"
 }
-
+```
+```
 variable "source_image_reference" {
   type = object({
     publisher = string
@@ -113,11 +119,9 @@ variable "source_image_reference" {
 
 This configuration sets up the virtual network and associated subnets. This is crucial as it forms the foundational network infrastructure in which the VMs will operate.
 
-**Configuration Explained:**
-
 **Resource Block: Virtual Network**
 
-``` hcl
+``` 
 resource "azurerm_virtual_network" "exercise5" {
   name                = "vnet-exercise5"
   resource_group_name = data.azurerm_resource_group.studentrg.name
@@ -130,7 +134,7 @@ resource "azurerm_virtual_network" "exercise5" {
 
 **Resource Block: Client Subnet**
 
-``` hcl
+``` 
 resource "azurerm_subnet" "client" {
   name                 = var.client_subnet.name
   resource_group_name  = data.azurerm_resource_group.studentrg.name
@@ -154,35 +158,15 @@ resource "azurerm_subnet" "server" {
 
 *Similar to the client subnet, this configures a subnet for server VMs, specifying its unique characteristics within the same virtual network.*
 
-**Initialize Terraform**: Prepares your project for Terraform operations.
-
- ```
-terraform init
- ```
-
-```
-terraform plan
-```
-
-**Apply Configuration**: Executes the plan to create resources.
-
-```
-terraform apply
-```
-
 ### 3\. Deploy Client VMs
 
 #### Creating `01-deployclients.tf`:
 
-**Purpose of Configuration:**
-
 This file handles the deployment of client VMs. Dynamic public IPs are assigned to these VMs, allowing external access and connectivity tests.
-
-**Configuration Explained:**
 
 **Local Value: Clients**
 
-``` hcl
+``` 
 locals {
   clients = toset(["client1", "client2"])
 }
@@ -192,7 +176,7 @@ locals {
 
 **Resource Block: Public IP**
 
-``` hcl
+``` 
 resource "azurerm_public_ip" "client" {
   for_each            = local.clients
   name                = "${each.key}-public-ip"
@@ -229,7 +213,7 @@ resource "azurerm_network_interface" "client" {
 
 **Resource Block: Virtual Machine**
 
-``` hcl
+``` 
 resource "azurerm_linux_virtual_machine" "client" {
   for_each                        = local.clients
   name                            = "vm-${each.key}"
@@ -261,15 +245,11 @@ resource "azurerm_linux_virtual_machine" "client" {
 
 #### Creating `01-deployserver.tf`:
 
-**Purpose of Configuration:**
-
 This configuration sets up a server VM with a static public IP, ensuring that it has a fixed entry point for network communications, which is essential for server roles.
-
-**Configuration Explained:**
 
 **Resource Block: Public IP**
 
-``` hcl
+``` 
 resource "azurerm_public_ip" "server" {
   name                = "server-public-ip"
   location            = data.azurerm_resource_group.studentrg.location
@@ -341,6 +321,24 @@ output "client_connection_string" {
   }
 }
 ```
+
+**Initialize Terraform**
+
+ ```
+terraform init
+ ```
+
+```
+terraform plan
+```
+
+**Apply Configuration**
+
+```
+terraform apply
+```
+
+- [ ] add screenshots
 
 ### 5. Verify Connectivity and Clean Up
 
