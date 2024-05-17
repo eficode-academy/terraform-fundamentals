@@ -9,18 +9,16 @@ This exercise provides an introduction to the basics commands of Terraform throu
 You will directly apply the basic Terraform commands, observe the changes each command makes, and understand their roles in the workflow of infrastructure as code.
 
 ### Flask Application
-The application consists of three components: `frontend`, `backend`, and a `database`.
+The application consists of three components: `frontend`, `backend`, and a `database`. 
 
 The frontend and backend are small python Flask webservers that listen for HTTP requests. 
-
 For persistent storage, a postgresql database is used.
 
 The basic functionality of the application can be achieved by deploying the frontend alone. 
-
 The frontend listens for HTTP requests on port `5000` (the default for Flask).
 
 ### Terraform Configuration
-The Terraform configuration in the [terraform basic commands](https://github.com/eficode-academy/terraform-fundamentals/tree/main/terraform-basic-commands) directory is set to define and provision the necessary cloud infrastructure to run the Flask application.
+The Terraform configuration in the [terraform basic commands](https://github.com/eficode-academy/terraform-fundamentals/tree/main/labs/01-terraform-basic-commands) directory is set to define and provision the necessary cloud infrastructure to run the Flask application.
 
 It typically includes server setup, networking, and security settings.
 
@@ -39,7 +37,6 @@ Initialize the Terraform workspace to prepare your environment:
 `terraform init`
 
 The output should resemble the example shown below.
-
 
 ```
 coder@workstation-3 ~/terraform-fundamentals/terraform-basic-commands (main *)
@@ -345,7 +342,7 @@ You will get an app url when you applied the configurations as part of the outpu
 
 You should see something like this:
 
-## Cleanup
+## Remember to clean up! 💡
 
 Execute the following command to remove all resources and clean up the infrastructure:
 
@@ -409,7 +406,6 @@ random_integer.ri: Destruction complete after 0s
 azurerm_service_plan.example: Destruction complete after 5s
 
 Destroy complete! Resources: 3 destroyed.
-
 ```
 
 **Congratulations!** **🎉** You have successfully deployed a web app on Azure using Terraform with basic Terraform commands.
