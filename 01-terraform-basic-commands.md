@@ -1,7 +1,7 @@
 # 01-Terraform Basic Commands
 
 ## Learning Goals
-- Execute the basic Terraform commands: `terraform init`, `terraform plan`, and `terraform apply`, and observe how they function in managing infrastructure.
+Execute the basic Terraform commands: `terraform init`, `terraform plan`, and `terraform apply`, and observe how they function in managing infrastructure.
 
 ## Introduction
 This exercise provides an introduction to the basics commands of Terraform through the setup and deployment of a Flask application. 
