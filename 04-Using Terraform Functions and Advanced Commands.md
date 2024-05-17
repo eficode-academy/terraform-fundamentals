@@ -17,6 +17,7 @@ Before experimenting with the functions, make sure you have a working Terraform 
 
 - **Navigate** to `using terraform functions and commands` directory.
 - **Open** a terminal in this directory.
+- Run `terraform init`
 - **Run** the Terraform console command:
 
   ```
