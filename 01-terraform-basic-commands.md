@@ -342,7 +342,7 @@ You will get an app url when you applied the configurations as part of the outpu
 
 You should see something like this
 
-- [ ] ADD APP SCREENSHOT
+- [ ] add app screenshot
 
 ## Remember to clean up! 💡
 
