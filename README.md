@@ -44,7 +44,7 @@ Learn the fundamental concepts of Terraform.
 ### Topics Covered
 - What is Terraform?
 - Installing and setting up Terraform
-- Authenticating via Azure CLI
+- Authenticating via Azure CLI / Intro to Azure Portal (UI)
 - Basic commands: `init`, `plan`, `apply`, `destroy`
 - Other Terraform Commands:
   - `validate`
