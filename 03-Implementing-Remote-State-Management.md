@@ -119,7 +119,7 @@ Visit this link to know more about the azurerm backend:
 
 💡 Save the File 💡
 
-- [ ] DESCRIBE HOW (maybe)
+- [ ] describe how?
 
 ### 3. Initializing Terraform with Remote Backend
 
