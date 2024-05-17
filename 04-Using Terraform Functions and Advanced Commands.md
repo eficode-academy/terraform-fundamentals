@@ -111,7 +111,7 @@ The content of the file `main.tf` looks like below
 
 ```hcl
 terraform {
-  required_version = "~> 1.3.0"  # Specifies the required Terraform version
+  required_version = "~> 1.8.0"  # Specifies the required Terraform version
   required_providers {
     random = {
       source  = "hashicorp/random"
