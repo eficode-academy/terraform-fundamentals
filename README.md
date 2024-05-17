@@ -72,7 +72,9 @@ Deep dive into Terraform’s core components.
 - Resources
 - Data sources
 - Variables
-- Outputs
+  - Input Vars 
+  - Outputs
+  - Local Block
 - Labels / Tags
 
 ### Lab Exercise: Create and Manage Resources with Terraform
@@ -98,7 +100,6 @@ Understand how to utilize built-in functions and master other Terraform commands
 ### Topics Covered
 - Introduction to Functions
   - Types of Built-in Functions
-- Local Block 
 - Expressions
   - Conditional expressions
   - For expressions
