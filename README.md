@@ -85,6 +85,7 @@ Understand how Terraform manages state.
 ### Topics Covered
 - Purpose of Terraform state
 - Remote state management
+  - Injecting secrets 
 - Locking state
 - Inspecting and modifying state
 
