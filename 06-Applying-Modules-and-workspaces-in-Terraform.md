@@ -13,7 +13,7 @@ Objectives
 *  Learn to interpret and apply configurations from YAML files.
 *  Deploy three virtual machines using the `for_each` construct to loop over configurations.
 *  Utilize Terraform workspaces to manage different deployment environments or stages.
-* Clean up resources to prevent unnecessary Azure charges.
+*  Clean up resources to prevent unnecessary Azure charges.
 
 Step-by-Step Instructions
 -------------------------
@@ -28,12 +28,13 @@ Before diving into the actual Terraform configurations, it's crucial to define t
 
 **Variable Definitions:**
 
-``` hcl
+``` 
 variable "exercise" {
   type        = string
   description = "This is the exercise number. It is used to make the name of some the resources unique"
 }
-
+```
+```
 variable "instances_configuration" {
   type        = string
   description = <<EOT
@@ -53,7 +54,8 @@ variable "instances_configuration" {
                 subnet: server
         EOT
 }
-
+```
+```
 variable "network_configuration" {
   type        = string
   description = <<EOT
@@ -70,13 +72,15 @@ variable "network_configuration" {
                     - 10.0.1.0/24
         EOT
 }
-
+```
+```
 variable "admin_password" {
   type        = string
   sensitive   = true
   description = "default password to connect to the servers we deploy"
 }
-
+```
+```
 variable "admin_username" {
   type        = string
   sensitive   = true
@@ -90,7 +94,7 @@ Ensure you have the YAML configuration files ready as described:
 
 #### `instances.yaml`
 
-``` yaml
+``` 
 data:
   client1:
     size: "Standard_B1ls"
@@ -108,7 +112,7 @@ data:
 
 #### `network.yaml`
 
-``` yaml
+``` 
 data:
   ranges:
   - 10.0.0.0/16
@@ -131,7 +135,7 @@ This file sets up the virtual network and associated subnets using data from `ne
 
 **Local Block: Network Data**
 
-``` hcl
+``` 
 locals {
   yaml_network_data = yamldecode(file("${path.root}/${var.network_configuration}"))
   network           = local.yaml_network_data["data"]
@@ -140,7 +144,7 @@ locals {
 
 **Resource Block: Virtual Network**
 
-``` hcl
+``` 
 resource "azurerm_virtual_network" "main" {
   name                = "vnet-${var.exercise}"
   resource_group_name = data.azurerm_resource_group.studentrg.name
@@ -151,7 +155,7 @@ resource "azurerm_virtual_network" "main" {
 
 **Resource Block: Subnet**
 
-```hcl
+```
 resource "azurerm_subnet" "main" {
   for_each            = local.network.subnets
   name                = each.key
@@ -179,11 +183,12 @@ This file deploys VMs based on configurations specified in `instances.yaml` usin
 
 **Local Block: VM Instances**
 
-```hcl
+```
 locals {
   yaml_vms_data = yamldecode(file("${path.root}/${var.instances_configuration}"))
   instances     = local.yaml_vms_data["data"]
-}`
+}
+```
 
 **Resource Block: Public IP**
 
@@ -202,7 +207,7 @@ resource "azurerm_public_ip" "pip" {
 
 **Module Block: Virtual Machine**
 
-``` hcl
+``` 
 module "virtual-machine" {
   for_each = local.instances
 
