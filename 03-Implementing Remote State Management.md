@@ -47,10 +47,24 @@ During this initialization, observe the local state file that is created.Note th
 
   `terraform apply`
 
+It will output something of the like:
+
+```
+Apply complete! Resources: 3 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+container_name = "tfstate"
+storage_account_name = "qglcfvfh"
+```
+
+* Take note of `container_name` and `storage_account_name`.
+
+After successfully applying the Terraform configuration, pay close attention to the output. The names of the storage account and the container where the Terraform state will be stored are displayed. Ensure you copy these names accurately for later use.
+
 Now exit the subdirectory `00start` and go the to subdriectoyr `01start`. All necessary configurations and files for hosting the static website on azure are present. An empty file named `backend.tf` is present among them . This file will be used to configure your remote backend.
 
 **Copy the Storage Account and Container Names**:
-After successfully applying the Terraform configuration, pay close attention to the output. The names of the storage account and the container where the Terraform state will be stored are displayed. Ensure you copy these names accurately for later use.
 
 - **Storage Account Name**: This is the Azure Storage Account name displayed in the output. You will need this to configure the `storage_account_name` field in your `backend.tf`.
   
