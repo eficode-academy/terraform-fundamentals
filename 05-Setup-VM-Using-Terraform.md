@@ -331,6 +331,17 @@ resource "azurerm_linux_virtual_machine" "server" {
 
 *Deploys the server VM, ensuring it is configured with the necessary credentials and linked to the network interface created earlier.*
 
+### Add output block to 01_deployserver.tf
+
+#### Output block that outputs the command to verify SSH connection to your newly created virtual machine
+
+```
+output "client_connection_string" {
+  value = { for client in local.clients : client => "ssh ${azurerm_linux_virtual_machine.client[client].admin_username}@${azurerm_linux_virtual_machine.client[client].public_ip_address}"
+  }
+}
+```
+
 ### 5. Verify Connectivity and Clean Up
 
 After deploying the resources, verify connectivity by accessing the client VMs using SSH and ensure they can connect to the server VM. Utilize the output connection strings provided in the Terraform output.
