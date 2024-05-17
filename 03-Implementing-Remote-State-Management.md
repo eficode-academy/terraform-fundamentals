@@ -2,21 +2,23 @@
 
 ## Learning Goals
 
-In this module, you will learn about the importance of remote state management in Terraform and how to configure a backend using the Azure provider. This setup enhances your Terraform projects by enabling team collaboration and maintaining state consistency.
+In this module, you will learn about the importance of remote state management in Terraform and how to configure a backend using the Azure provider. 
+This setup enhances your Terraform projects by enabling team collaboration and maintaining state consistency.
 
 ### Objectives
 
 - Understand and implement remote state management.
 - Configure an Azure backend for Terraform state.
 - Verify the state file in Azure.
-- View the deployed static website.
+- View the deployed static website
 - Clean up resources to prevent unnecessary charges.
 
 ## Step-by-Step Instructions
 
 ### 1. Introduction to Remote State
 
-Remote state is a feature in Terraform that allows state information to be stored in a remote data store, which supports team collaboration and improves the security of state files. Unlike local state files, remote state enables teams to share access to the state, ensuring everyone is working with the same configuration.
+Remote state is a feature in Terraform that allows state information to be stored in a remote data store, which supports team collaboration and improves the security of state files. 
+Unlike local state files, remote state enables teams to share access to the state, ensuring everyone is working with the same configuration.
 
 ### 2. Configure the Azure Backend
 
@@ -24,20 +26,20 @@ The Azure backend stores state as a blob in a specified container on an Azure St
 
 #### Setting Up `backend.tf`
 
-Navigate to the directory `Implementing Remote state management`.
-
+Navigate to the directory `03-Implementing-Remote-state-management`.
 
 Inside, you will find both the `01start` and `00start` subdirectories.
 
 **Prepare the Backend**:
 Before configuring your remote backend, proceed to the `00start` subdirectory. Here, execute the following Terraform commands to create a storage account that will house your state file:
 
-
 1. Initialize the Terraform environment:
 
    `terraform init`
 
-During this initialization, observe the local state file that is created.Note that storing sensitive information in local state files can be risky as these files can easily be exposed to unauthorized access if not properly secured.
+During this initialization, observe the local state file that is created.
+
+Note that storing sensitive information in local state files can be risky as these files can easily be exposed to unauthorized access if not properly secured.
 
 2. Generate and review the execution plan:
 
@@ -60,9 +62,12 @@ storage_account_name = "qglcfvfh"
 
 * Take note of `container_name` and `storage_account_name`.
 
-After successfully applying the Terraform configuration, pay close attention to the output. The names of the storage account and the container where the Terraform state will be stored are displayed. Ensure you copy these names accurately for later use.
+After successfully applying the Terraform configuration, pay close attention to the output. 
+The names of the storage account and the container where the Terraform state will be stored are displayed. Ensure you copy these names accurately for later use.
 
-Now exit the subdirectory `00start` and go the to subdriectoyr `01start`. All necessary configurations and files for hosting the static website on azure are present. An empty file named `backend.tf` is present among them . This file will be used to configure your remote backend.
+Now exit the subdirectory `00start` and go the to subdirectory `01start`. 
+All necessary configurations and files for hosting the static website on Azure are present. 
+An empty file named `backend.tf` is present among them . This file will be used to configure your remote backend.
 
 **Copy the Storage Account and Container Names**:
 
@@ -72,11 +77,9 @@ Now exit the subdirectory `00start` and go the to subdriectoyr `01start`. All ne
 
 These details are critical for setting up the remote backend correctly, so it's important to ensure they are noted precisely.
 
-
 **Configure the Backend:**
 
 After setting up the necessary resources, exit the 00start subdirectory and enter the 01start subdirectory. This location contains all necessary configurations and files for hosting the static website on Azure, including an empty file named backend.tf. This file will be used to set up your remote backend.
-
 
 **Add Backend Configuration**:
 
@@ -95,7 +98,7 @@ After setting up the necessary resources, exit the 00start subdirectory and ente
    }
    ```
 
-  ❗**Important**:
+❗**Important**:
 - Replace `<resource group name>` with the name of the Azure Resource Group you have prepared for this configuration. This must be an existing resource group where you have permissions to create resources.
 - Replace `<storage account name>` with the name of your Azure Storage Account. Ensure that the storage account name is unique within Azure and that it follows Azure naming conventions.
 - Replace `<name of container>` with the name of the container in your Azure Blob Storage where you intend to store the Terraform state files. The container should be created beforehand if it does not already exist.
@@ -115,6 +118,8 @@ Visit this link to know more about the azurerm backend:
 [Backend type azurem](https://developer.hashicorp.com/terraform/language/settings/backends/azurerm)
 
 💡 Save the File 💡
+
+- [ ] DESCRIBE HOW (maybe)
 
 ### 3. Initializing Terraform with Remote Backend
 
@@ -152,6 +157,8 @@ This command applies the configurations. Terraform will prompt you to approve th
 
 - **Visit** this URL in your web browser to view your deployed static website.
 
+ - [ ] ADD SCREENSHOT
+
 ### 6. Verify the State File in Azure
 
 - Log in to your Azure Portal.
@@ -170,6 +177,8 @@ To avoid incurring unnecessary charges:
 
   Confirm the action to remove all deployed resources.
 
-### YAAAAYYYYYYYY 🎆
+### YAAAYYY 🎆
 
-By completing this module, you have successfully learned how to manage Terraform state remotely using Azure as the backend enhancing your project's security and collaboration capabilities. This setup not only ensures that your state file is secure and accessible but also facilitates teamwork by maintaining a single source of truth for your Terraform state.
+By completing this module, you have successfully learned how to manage Terraform state remotely using Azure as the backend enhancing your project's security and collaboration capabilities. 
+
+This setup not only ensures that your state file is secure and accessible but also facilitates teamwork by maintaining a single source of truth for your Terraform state.
