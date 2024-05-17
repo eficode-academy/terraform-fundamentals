@@ -1,8 +1,12 @@
 # Terraform Fundamentals Katas
 
-Welcome to the Terraform Fundamentals Katas! This repository is designed to help new users master Terraform through practical exercises hosted on the Azure cloud. Each kata focuses on essential concepts and skills, providing a hands-on approach to learning infrastructure as code with Terraform.
+Welcome to the Terraform Fundamentals Katas! This repository is designed to help new users master Terraform through practical exercises hosted on the Azure cloud. 
 
-Whether you're starting from scratch or looking to deepen your understanding, these challenges will guide you through creating, modifying, and managing Azure resources effectively. Dive in and start your journey to becoming proficient with Terraform!
+Each kata focuses on essential concepts and skills, providing a hands-on approach to learning infrastructure as code with Terraform.
+
+Whether you're starting from scratch or looking to deepen your understanding, these challenges will guide you through creating, modifying, and managing Azure resources using Terraform. 
+
+Dive in and start your journey to becoming proficient with Terraform!
 
 ## About Terraform
 
@@ -15,9 +19,9 @@ Terraform serves as an infrastructure as code (IaC) tool designed to automate th
 Terraform enhances collaboration, ensures infrastructure consistency, and supports a version-controlled, collaborative approach to managing cloud environments.
 
 ## Pre-requisites
-- Terraform CLI installed on your machine.
-- Access to a cloud provider account with permissions to create and manage resources.
-- Basic knowledge of command line interfaces and text editors.
+- Terraform CLI and Azure CLI installed on your machine
+- Access to a cloud provider account with permissions to create and manage resources
+- Basic knowledge of command line interfaces and text editors
 
 # Terraform Course Outline
 
@@ -28,8 +32,9 @@ Understand the concept and benefits of Infrastructure as Code (IaC).
 
 ### Topics Covered
 - What is IaC?
-- Benefits of using IaC.
-- Overview of IaC tools with a focus on Terraform.
+- Benefits of using IaC
+- Overview of IaC tools with a focus on Terraform
+- Terraform Cloud / Enterprise / Sentinel
 
 ## Module 2: Terraform Basics
 
@@ -38,9 +43,21 @@ Learn the fundamental concepts of Terraform.
 
 ### Topics Covered
 - What is Terraform?
-- Installing and setting up Terraform.
-- Login to Azure CLI
-- Basic commands: `init`, `plan`, `apply`, `destroy`.
+- Installing and setting up Terraform
+- Authenticating via Azure CLI
+- Basic commands: `init`, `plan`, `apply`, `destroy`
+- Other Terraform Commands:
+  - `validate`
+  - `fmt`
+  - `output`
+  - `providers`
+  - `show`
+  - `version`
+  - `get`
+  - `console`
+  - `graph`
+  - `test`
+  - `import`
 
 ### Lab Exercise: Terraform basic commands
 
@@ -54,8 +71,9 @@ Deep dive into Terraform’s core components.
   - Terraform providers
 - Resources
 - Data sources
-- Outputs
 - Variables
+- Outputs
+- Labels / Tags
 
 ### Lab Exercise: Create and Manage Resources with Terraform
 
@@ -68,9 +86,7 @@ Understand how Terraform manages state.
 - Purpose of Terraform state
 - Remote state management
 - Locking state
-- Inspecting and modifying state:
-  - Terraform state
-  - Terraform refresh
+- Inspecting and modifying state
 
 ### Lab Exercise: Implementing Remote State Management
 
@@ -81,30 +97,16 @@ Understand how to utilize built-in functions and master other Terraform commands
 
 ### Topics Covered
 - Introduction to Functions
-- Types of Built-in Functions
-- Other Terraform Commands:
-  - `validate`
-  - `fmt`
-  - `output`
-  - `providers`
-  - `show`
-  - `version`
-  - `get`
-  - `console`
-  - `graph`
-  - `test`
-  - `import`
-- Terrafrom Provisioners 
-  -Local-exec
-  -Remote-exec
+  - Types of Built-in Functions
 - Local Block 
-- Conditional expressions
-- For expressions
-- Meta-Arguments:
-  - `depends_on`
-  - `count`
-  - `for_each`
-  - `lifecycle`
+- Expressions
+  - Conditional expressions
+  - For expressions
+- Meta-Arguments
+  - count
+  - for_each
+  - depends_on
+  - lifecycle
 
 ### Lab Exercise: Using Terraform Functions and Advanced Commands
 
@@ -117,24 +119,16 @@ Master advanced Terraform configurations.
 
 ### Topics Covered
 
--  Dynamic blocks
+- Dynamic blocks
 - Terraform modules
-- Terraform Workspaces
+- Terraform workspaces
 
 ### Lab Exercise: Applying Modules and workspaces in Terrafrom
 
-## Module 7: Terraform Cloud and Enterprise
-
-### Objective
-Utilize Terraform in a team setting with Terraform Cloud.
-
-### Topics Covered
-- Benefits of Using Terraform Cloud
-
-## Module 8: Best Practices
+## Module 7: Best Practices
 
 ### Objective
 Learn to secure Terraform configurations and follow best practices.
 
 ### Topics Covered
-- (Topics related to best practices in Terraform)
+- Best Practices.md
