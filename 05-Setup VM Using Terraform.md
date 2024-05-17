@@ -337,8 +337,6 @@ After deploying the resources, verify connectivity by accessing the client VMs u
 
 To avoid incurring unnecessary charges, use the command `terraform destroy` to clean up all resources once you complete the exercises.
 
-Certainly! To provide clear instructions for generating and visualizing the Terraform dependency graph, you can frame it as an optional additional task within your documentation like this:
-
 **Extra Task: Visualizing the Terraform Dependency Graph**:
 
 For those interested in visualizing how Terraform manages dependencies within your configuration, you can generate and view the dependency graph using the following commands:
