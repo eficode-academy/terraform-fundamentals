@@ -98,8 +98,6 @@ Understand how Terraform manages state.
 Understand how to utilize built-in functions and master other Terraform commands.
 
 ### Topics Covered
-- Introduction to Functions
-  - Types of Built-in Functions
 - Expressions
   - Conditional expressions
   - For expressions
@@ -108,6 +106,8 @@ Understand how to utilize built-in functions and master other Terraform commands
   - for_each
   - depends_on
   - lifecycle
+- Introduction to Functions
+  - Types of Built-in Functions
 
 ### Lab Exercise: Using Terraform Functions and Advanced Commands
 
