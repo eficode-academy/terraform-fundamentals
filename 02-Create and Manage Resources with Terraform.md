@@ -96,7 +96,7 @@ The `provider` block configures the specified provider, in this case, `azurerm`.
 
 This provider is maintained by the Azure team at Microsoft and the Terraform team at HashiCorp.
 
-Paste the configuration below into `providers.tf`:
+Paste the configuration into the buttom of `providers.tf`:
 
 ```hcl
 provider "azurerm" {
