@@ -26,9 +26,9 @@ The Azure backend stores state as a blob in a specified container on an Azure St
 
 #### Setting Up `backend.tf`
 
-Navigate to the directory `03-Implementing-Remote-state-management`.
+Navigate to the directory `labs/03-Implementing-Remote-state-management`.
 
-Inside, you will find both the `01start` and `00start` subdirectories.
+Inside, you will find both the `00start` and `01start` subdirectories.
 
 **Prepare the Backend**:
 Before configuring your remote backend, proceed to the `00start` subdirectory. Here, execute the following Terraform commands to create a storage account that will house your state file:
