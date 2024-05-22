@@ -12,6 +12,7 @@ This setup enhances your Terraform projects by enabling team collaboration and m
 - Verify the state file in Azure.
 - View the deployed static website
 - Clean up resources to prevent unnecessary charges.
+- Manipulate Terraform state file.
 
 ## Step-by-Step Instructions
 
@@ -69,14 +70,6 @@ Now exit the subdirectory `00start` and go the to subdirectory `01start`.
 All necessary configurations and files for hosting the static website on Azure are present. 
 An empty file named `backend.tf` is present among them . This file will be used to configure your remote backend.
 
-**Copy the Storage Account and Container Names**:
-
-- **Storage Account Name**: This is the Azure Storage Account name displayed in the output. You will need this to configure the `storage_account_name` field in your `backend.tf`.
-  
-- **Container Name**: This is the name of the container within the Azure Storage Account displayed in the output. This will be used to configure the `container_name` field in your `backend.tf`.
-
-These details are critical for setting up the remote backend correctly, so it's important to ensure they are noted precisely.
-
 **Configure the Backend:**
 
 After setting up the necessary resources, exit the 00start subdirectory and enter the 01start subdirectory. This location contains all necessary configurations and files for hosting the static website on Azure, including an empty file named backend.tf. This file will be used to set up your remote backend.
@@ -85,7 +78,7 @@ After setting up the necessary resources, exit the 00start subdirectory and ente
 
    - Paste the following configuration into `backend.tf`. This setup specifies the Azure backend for your Terraform state.
 
-   ```hcl
+   ```
    terraform {
      backend "azurerm" {
        resource_group_name   = "<resource-group-name>"
@@ -119,13 +112,11 @@ Visit this link to know more about the azurerm backend:
 
 💡 Save the File 💡
 
-- [ ] describe how?
-
 ### 3. Initializing Terraform with Remote Backend
 
 Run the following command to initialize the Terraform configuration with your Azure backend:
 
-```bash
+```
 terraform init
 ```
 
@@ -149,15 +140,13 @@ This command applies the configurations. Terraform will prompt you to approve th
 
 ### 5. View the Static Website
 
-- After deployment, Terraform outputs the URL of the static website:
+After deployment, Terraform outputs the URL of the static website:
   
-  ```plaintext
-  primary_web_host = "https://example.z13.web.core.windows.net/"
-  ```
+```plaintext
+primary_web_host = "https://example.z13.web.core.windows.net/"
+```
 
-- **Visit** this URL in your web browser to view your deployed static website.
-
- - [ ] add screenshot
+**Visit** this URL in your web browser to view your deployed static website.
 
 ### 6. Verify the State File in Azure
 
@@ -165,17 +154,61 @@ This command applies the configurations. Terraform will prompt you to approve th
 - Navigate to the specified Storage Account .
 - Look into the `tfstate` container to verify that the state file (`unique-training-key.terraform.tfstate`) is present.
 
-### 7. Cleanup Resources
+### 7. Manipulating Terraform State
+
+**List all resources in the current state file:**
+
+```
+terraform state list
+```
+
+**Display detailed information about a specific resource:**
+
+```
+terraform state show <resource_name>
+```
+
+Replace <resource_name> with one of the resources listed in the previous step.
+
+**Refreshing and Forcing Re-creation of Resources**
+
+Update the state file to match the actual infrastructure:
+
+```
+terraform state refresh
+```
+
+**Remove a resource from the state file:**
+
+```
+terraform state rm <resource_name>
+```
+
+For example:
+
+```
+terraform state rm azurerm_virtual_network.vnet
+```
+
+💡 Note: This does not destroy the actual resource, it only removes it from the state file.
+
+**Force Terraform to recreate a specified resource during the next apply:**
+
+```
+terraform apply -replace="azurerm_virtual_network.vnet"
+```
+
+### 8. Cleanup Resources
 
 To avoid incurring unnecessary charges:
 
-- Run the following command in both the `00start` & `01start` sub directiories :
+- Run the following command in both the `00start` & `01start` sub directories :
 
-  ```bash
-  terraform destroy
-  ```
+```bash
+terraform destroy
+```
 
-  Confirm the action to remove all deployed resources.
+Confirm the action to remove all deployed resources.
 
 ### YAAAYYY 🎆
 
