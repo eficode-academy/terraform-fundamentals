@@ -86,11 +86,11 @@ Understand how Terraform manages state.
 - What is Terraform state
 - Remote state management
 - Inspecting and modifying state
-    - Terraform state command
+    - Terraform state commands
 
 ### Lab Exercise: Implementing Remote State Management
 
-## Module 5: Terraform Functions and Advanced Commands
+## Module 5: Terraform Functions and Other Commands
 
 ### Objective
 Understand how to utilize built-in functions and master other Terraform commands.
@@ -114,7 +114,7 @@ Understand how to utilize built-in functions and master other Terraform commands
   - `console`
   - `graph`
 
-### Lab Exercise: Using Terraform Functions and Advanced Commands
+### Lab Exercise: Using Terraform Functions and Other Commands
 
 ### Lab Exercise: Setup VM using using Terrafrom
 
