@@ -47,7 +47,7 @@ Learn the fundamental concepts of Terraform.
 - Terraform language
 - Authenticating via Azure CLI / Intro to Azure Portal (UI)
 
-### Lab Exercise: Terraform basic commands
+### Lab Exercise: labs/01-terraform-basic-commands
 
 - Basic commands: `init`, `plan`, `apply`, `destroy`
 - Other Terraform Commands:
