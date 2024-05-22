@@ -34,7 +34,6 @@ Understand the concept and benefits of Infrastructure as Code (IaC).
 - What is IaC?
 - Benefits of using IaC
 - Overview of IaC tools with a focus on Terraform
-- Terraform Cloud / Enterprise / Sentinel
 
 ## Module 2: Terraform Basics
 
@@ -42,24 +41,20 @@ Understand the concept and benefits of Infrastructure as Code (IaC).
 Learn the fundamental concepts of Terraform.
 
 ### Topics Covered
-- What is Terraform?
+- Why Terraform?
 - Installing and setting up Terraform
+- Terraform workflow
+- Terraform language
 - Authenticating via Azure CLI / Intro to Azure Portal (UI)
+
+### Lab Exercise: labs/01-terraform-basic-commands
+
 - Basic commands: `init`, `plan`, `apply`, `destroy`
 - Other Terraform Commands:
   - `validate`
   - `fmt`
-  - `output`
-  - `providers`
-  - `show`
   - `version`
-  - `get`
-  - `console`
-  - `graph`
-  - `test`
-  - `import`
 
-### Lab Exercise: Terraform basic commands
 
 ## Module 3: Terraform Core Concepts
 
@@ -68,12 +63,17 @@ Deep dive into Terraform’s core components.
 
 ### Topics Covered
 - Providers
-  - Terraform providers
 - Resources
 - Data sources
 - Variables
+  - Input Vars 
 - Outputs
-- Labels / Tags
+- Terraform commands
+  - `output`
+  - `providers`
+  - `show`
+  - `get`
+  - `import`
 
 ### Lab Exercise: Create and Manage Resources with Terraform
 
@@ -83,9 +83,8 @@ Deep dive into Terraform’s core components.
 Understand how Terraform manages state.
 
 ### Topics Covered
-- Purpose of Terraform state
+- What is Terraform state
 - Remote state management
-- Locking state
 - Inspecting and modifying state
 
 ### Lab Exercise: Implementing Remote State Management
@@ -96,21 +95,27 @@ Understand how Terraform manages state.
 Understand how to utilize built-in functions and master other Terraform commands.
 
 ### Topics Covered
-- Introduction to Functions
-  - Types of Built-in Functions
-- Local Block 
+
+- Local Block
 - Expressions
   - Conditional expressions
   - For expressions
+  - Dynamic Block
 - Meta-Arguments
   - count
   - for_each
   - depends_on
   - lifecycle
+- Introduction to Functions
+  - Types of Built-in Functions
+ 
+- Terraform commands
+  - `console`
+  - `graph`
 
 ### Lab Exercise: Using Terraform Functions and Advanced Commands
 
-### Lab Exercise: Deploy a Multi-Tier Application using terrafrom
+### Lab Exercise: Setup Vm using using terrafrom
 
 ## Module 6: Advanced Configuration
 
@@ -119,13 +124,16 @@ Master advanced Terraform configurations.
 
 ### Topics Covered
 
-- Dynamic blocks
 - Terraform modules
 - Terraform workspaces
 
 ### Lab Exercise: Applying Modules and workspaces in Terrafrom
 
-## Module 7: Best Practices
+## Module 7: Overview of Terraform Cloud/ Enterprise
+
+- Terraform Cloud / Enterprise
+
+## Module 8: Best Practices
 
 ### Objective
 Learn to secure Terraform configurations and follow best practices.
