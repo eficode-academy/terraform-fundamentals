@@ -83,9 +83,8 @@ Deep dive into Terraform’s core components.
 Understand how Terraform manages state.
 
 ### Topics Covered
-- Purpose of Terraform state
+- What is Terraform state
 - Remote state management
-  - Injecting secrets 
 - Inspecting and modifying state
 
 ### Lab Exercise: Implementing Remote State Management
