@@ -116,7 +116,7 @@ Understand how to utilize built-in functions and master other Terraform commands
 
 ### Lab Exercise: Using Terraform Functions and Advanced Commands
 
-### Lab Exercise: Setup VM using using terrafrom
+### Lab Exercise: Setup VM using using Terrafrom
 
 ## Module 6: Advanced Configuration
 
