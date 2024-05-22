@@ -86,6 +86,7 @@ Understand how Terraform manages state.
 - What is Terraform state
 - Remote state management
 - Inspecting and modifying state
+    - Terraform state command
 
 ### Lab Exercise: Implementing Remote State Management
 
