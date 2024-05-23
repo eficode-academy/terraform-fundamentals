@@ -201,26 +201,6 @@ Update the state file to match the actual infrastructure:
 terraform refresh
 ```
 
-**Remove a resource from the state file:**
-
-```
-terraform state rm <resource_name>
-```
-
-For example:
-
-```
-terraform state rm azurerm_virtual_network.vnet
-```
-
-💡 Note: This does not destroy the actual resource, it only removes it from the state file.
-
-**Force Terraform to recreate a specified resource during the next apply:**
-
-```
-terraform apply -replace="azurerm_virtual_network.vnet"
-```
-
 ### 8. Cleanup Resources
 
 To avoid incurring unnecessary charges:
