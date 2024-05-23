@@ -59,7 +59,7 @@ container_name = "tfstate"
 storage_account_name = "qglcfvfh"
 ```
 
-* Take note of `container_name` and `storage_account_name`.
+❗ Take note of `container_name` and `storage_account_name`. ❗
 
 After successfully applying the Terraform configuration, pay close attention to the output. 
 
