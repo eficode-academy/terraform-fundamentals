@@ -334,6 +334,29 @@ terraform init
 terraform plan
 ```
 
+You will see the prompt where you have to enter some values manually:
+
+The password can be anything, but has to be minimum 6 characters, has to have min 1 lower and 1 upper character, has a number in it, and one special condition other than "_". 
+
+There are also certain words that are reserved in Terraform, so you can use f.x your workstation name (Workstation-0, etc).
+
+```
+var.admin_password
+  default password to connect to the servers we deploy
+
+  Enter a value: 
+
+var.admin_username
+  default admin user to connect to the servers we deploy
+
+  Enter a value: Student-0
+
+var.exercise
+  This is the exercise number. It is used to make the name of some the resources unique
+
+  Enter a value: 7
+```
+
 **Apply Configuration**
 
 ```
