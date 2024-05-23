@@ -23,7 +23,9 @@ Unlike local state files, remote state enables teams to share access to the stat
 
 ### 2. Configure the Azure Backend
 
-The Azure backend stores state as a blob in a specified container on an Azure Storage Account. This method is recommended for any sizable infrastructure or team-based projects.
+The Azure backend stores state as a blob in a specified container on an Azure Storage Account. 
+
+This method is recommended for any sizable infrastructure or team-based projects.
 
 #### Setting Up `backend.tf`
 
@@ -32,7 +34,9 @@ Navigate to the directory `labs/03-Implementing-Remote-State-Management`.
 Inside, you will find both the `00start` and `01start` subdirectories.
 
 **Prepare the Backend**:
-Before configuring your remote backend, proceed to the `00start` subdirectory. Here, execute the following Terraform commands to create a storage account that will house your state file:
+Before configuring your remote backend, proceed to the `00start` subdirectory. 
+
+Here, execute the following Terraform commands to create a storage account that will house your state file:
 
 1. Initialize the Terraform environment:
 
@@ -66,12 +70,16 @@ After successfully applying the Terraform configuration, pay close attention to 
 The names of the storage account and the container where the Terraform state will be stored are displayed. Ensure you copy these names accurately for later use.
 
 Now exit the subdirectory `00start` and go the to subdirectory `01start`. 
+
 All necessary configurations and files for hosting the static website on Azure are present. 
+
 An empty file named `backend.tf` is present among them . This file will be used to configure your remote backend.
 
 **Configure the Backend:**
 
-After setting up the necessary resources, exit the 00start subdirectory and enter the 01start subdirectory. This location contains all necessary configurations and files for hosting the static website on Azure, including an empty file named backend.tf. This file will be used to set up your remote backend.
+After setting up the necessary resources, exit the 00start subdirectory and enter the 01start subdirectory. 
+
+This location contains all necessary configurations and files for hosting the static website on Azure, including an empty file named backend.tf. This file will be used to set up your remote backend.
 
 **Add Backend Configuration**:
 
@@ -92,15 +100,19 @@ After setting up the necessary resources, exit the 00start subdirectory and ente
 
 ❗**Important**:
 - Replace `<resource group name>` with the name of the Azure Resource Group you have prepared for this configuration.
+  
   This must be an existing resource group where you have permissions to create resources.
 
 - Replace `<storage account name>` with the name of your Azure Storage Account.
+  
   Ensure that the storage account name is unique within Azure and that it follows Azure naming conventions.
 
 - Replace `<name of container>` with the name of the container in your Azure Blob Storage where you intend to store the Terraform state files.
+  
   The container should be created beforehand if it does not already exist.
 
 - Replace `<unique-key-name>` with a unique name to prevent conflicts and ensure your state file is distinctly identifiable.
+  
   This can be the name of your workstation.
 
 - Verify that `tenant_id` and `subscription_id` are correctly set to match your Azure tenant and subscription details where you want to manage resources.
