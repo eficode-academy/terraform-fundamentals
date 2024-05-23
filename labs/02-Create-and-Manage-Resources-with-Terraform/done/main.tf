@@ -29,7 +29,7 @@ resource "azurerm_storage_account" "storage_account" {
 resource "azurerm_storage_blob" "index" {
   name                   = "index.html"
   storage_account_name   = azurerm_storage_account.storage_account.name
-  storage_container_name = "$web"
+  storage_container_name = var.container_name
   type                   = "Block"
   content_type           = "text/html"
   source                 = "${path.root}/web/index.html"
@@ -38,7 +38,7 @@ resource "azurerm_storage_blob" "index" {
 resource "azurerm_storage_blob" "image" {
   name                   = "image.jpg"
   storage_account_name   = azurerm_storage_account.storage_account.name
-  storage_container_name = "$web"
+  storage_container_name = var.container_name
   type                   = "Block"
   content_type           = "image/jpeg"
   source                 = "${path.root}/web/image.jpg" 

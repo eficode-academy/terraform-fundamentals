@@ -141,7 +141,60 @@ provider "azurerm" {
 ```
 ----
 
-### 2. Configure the main.tf File for Azure Resources
+
+### 2.Configure `variables.tf` for Input Customization
+
+The `variables.tf` file is used to define variables that will be used throughout your Terraform configurations, allowing for parameterization and reusability.
+
+**Task:**
+
+Try to write the variable block on your own. There are optional arguments available to use within the variable block, but for now, focus on the type, description, and default arguments.
+
+Relevant Arguments to Look for in the Documentation:
+
+- type: Specifies the type of the variable (e.g., string, number, list).
+
+- description: A brief description of what the variable represents.
+
+- default: The default value of the variable if none is provided.
+
+Example Variable Block:
+
+```hcl
+variable "example_variable" {
+  type        = string
+  description = "A description of the variable."
+  default     = "default_value"
+}
+```
+
+Using the example above, let's define the variable for the container name using these attributes.
+
+- Start by defining a new variable block named container_name using the variable keyword.
+
+```hcl
+variable "container_name{}
+```
+
+- Inside the variable block use the type argument to specify that the variable's type is a string.
+
+- Provide a brief description of what this variable represents using the description argument. This helps others understand the purpose of the variable.
+
+- Use the default argument to set the default value of the variable to $web. This means if no other value is provided for this variable, $web will be used as the container name.
+
+If you need help, you can use the provided code snippet.
+
+```hcl
+variable "container_name" {
+  type        = string
+  description = "name of the container in the storage account."
+  default     = "$web"
+}
+```
+
+This variable allow you to specify the name of the container inside storage account, which can be overridden at runtime if needed.
+
+### 3. Configure the main.tf File for Azure Resources
 
 In the `main.tf` file, we will define the necessary resources to host a static website on Azure. 
 
@@ -164,9 +217,53 @@ Learn more about configuring the  azurerm_client_config data source:
 
 **Resource Block - Random String for Storage Account Name**
    
-Generates a unique name for the Azure storage account, adhering to Azure's naming requirements.
+Generates a unique name for the Azure storage account, .
 
-Add this block under the data one.
+**Task:**
+
+Try to write the random_string resource block adhering to Azure's naming requirements on your own by referring to the Terraform registry. If you need help, you can use the provided code snippet.
+
+
+1. Visit the [Random String Resource Documentation](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string)
+
+2. Look for the arguments section to find details about the random_string resource.
+
+Relevant Arguments to Look for in the Documentation:
+
+- length: Specifies the length of the random string to generate.
+
+- lower: Specifies whether to include lowercase letters in the string.
+
+- numeric: Specifies whether to include numeric characters in the string.
+
+- special: Specifies whether to include special characters in the string.
+
+- upper: Specifies whether to include uppercase letters in the string.
+
+Using these arguments, you can define the random_string resource block adhering to Azure's naming requirements.
+
+
+**values to set for each argumnet are below**
+
+
+  - length  = 8
+  - lower   = true
+  - numeric = false
+  - special = false
+  - upper   = false
+
+
+- Start by defining a new resource block  of type random_string named storage_account_name using the resource keyword.
+
+```hcl
+resource "random_string" "storage_account_name" {}
+```
+
+- Inside the  block define the relevant arguments.
+
+
+If you need help, you can use the provided code snippet.
+
 
    ```hcl
    resource "random_string" "storage_account_name" {
@@ -178,9 +275,7 @@ Add this block under the data one.
    }
    ```
 
-   Learn more about configuring the  random_string resource:
-   [Random String Resource Documentation](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string)
-
+   
 **Resource Block - Azure Storage Account**
    
   Defines the storage account where the static website will be hosted, specifying type, replication, and static website settings.
@@ -192,7 +287,7 @@ Add this block under the data one.
     resource_group_name = data.azurerm_resource_group.studentrg.name
     location            = data.azurerm_resource_group.studentrg.location
 
-     name = random_string.storage_account_name.result
+     name = <name of the storage account creatd usinf random string resource block>
 
      account_tier             = "Standard"
      account_replication_type = "LRS"
@@ -204,6 +299,14 @@ Add this block under the data one.
      }
    }
    ```
+
+   Set the name argument of the storage account using the random_string resource. 
+   
+   How do you refer the result of random_string block?
+
+   To refer to the random_string resource within the storage account block, use the syntax <RESOURCE TYPE>.<NAME>.<ATTRIBUTE>. For the name argument, it is:
+   
+  `name =random_string.storage_account_name.result`
 
    Learn more about configuring the  azurerm_storage_account resource:
    [Azure Storage Account Resource Documentation](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account)
@@ -218,7 +321,7 @@ Add it as last in your main.tf configuration file.
 resource "azurerm_storage_blob" "index" {
   name                   = "index.html"
   storage_account_name   = azurerm_storage_account.storage_account.name
-  storage_container_name = "$web"
+  storage_container_name = <refer the defined variable>
   type                   = "Block"
   content_type           = "text/html"
   source                 = "${path.root}/web/index.html"
@@ -227,7 +330,7 @@ resource "azurerm_storage_blob" "index" {
 resource "azurerm_storage_blob" "image" {
   name                   = "image.jpg"
   storage_account_name   = azurerm_storage_account.storage_account.name
-  storage_container_name = "$web"
+  storage_container_name = <refer the defined variable>
   type                   = "Block"
   content_type           = "image/jpeg"
   source                 = "${path.root}/web/image.jpg" 
@@ -235,12 +338,17 @@ resource "azurerm_storage_blob" "image" {
 
 ```
 
+Set the storage_container_name argument of the storage blob using the variable defined in `variables.tf`. 
+
+To refer to the variable defined in the variables.tf file within the Azure blob block, use the syntax var.<variable_name>. For the storage_container_name argument, it is var.container_name.
+
 Learn more about configuring the azurerm_storage_blob resource:
    [Azure Storage Blob Resource Documentation](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_blob)
 
+
 **Assembling the Configuration in `main.tf`**
 
-After adding these blocks to your `main.tf` file, you'll have a complete configuration for deploying a static website. 
+After adding these blocks to your `main.tf` file and configuring some arguments, you'll have a complete configuration for deploying a static website. 
  
 Your `main.tf` should look something like this:
 
@@ -276,7 +384,7 @@ resource "azurerm_storage_account" "storage_account" {
 resource "azurerm_storage_blob" "index" {
   name                   = "index.html"
   storage_account_name   = azurerm_storage_account.storage_account.name
-  storage_container_name = "$web"
+  storage_container_name = var.container_name
   type                   = "Block"
   content_type           = "text/html"
   source                 = "${path.root}/web/index.html"
@@ -285,7 +393,7 @@ resource "azurerm_storage_blob" "index" {
 resource "azurerm_storage_blob" "image" {
   name                   = "image.jpg"
   storage_account_name   = azurerm_storage_account.storage_account.name
-  storage_container_name = "$web"
+  storage_container_name = var.container_name
   type                   = "Block"
   content_type           = "image/jpeg"
   source                 = "${path.root}/web/image.jpg" 
@@ -302,37 +410,71 @@ These outputs can be useful for obtaining direct links or important information 
 Insert the code below into `outputs.tf` and save the file.
 
 
+Required Outputs:
+
+Storage Account Name
+Primary Web Endpoint (URL)
+
+
+Task:
+
+First, we will write the output block for the storage account name. Then, you will try to find the appropriate attribute for the primary web endpoint and create the corresponding output block.
+
+Steps to Follow:
+
+- Visit the [Azure Storage Account Resource Documentation](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account).
+.
+
+- Look for the attributes section to find details about the storage account name and the primary web endpoint.
+Output Block for Storage Account Name:
+
+
+
+Instructions:
+
+1. output "storage_account_name": This defines a new output block named storage_account_name.
+
+2. value = azurerm_storage_account.storage_account.name: The value of this output is set to the name attribute of the azurerm_storage_account resource. This retrieves the name of the storage account created by Terraform.Note that some attributes, like the storage account name, might not be explicitly listed in the documentation but are generally retrievable.
+
+3. description = "The name of the storage account.": This provides a brief description of what this output represents.
+
+Here’s the code for the output block:
+
 
 ```hcl
 output "storage_account_name" {
   value = azurerm_storage_account.storage_account.name
   description = "The name of the storage account."
 }
+```
 
+**Your Task:**
+
+Now, try to write the output block for the primary web endpoint on your own.
+
+1. Go to the [Azure Storage Account Resource Documentation](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account).
+
+
+2. Look for the attribute that provides the primary web endpoint for the static website. Hint: It might be something related to a web endpoint or URL.
+
+3. Use the example above to help you format your output block.
+
+
+
+If you  still need help, you can use the code snippet below:
+
+
+```hcl
 output "primary_web_host" {
   value = azurerm_storage_account.storage_account.primary_web_endpoint
   description = "The primary web endpoint for the static website."
 }
 ```
-For more attributes that you can output from the Azure Storage Account, visit the [Azure Storage Account Resource Documentation](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account).
+
+For more attributes that you can output from any resource, refer to the attributes section of the respective resource documentation.
+
 
 These outputs will provide easy access to the storage account name and the URL of the static website hosted on Azure after deployment.
-
-### 4.Configure `variables.tf` for Input Customization
-
-The `variables.tf` file is used to define variables that will be used throughout your Terraform configurations, allowing for parameterization and reusability.
-
-Insert the code below into `variables.tf` and save the file.
-
-```hcl
-variable "container_name" {
-  type        = string
-  description = "name of the container in the storage account."
-  default     = "$web"
-}
-```
-
-This variable allow you to specify the name of the soniter inside storage account, which can be overridden at runtime if needed.
 
 
 ### 5. Running Terraform Commands
