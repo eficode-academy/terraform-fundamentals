@@ -2,11 +2,14 @@
 
 ## Learning Goals
 
-This module is designed to deepen your understanding of Terraform's capabilities by exploring both its built-in functions and a variety of advanced commands. Through hands-on practice, you will learn how to manipulate data and manage Terraform configurations more effectively.
+This module is designed to deepen your understanding of Terraform's capabilities by exploring both its built-in functions and a variety of advanced commands. 
+
+Through hands-on practice, you will learn how to manipulate data and manage Terraform configurations more effectively.
 
 ### Objectives
 
 - Master the use of Terraform's built-in functions to perform data manipulation and formatting directly within Terraform configurations.
+  
 - Utilize the Terraform console for interactive exploration of function capabilities.
 
 ## Step-by-Step Instructions
