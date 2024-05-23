@@ -121,7 +121,9 @@ This configuration sets up the virtual network and associated subnets. This is c
 
 **Resource Block: Virtual Network**
 
-``` 
+```
+terraform {}
+
 resource "azurerm_virtual_network" "exercise5" {
   name                = "vnet-exercise5"
   resource_group_name = data.azurerm_resource_group.studentrg.name
