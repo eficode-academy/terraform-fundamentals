@@ -49,7 +49,7 @@ terraform {
 }
 ```
 
-Let's continue adding another option to the `terraform` block. 
+Let's continue adding another option inside the `terraform` block. 
 
 The `required_providers` block lists each provider required by the configuration along with additional details:
 
