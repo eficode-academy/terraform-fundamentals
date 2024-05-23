@@ -160,7 +160,7 @@ resource "azurerm_subnet" "server" {
 
 ### 3\. Deploy Client VMs
 
-#### Creating `01-deployclients.tf`:
+#### Creating `01_deployclients.tf`:
 
 This file handles the deployment of client VMs. Dynamic public IPs are assigned to these VMs, allowing external access and connectivity tests.
 
