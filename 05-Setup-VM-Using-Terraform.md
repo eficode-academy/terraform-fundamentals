@@ -363,7 +363,18 @@ var.exercise
 terraform apply
 ```
 
-- [ ] add screenshots
+There will be a whole lot of resources created, and the output should resemble this:
+
+```
+Apply complete! Resources: 12 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+client_connection_string = {
+  "client1" = "ssh Student-0@40.118.57.218"
+  "client2" = "ssh Student-0@13.81.85.56"
+}
+```
 
 ### 5. Verify Connectivity and Clean Up
 
