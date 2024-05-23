@@ -346,7 +346,7 @@ You will get an app url when you applied the configurations as part of the outpu
 
 You should see something like this
 
-- [ ] add app screenshot
+![image](https://github.com/eficode-academy/terraform-fundamentals/assets/71190161/77275510-e48f-4cc1-b5e9-a8ab7308f9a2)
 
 ## Remember to clean up! 💡
 
@@ -354,9 +354,13 @@ Execute the following command to remove all resources and clean up the infrastru
 
 `terraform destroy`
 
-This command will prompt you to review and confirm the destruction of the resources defined in your Terraform configuration. Once confirmed, Terraform will proceed to safely remove all the resources, effectively cleaning up the deployed infrastructure. This step helps prevent unnecessary costs and ensures that the environment is reset for future exercises.
+This command will prompt you to review and confirm the destruction of the resources defined in your Terraform configuration. 
 
-The output will somewhat resemble the example shown below.
+Once confirmed, Terraform will proceed to safely remove all the resources, effectively cleaning up the deployed infrastructure. 
+
+This step helps prevent unnecessary costs and ensures that the environment is reset for future exercises.
+
+The output should resemble the example shown below.
 
 ```
 coder@workstation-3 ~/terraform-fundamentals/terraform-basic-commands (main *)
