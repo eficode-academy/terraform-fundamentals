@@ -91,10 +91,18 @@ After setting up the necessary resources, exit the 00start subdirectory and ente
    ```
 
 ❗**Important**:
-- Replace `<resource group name>` with the name of the Azure Resource Group you have prepared for this configuration. This must be an existing resource group where you have permissions to create resources.
-- Replace `<storage account name>` with the name of your Azure Storage Account. Ensure that the storage account name is unique within Azure and that it follows Azure naming conventions.
-- Replace `<name of container>` with the name of the container in your Azure Blob Storage where you intend to store the Terraform state files. The container should be created beforehand if it does not already exist.
-- Replace `<unique-key-name>` with a unique name to prevent conflicts and ensure your state file is distinctly identifiable. This can be the name of your workstation.
+- Replace `<resource group name>` with the name of the Azure Resource Group you have prepared for this configuration.
+  This must be an existing resource group where you have permissions to create resources.
+
+- Replace `<storage account name>` with the name of your Azure Storage Account.
+  Ensure that the storage account name is unique within Azure and that it follows Azure naming conventions.
+
+- Replace `<name of container>` with the name of the container in your Azure Blob Storage where you intend to store the Terraform state files.
+  The container should be created beforehand if it does not already exist.
+
+- Replace `<unique-key-name>` with a unique name to prevent conflicts and ensure your state file is distinctly identifiable.
+  This can be the name of your workstation.
+
 - Verify that `tenant_id` and `subscription_id` are correctly set to match your Azure tenant and subscription details where you want to manage resources.
 
 
