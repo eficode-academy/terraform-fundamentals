@@ -36,15 +36,15 @@ Before configuring your remote backend, proceed to the `00start` subdirectory. H
 
 1. Initialize the Terraform environment:
 
-   `terraform init`
+    `terraform init`
 
 2. Generate and review the execution plan:
 
-  `terrafom plan`
+     `terrafom plan`
 
 3. Apply the configuration (you will be prompted to approve the plan):
 
-  `terraform apply`
+     `terraform apply`
 
 During this, observe the local state file that is created in the current directory.
 
