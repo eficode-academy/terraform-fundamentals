@@ -207,7 +207,7 @@ var.instances_configuration
                   public_ip: false
                   subnet: server
 
-  Enter a value: **configuration/instances.yaml**
+  Enter a value: configuration/instances.yaml
 
 var.network_configuration
           "Should point to a yaml file, structured as:"
@@ -222,7 +222,7 @@ var.network_configuration
                       ranges:
                       - 10.0.1.0/24
 
-  Enter a value: **configuration/network.yaml**
+  Enter a value: configuration/network.yaml
 
 ```
 
