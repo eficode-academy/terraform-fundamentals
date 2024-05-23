@@ -313,7 +313,7 @@ resource "azurerm_linux_virtual_machine" "server" {
 
 *Deploys the server VM, ensuring it is configured with the necessary credentials and linked to the network interface created earlier.*
 
-### Add output block to 01_deployserver.tf
+### Add output block to 01_deployclients.tf
 
 #### Output block that outputs the command to verify SSH connection to your newly created virtual machine
 
