@@ -378,9 +378,79 @@ client_connection_string = {
 
 ### 5. Verify Connectivity and Clean Up
 
-After deploying the resources, verify connectivity by accessing the client VMs using SSH and ensure they can connect to the server VM. Utilize the output connection strings provided in the Terraform output.
+After deploying the resources, verify connectivity by accessing the client VMs using SSH and ensure they can connect to the server VM. 
 
-To avoid incurring unnecessary charges, use the command `terraform destroy` to clean up all resources once you complete the exercises.
+Utilize the output connection strings provided in the Terraform output.
+
+```
+ssh Student-0@40.118.57.218
+The authenticity of host '40.118.57.218 (40.118.57.218)' can't be established.
+ECDSA key fingerprint is SHA256:WkvzYvfuAnJ1X6oVH91wxZKaXjp2W1YHiV5blEnCvH8.
+Are you sure you want to continue connecting (yes/no/[fingerprint])?
+```
+Type 'yes'.
+
+```
+ssh Student-0@40.118.57.218
+The authenticity of host '40.118.57.218 (40.118.57.218)' can't be established.
+ECDSA key fingerprint is SHA256:WkvzYvfuAnJ1X6oVH91wxZKaXjp2W1YHiV5blEnCvH8.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '40.118.57.218' (ECDSA) to the list of known hosts.
+Student-0@40.118.57.218's password:
+```
+
+Type in the password you have set during the resource creation.
+
+```
+$ ssh Student-0@40.118.57.218
+The authenticity of host '40.118.57.218 (40.118.57.218)' can't be established.
+ECDSA key fingerprint is SHA256:WkvzYvfuAnJ1X6oVH91wxZKaXjp2W1YHiV5blEnCvH8.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '40.118.57.218' (ECDSA) to the list of known hosts.
+Student-0@40.118.57.218's password: 
+Welcome to Ubuntu 22.04.4 LTS (GNU/Linux 6.5.0-1021-azure x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Thu May 23 13:43:32 UTC 2024
+
+  System load:  0.09              Processes:             105
+  Usage of /:   5.1% of 28.89GB   Users logged in:       0
+  Memory usage: 62%               IPv4 address for eth0: 10.0.0.4
+  Swap usage:   0%
+
+Expanded Security Maintenance for Applications is not enabled.
+
+0 updates can be applied immediately.
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+The list of available updates is more than a week old.
+To check for new updates run: sudo apt update
+
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+To run a command as administrator (user "root"), use "sudo <command>".
+See "man sudo_root" for details.
+
+Student-0@vm-client1:~$ 
+
+```
+
+Et voila, you are now connected to a virtual machine on Azure you just created with Terraform! You are awesome! 🎉
+
+
+Of course, to avoid incurring unnecessary charges, use the command `terraform destroy` to clean up all resources once you complete the exercises.
 
 **Extra Task: Visualizing the Terraform Dependency Graph**:
 
