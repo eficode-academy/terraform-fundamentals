@@ -449,6 +449,7 @@ Student-0@vm-client1:~$
 
 Et voila, you are now connected to a virtual machine on Azure you just created with Terraform! You are awesome! 🎉
 
+You can exit by either typing 'exit', or pressing Ctrl+D. 
 
 Of course, to avoid incurring unnecessary charges, use the command `terraform destroy` to clean up all resources once you complete the exercises.
 
