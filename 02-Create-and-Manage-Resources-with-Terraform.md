@@ -7,6 +7,7 @@
 
 ## Introduction
 This exercise will guide you through the process of using Terraform to deploy a static website to Azure. 
+
 You will learn how to write, plan, and apply Terraform configurations to create an Azure storage account, enable the static website feature, and upload content.
 
 **Note:** 
@@ -56,7 +57,9 @@ The `required_providers` block lists each provider required by the configuration
 - `source`: Indicates where Terraform can find the provider's source code. Typically, this is in the form of `namespace/provider`, and for official providers like Azure and Random, `hashicorp/` is the namespace.
 - `version`: Specifies the version or range of versions of the provider. The version constraint `~> 3.0` means it will use version 3.0 and any subsequent patch versions, but not 4.0 or later.
 
-We are going to configure the Azure and Random providers within the `terraform` block in the `required_providers` block. This setup is necessary because we'll be using Azure Cloud for our infrastructure and the Random provider to generate unique names for storage accounts on Azure.
+We are going to configure the Azure and Random providers within the `terraform` block in the `required_providers` block. 
+
+This setup is necessary because we'll be using Azure Cloud for our infrastructure and the Random provider to generate unique names for storage accounts on Azure.
 
 ```hcl
 required_providers {
@@ -92,7 +95,9 @@ terraform {
 
 **What is a Provider Block?**
 
-The `provider` block configures the specified provider, in this case, `azurerm`. A provider is a plugin that Terraform uses to create and manage your resources. You can define multiple provider blocks in a Terraform configuration to manage resources from different providers.
+The `provider` block configures the specified provider, in this case, `azurerm`. 
+
+A provider is a plugin that Terraform uses to create and manage your resources. You can define multiple provider blocks in a Terraform configuration to manage resources from different providers.
 
 This provider is maintained by the Azure team at Microsoft and the Terraform team at HashiCorp.
 
@@ -290,7 +295,9 @@ resource "azurerm_storage_blob" "image" {
 
 ### 3.Configure `outputs.tf` for Azure Resources
 
-The `outputs.tf` file defines the output variables that will be displayed after Terraform applies its configurations. These outputs can be useful for obtaining direct links or important information regarding the deployed resources.
+The `outputs.tf` file defines the output variables that will be displayed after Terraform applies its configurations. 
+
+These outputs can be useful for obtaining direct links or important information regarding the deployed resources.
 
 Insert the code below into `outputs.tf` and save the file.
 
@@ -344,14 +351,18 @@ This command initializes the project, installs the required provider plugins, an
 ```bash
 terraform plan
 ```
-This command shows you what Terraform intends to do before making any changes to your actual resources. It's a good practice to review this output to avoid unexpected changes.
+This command shows you what Terraform intends to do before making any changes to your actual resources. 
+
+It's a good practice to review this output to avoid unexpected changes.
 
 #### Apply the Configuration
 
 ```bash
 terraform apply
 ```
-This command applies the configurations. Terraform will prompt you to approve the action before proceeding. After approval, it will provision the resources specified in your Terraform files.
+This command applies the configurations. Terraform will prompt you to approve the action before proceeding. 
+
+After approval, it will provision the resources specified in your Terraform files.
 
 #### View the Deployed Website
 
@@ -371,8 +382,14 @@ Execute the following command to remove all resources and clean up the infrastru
 ```bash
 terraform destroy
 ```
-This command will prompt you to review and confirm the destruction of the resources defined in your Terraform configuration. Once confirmed, Terraform will proceed to safely remove all the resources, effectively cleaning up the deployed infrastructure. This step helps prevent unnecessary costs and ensures that the environment is reset for future exercises.
+This command will prompt you to review and confirm the destruction of the resources defined in your Terraform configuration. 
+
+Once confirmed, Terraform will proceed to safely remove all the resources, effectively cleaning up the deployed infrastructure. 
+
+This step helps prevent unnecessary costs and ensures that the environment is reset for future exercises.
 
 # Congratulations 🎉
 
-Following these instructions, you've successfully configured, deployed, and cleaned up a static website hosted on Azure using Terraform. This process not only automates your deployments, but also helps manage infrastructure as code efficiently.
+Following these instructions, you've successfully configured, deployed, and cleaned up a static website hosted on Azure using Terraform. 
+
+This process not only automates your deployments, but also helps manage infrastructure as code efficiently.
