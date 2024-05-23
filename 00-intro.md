@@ -100,3 +100,6 @@ You'll see a window titled _Action Required_, click on _Ask later_ to skip it.
 
 ![image](https://github.com/eficode-academy/terraform-fundamentals/assets/71190161/93ef475b-8703-4732-b4a1-fea821ec0d59)
 
+![image](https://github.com/eficode-academy/terraform-fundamentals/assets/71190161/31bd9779-f773-4629-89e7-4852a5595ef1)
+
+Now you should be able to access _Resource Groups_ in the _Navigate_ submenu, where we will be creating most of our resources going forward, then you are able to see the created objects.
