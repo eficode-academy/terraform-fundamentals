@@ -81,3 +81,22 @@ $ az account show
 }
 
 ```
+
+4. **Login to Azure Portal**
+
+Try typing
+
+`az login`
+
+A window will pop up to warn you that you are about to open an external website. 
+
+![image](https://github.com/eficode-academy/terraform-fundamentals/assets/71190161/bd7cf2ab-32cb-4215-b040-b64dc435a2f7)
+
+Click _Open_
+
+Sign in using the username and the password you used for Azure CLI earlier.
+
+You'll see a window titled _Action Required_, click on _Ask later_ to skip it.
+
+![image](https://github.com/eficode-academy/terraform-fundamentals/assets/71190161/93ef475b-8703-4732-b4a1-fea821ec0d59)
+
