@@ -61,29 +61,57 @@ Outputs:
 
 container_name = "tfstate"
 storage_account_name = "qglcfvfh"
+resource_group_name = "rg-resourcegrp"
 ```
 
-❗ Take note of `container_name` and `storage_account_name`. ❗
+❗ Take note of `container_name`, `storage_account_name` and `resource_group_name`. ❗
 
 After successfully applying the Terraform configuration, pay close attention to the output. 
 
-The names of the storage account and the container where the Terraform state will be stored are displayed. Ensure you copy these names accurately for later use.
+The names of the storage account ,the container and resource group where the Terraform state will be stored are displayed. Ensure you copy these  accurately for later use.
 
-Now exit the subdirectory `00start` and go the to subdirectory `01start`. 
-
-All necessary configurations and files for hosting the static website on Azure are present. 
-
-An empty file named `backend.tf` is present among them . This file will be used to configure your remote backend.
+After setting up the necessary outputs, exit the `00start` subdirectory and enter the `01start` subdirectory. 
 
 **Configure the Backend:**
 
-After setting up the necessary resources, exit the 00start subdirectory and enter the 01start subdirectory. 
+The `01start` subdirectory contains all necessary configurations and files for hosting the static website on Azure, including an empty file named backend.tf
 
-This location contains all necessary configurations and files for hosting the static website on Azure, including an empty file named backend.tf. This file will be used to set up your remote backend.
+An empty file named `backend.tf` is present among them . This file will be used to configure your remote backend.
+
+
 
 **Add Backend Configuration**:
 
-   - Paste the following configuration into `backend.tf`. This setup specifies the Azure backend for your Terraform state.
+**Task:**
+
+Lets try to write the backend configuration on your own by referring to the Backend type azurerm documentation.
+
+**Steps to Follow:**
+
+1. Visit this link to know more about the azurerm backend:
+[Backend type azurem](https://developer.hashicorp.com/terraform/language/settings/backends/azurerm)
+
+2. Begin by defining the terraform block in your backend.tf file. This block is used to specify backend configuration.
+
+```hcl
+terraform {
+  backend "azurerm" {
+    // Backend configuration parameters will go here
+  }
+}
+```
+
+3. Required Parameters to define within the backend block:
+
+- resource_group_name: The name of the resource group containing the storage account.
+- storage_account_name: The name of the Azure Storage Account where the state file will be stored.
+- container_name: The container within the storage account where the state file will reside.
+- key: The name of the state file. Ensure this is unique to prevent overlap with other projects.
+- tenant_id and subscription_id: Your Azure account's tenant and subscription identifiers.
+
+
+
+4. Paste the following configuration into `backend.tf`. This setup specifies the Azure backend for your Terraform state.
 
    ```
    terraform {
@@ -97,6 +125,7 @@ This location contains all necessary configurations and files for hosting the st
      }
    }
    ```
+
 
 ❗**Important**:
 - Replace `<resource group name>` with the name of the Azure Resource Group you have prepared for this configuration.
@@ -125,9 +154,6 @@ This location contains all necessary configurations and files for hosting the st
    - `key`: The name of the state file. Ensure this is unique to prevent overlap with other projects.
    - `tenant_id` and `subscription_id`: Your Azure account's tenant and subscription identifiers.
 
-
-Visit this link to know more about the azurerm backend:
-[Backend type azurem](https://developer.hashicorp.com/terraform/language/settings/backends/azurerm)
 
 💡 Save the File 💡
 
@@ -175,7 +201,7 @@ Visit this URL in your web browser to view your deployed static website.
 ![image](https://github.com/eficode-academy/terraform-fundamentals/assets/71190161/ac55c146-cf98-4a81-9ed0-d92b5a9bb792)
 
 
-- Look into the `tfstate` container to verify that the state file (`unique-training-key.terraform.tfstate`) is present.
+- Look into the `tfstate` container to verify that the state file (`<unique-training-key>.terraform.tfstate`) is present.
 
 ### 7. Manipulating Terraform State
 

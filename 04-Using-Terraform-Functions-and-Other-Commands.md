@@ -109,7 +109,10 @@ After exploring Terraform functions, we'll practice using several important Terr
 
 #### Navigate to the directory
 
-Before executing the commands, make sure you are in the correct directory `using terraform functions and advanced commands` where a  Terraform configuration file is located. The terraform configuration is to create a random string.
+Before executing the commands, make sure you are in the correct directory  `labs/04-Using-Terraform-Functions-and-Other-Commands` where a  Terraform configuration file is located. 
+
+The terraform configuration is to create a random string.
+
 The content of the file `main.tf` looks like below
 
 ```hcl
