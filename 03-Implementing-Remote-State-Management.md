@@ -198,7 +198,7 @@ Replace <resource_name> with one of the resources listed in the previous step.
 Update the state file to match the actual infrastructure:
 
 ```
-terraform state refresh
+terraform refresh
 ```
 
 **Remove a resource from the state file:**
