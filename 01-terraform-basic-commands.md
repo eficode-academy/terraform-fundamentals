@@ -18,7 +18,7 @@ The basic functionality of the application can be achieved by deploying the fron
 The frontend listens for HTTP requests on port `5000` (the default for Flask).
 
 ### Terraform Configuration
-The Terraform configuration in the [terraform basic commands](https://github.com/eficode-academy/terraform-fundamentals/tree/main/labs/01-terraform-basic-commands) directory is set to define and provision the necessary cloud infrastructure to run the Flask application.
+The Terraform configuration in the [labs/01-terraform-basic-commands](https://github.com/eficode-academy/terraform-fundamentals/tree/main/labs/01-terraform-basic-commands) directory is set to define and provision the necessary cloud infrastructure to run the Flask application.
 
 It typically includes server setup, networking, and security settings.
 
