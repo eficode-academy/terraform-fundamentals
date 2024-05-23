@@ -15,7 +15,7 @@ Terraform only supports authenticating to Azure via the Azure CLI. Authenticatin
 
 1. **Check Terraform Version:**
 
-Open an integrated terminal on your workstation and type the following command to check the installed version of Terraform:
+Open the terminal on your workstation by right clicking in the File Explorer sidebar on the left side of the screen and select _Open in Integrated Terminal_ , and type the following command to check the installed version of Terraform:
    
    `terraform version` 
    
