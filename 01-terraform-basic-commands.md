@@ -311,7 +311,11 @@ Do you want to perform these actions?
 
 ```
 
-You will be prompted to approve the action by typing 'yes'. As you will see in the terminal prompt, 'yes' is the only acceptable value here, everything else will cancel the command. Once confirmed, Terraform will apply the specified configurations, provisioning the necessary resources for the Flask application.
+You will be prompted to approve the action by typing 'yes'. 
+
+As you will see in the terminal prompt, 'yes' is the only acceptable value here, everything else will cancel the command. 
+
+Once confirmed, Terraform will apply the specified configurations, provisioning the necessary resources for the Flask application.
 
 The output should resemble the example shown below.
 
