@@ -470,7 +470,7 @@ For those interested in visualizing how Terraform manages dependencies within yo
 This will create a `graph.png` file, which visually represents the structure of your Terraform configuration. Open this file to review the relationships and dependencies between your resources.
 
 
-Conclusion
+Congratulations!
 ----------
 
-Congratulations! By completing this module, you've learned to set up and manage network configurations and VMs in Azure using Terraform, which is crucial for effective cloud infrastructure management.
+By completing this module, you've learned to set up and manage network configurations and VMs in Azure using Terraform, which is crucial for effective cloud infrastructure management.
