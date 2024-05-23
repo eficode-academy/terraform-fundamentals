@@ -27,7 +27,7 @@ The Azure backend stores state as a blob in a specified container on an Azure St
 
 #### Setting Up `backend.tf`
 
-Navigate to the directory `labs/03-Implementing-Remote-state-management`.
+Navigate to the directory `labs/03-Implementing-Remote-State-Management`.
 
 Inside, you will find both the `00start` and `01start` subdirectories.
 
