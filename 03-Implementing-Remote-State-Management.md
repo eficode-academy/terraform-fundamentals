@@ -170,7 +170,11 @@ Visit this URL in your web browser to view your deployed static website.
 ### 6. Verify the State File in Azure
 
 - Log in to your Azure Portal.
-- Navigate to the specified Storage Account .
+- Navigate to the specified Storage Account by accessing Storage accounts(classic).
+
+![image](https://github.com/eficode-academy/terraform-fundamentals/assets/71190161/ac55c146-cf98-4a81-9ed0-d92b5a9bb792)
+
+
 - Look into the `tfstate` container to verify that the state file (`unique-training-key.terraform.tfstate`) is present.
 
 ### 7. Manipulating Terraform State
