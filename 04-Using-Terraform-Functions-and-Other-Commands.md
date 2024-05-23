@@ -18,7 +18,7 @@ Through hands-on practice, you will learn how to manipulate data and manage Terr
 
 Before experimenting with the functions, make sure you have a working Terraform setup.
 
-- **Navigate** to `using terraform functions and commands` directory.
+- **Navigate** to `labs/04-Using-Terraform-Functions-and-Other-Commands` directory.
 - **Open** a terminal in this directory.
 - Run `terraform init`
 - **Run** the Terraform console command:
