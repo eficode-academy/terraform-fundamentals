@@ -174,6 +174,114 @@ resource "azurerm_subnet" "main" {
 **Review the planned actions by Terraform without applying them:**
 
 ```terraform plan```
+```
+terraform plan
+var.admin_password
+  default password to connect to the servers we deploy
+
+  Enter a value: 
+
+var.admin_username
+  default admin user to connect to the servers we deploy
+
+  Enter a value: 
+
+var.exercise
+  This is the exercise number. It is used to make the name of some the resources unique
+
+  Enter a value: 9
+
+var.instances_configuration
+          "Should point to a yaml file, structured as:"
+          data:
+              VMNAME:
+                  size: "VM SKU"
+                  public_ip: true/false
+                  subnet: client
+              client2:
+                  size: "VM SKU"
+                  public_ip: true
+                  subnet: client
+              server:
+                  size: "VM SKU"
+                  public_ip: false
+                  subnet: server
+
+  Enter a value: configuration/instances.yaml
+
+var.network_configuration
+          "Should point to a yaml file, structured as:"
+              data:
+              ranges:
+              - 10.0.0.0/16
+              subnets:
+                  client:
+                      ranges:
+                      - 10.0.0.0/24
+                  server:
+                      ranges:
+                      - 10.0.1.0/24
+
+  Enter a value: configuration/network.yaml
+
+data.azurerm_client_config.current: Reading...
+data.azurerm_resource_group.studentrg: Reading...
+data.azurerm_client_config.current: Read complete after 0s [id=Y2xpZW50Q29uZmlncy9jbGllbnRJZD0wNGIwNzc5NS04ZGRiLTQ2MWEtYmJlZS0wMmY5ZTFiZjdiNDY7b2JqZWN0SWQ9OTQ0MDRlY2ItN2JkYS00ZTFhLTg3NDAtNWQ5ZjA3NDEyYzZjO3N1YnNjcmlwdGlvbklkPTc2OWQ4ZjdlLWUzOTgtNGNiZi04MDE0LTAwMTllMWZkZWU1OTt0ZW5hbnRJZD1jZTk4YzkwMy1mNTIxLTQwMjgtODlkYy0xMzIyNzkyN2UzMjM=]
+data.azurerm_resource_group.studentrg: Read complete after 0s [id=/subscriptions/769d8f7e-e398-4cbf-8014-0019e1fdee59/resourceGroups/rg-workstation-0]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # azurerm_subnet.main["client"] will be created
+  + resource "azurerm_subnet" "main" {
+      + address_prefixes                               = [
+          + "10.0.0.0/24",
+        ]
+      + enforce_private_link_endpoint_network_policies = (known after apply)
+      + enforce_private_link_service_network_policies  = (known after apply)
+      + id                                             = (known after apply)
+      + name                                           = "client"
+      + private_endpoint_network_policies              = (known after apply)
+      + private_endpoint_network_policies_enabled      = (known after apply)
+      + private_link_service_network_policies_enabled  = (known after apply)
+      + resource_group_name                            = "rg-workstation-0"
+      + virtual_network_name                           = "vnet-9"
+    }
+
+  # azurerm_subnet.main["server"] will be created
+  + resource "azurerm_subnet" "main" {
+      + address_prefixes                               = [
+          + "10.0.1.0/24",
+        ]
+      + enforce_private_link_endpoint_network_policies = (known after apply)
+      + enforce_private_link_service_network_policies  = (known after apply)
+      + id                                             = (known after apply)
+      + name                                           = "server"
+      + private_endpoint_network_policies              = (known after apply)
+      + private_endpoint_network_policies_enabled      = (known after apply)
+      + private_link_service_network_policies_enabled  = (known after apply)
+      + resource_group_name                            = "rg-workstation-0"
+      + virtual_network_name                           = "vnet-9"
+    }
+
+  # azurerm_virtual_network.main will be created
+  + resource "azurerm_virtual_network" "main" {
+      + address_space       = [
+          + "10.0.0.0/16",
+        ]
+      + dns_servers         = (known after apply)
+      + guid                = (known after apply)
+      + id                  = (known after apply)
+      + location            = "westeurope"
+      + name                = "vnet-9"
+      + resource_group_name = "rg-workstation-0"
+      + subnet              = (known after apply)
+    }
+
+Plan: 3 to add, 0 to change, 0 to destroy.
+```
 
 ### 6\. Deploy Virtual Machines
 
