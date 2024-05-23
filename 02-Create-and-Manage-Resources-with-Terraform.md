@@ -16,7 +16,7 @@ The `web` directory contains all static files for your website.
 
 ### 1. Prepare Your Terraform Configuration
 
-Navigate to the directory `labs/02-Create-and-Manage-Resources-with-Terraform`.
+Navigate to the directory `labs/02-Create-and-Manage-Resources-with-Terraform/start`.
 
 Inside, you will find the `start` directory , which contains the following empty Terraform files:
 
