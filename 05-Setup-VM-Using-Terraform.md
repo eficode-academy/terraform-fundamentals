@@ -243,7 +243,7 @@ resource "azurerm_linux_virtual_machine" "client" {
 
 ### 4\. Deploy Server VM
 
-#### Creating `01-deployserver.tf`:
+#### Creating `01_deployserver.tf`:
 
 This configuration sets up a server VM with a static public IP, ensuring that it has a fixed entry point for network communications, which is essential for server roles.
 
