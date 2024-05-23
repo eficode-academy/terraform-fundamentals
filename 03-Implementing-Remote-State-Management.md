@@ -165,7 +165,7 @@ After deployment, Terraform outputs the URL of the static website:
 primary_web_host = "https://example.z13.web.core.windows.net/"
 ```
 
-**Visit** this URL in your web browser to view your deployed static website.
+Visit this URL in your web browser to view your deployed static website.
 
 ### 6. Verify the State File in Azure
 
