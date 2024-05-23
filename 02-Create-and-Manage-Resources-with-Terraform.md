@@ -375,6 +375,9 @@ primary_web_host = "https://example.z13.web.core.windows.net/"
 ```
 **Open** a web browser and **navigate** to the URL displayed in the outputs to view your deployed static website.
 
+![image](https://github.com/eficode-academy/terraform-fundamentals/assets/71190161/fbd8ebe2-42c9-4add-9acf-f80e75946752)
+
+
 ### 6. Cleanup Resources
 
 Execute the following command to remove all resources and clean up the infrastructure:
