@@ -101,7 +101,7 @@ Here are some of the key Terraform functions and practical examples of how to us
 
 ### 3. Exiting the Console
 
-To exit the Terraform console, simply type `exit` and press Enter.
+To exit the Terraform console, simply type `exit` and press Enter, or press Ctrl + C.
 
 ### 4. Practice Terraform Commands
 
