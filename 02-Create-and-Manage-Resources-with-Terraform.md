@@ -18,7 +18,7 @@ The `web` directory contains all static files for your website.
 
 Navigate to the directory `labs/02-Create-and-Manage-Resources-with-Terraform/start`.
 
-Inside, you will find the `start` directory , which contains the following empty Terraform files:
+Inside, you will find the following empty Terraform files:
 
 - **main.tf** - Defines the required resources for hosting a static website on Azure.
 - **providers.tf** - Specifies the required version of Terraform and the providers you plan to use.
