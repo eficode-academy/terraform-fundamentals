@@ -4,7 +4,9 @@ y06-Applying Modules and Workspaces in Terraform.md
 Learning Goals
 --------------
 
-This module provides an opportunity to master the use of Terraform modules and workspaces by creating a scalable and repeatable infrastructure with virtual machines (VMs) in Azure. Learn how to deploy VMs based on YAML configurations, emphasizing the flexibility and reusability of Terraform modules.
+This module provides an opportunity to master the use of Terraform modules by creating a scalable and repeatable infrastructure with virtual machines (VMs) in Azure. 
+
+Learn how to deploy VMs based on YAML configurations, emphasizing the flexibility and reusability of Terraform modules.
 
 Objectives
 ----------
@@ -12,7 +14,6 @@ Objectives
 *  Understand the use of Terraform modules for resource deployment.
 *  Learn to interpret and apply configurations from YAML files.
 *  Deploy three virtual machines using the `for_each` construct to loop over configurations.
-*  Utilize Terraform workspaces to manage different deployment environments or stages.
 *  Clean up resources to prevent unnecessary Azure charges.
 
 Step-by-Step Instructions
@@ -315,7 +316,9 @@ To manage costs effectively and avoid unnecessary charges in Azure:
 
 This command cleans up all resources deployed during this exercise.
 
-Conclusion
+Well done!
 ----------
 
-Congratulations! You've successfully utilized Terraform modules and workspaces to deploy and manage virtual machines in Azure. This exercise demonstrates the power of Terraform in managing complex infrastructure setups efficiently and repeatably.
+You've successfully utilized Terraform modules to deploy and manage virtual machines in Azure. 
+
+This exercise demonstrates the power of Terraform in managing complex infrastructure setups efficiently and repeatably.
