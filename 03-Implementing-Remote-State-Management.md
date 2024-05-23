@@ -38,10 +38,6 @@ Before configuring your remote backend, proceed to the `00start` subdirectory. H
 
    `terraform init`
 
-During this initialization, observe the local state file that is created.
-
-Note that storing sensitive information in local state files can be risky as these files can easily be exposed to unauthorized access if not properly secured.
-
 2. Generate and review the execution plan:
 
   `terrafom plan`
@@ -50,7 +46,9 @@ Note that storing sensitive information in local state files can be risky as the
 
   `terraform apply`
 
-It will output something of the like:
+During this, observe the local state file that is created in the current directory.
+
+The command will output something of the like:
 
 ```
 Apply complete! Resources: 3 added, 0 changed, 0 destroyed.
@@ -64,6 +62,7 @@ storage_account_name = "qglcfvfh"
 * Take note of `container_name` and `storage_account_name`.
 
 After successfully applying the Terraform configuration, pay close attention to the output. 
+
 The names of the storage account and the container where the Terraform state will be stored are displayed. Ensure you copy these names accurately for later use.
 
 Now exit the subdirectory `00start` and go the to subdirectory `01start`. 
