@@ -138,24 +138,30 @@ provider "azurerm" {
 
 ### 2. Configure the main.tf File for Azure Resources
 
-In the `main.tf` file, we will define the necessary resources to host a static website on Azure. This setup includes creating a uniquely named storage account and configuring it to serve static content.
+In the `main.tf` file, we will define the necessary resources to host a static website on Azure. 
+
+This setup includes creating a uniquely named storage account and configuring it to serve static content.
 
 **Starting with Data and Resource Blocks**
 
-1. **Data Block - Azure Client Configuration**
+**Data Block - Azure Client Configuration**
    
-   Retrieves the configuration of the client running Terraform. Useful for obtaining properties like the account's subscription and tenant IDs if required.
+Retrieves the configuration of the client running Terraform. Useful for obtaining properties like the account's subscription and tenant IDs if required.
+
+Add this to your main.tf. 
 
    ```hcl
    data "azurerm_client_config" "current" {}
    ```
 
-  Learn more about configuring the  azurerm_client_config data source:
-   [Azure Client Config Data Source Documentation](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/client_config)
+Learn more about configuring the  azurerm_client_config data source:
+[Azure Client Config Data Source Documentation](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/client_config)
 
-2. **Resource Block - Random String for Storage Account Name**
+**Resource Block - Random String for Storage Account Name**
    
-   Generates a unique name for the Azure storage account, adhering to Azure's naming requirements.
+Generates a unique name for the Azure storage account, adhering to Azure's naming requirements.
+
+Add this block under the data one.
 
    ```hcl
    resource "random_string" "storage_account_name" {
@@ -170,9 +176,11 @@ In the `main.tf` file, we will define the necessary resources to host a static w
    Learn more about configuring the  random_string resource:
    [Random String Resource Documentation](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string)
 
-3. **Resource Block - Azure Storage Account**
+**Resource Block - Azure Storage Account**
    
-   Defines the storage account where the static website will be hosted, specifying type, replication, and static website settings.
+  Defines the storage account where the static website will be hosted, specifying type, replication, and static website settings.
+
+  Continue by adding this to your main.tf
 
    ```hcl
    resource "azurerm_storage_account" "storage_account" {
@@ -195,9 +203,11 @@ In the `main.tf` file, we will define the necessary resources to host a static w
    Learn more about configuring the  azurerm_storage_account resource:
    [Azure Storage Account Resource Documentation](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account)
 
-4. **Resource Block - Azure Storage Blob**
+**Resource Block - Azure Storage Blob**
    
-   Uploads the `index.html` file and`image.jpg`into the Azure storage account, placing it in the `$web` container used for static website hosting.
+Uploads the `index.html` file and`image.jpg`into the Azure storage account, placing it in the `$web` container used for static website hosting.
+
+Add it as last in your main.tf configuration file.
 
 ```hcl
 resource "azurerm_storage_blob" "index" {
