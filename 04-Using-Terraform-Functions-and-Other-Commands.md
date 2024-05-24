@@ -237,8 +237,8 @@ In a subsequent exercise, you will have the opportunity to explore the `terrafor
    ```
 
 
-### Conclusion
+### Congratulations!
 
-This hands-on session with Terraform's built-in functions  and commands provides a deeper understanding of how to dynamically manage and manipulate data within Terraform configurations. 
+This hands-on session with Terraform's built-in functions and commands provides a deeper understanding of how to dynamically manage and manipulate data within Terraform configurations. 
 
 To read more of Terraform's functions and to see a complete list of available functions, visit the [Terraform Documentation on Functions](https://www.terraform.io/language/functions).
