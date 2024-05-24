@@ -194,7 +194,7 @@ variable "container_name" {
 
 This variable allow you to specify the name of the container inside storage account, which can be overridden at runtime if needed.
 
-### 3. Configure the main.tf File for Azure Resources
+### 3. Configure the main.tf file for Azure Resources
 
 In the `main.tf` file, we will define the necessary resources to host a static website on Azure. 
 
