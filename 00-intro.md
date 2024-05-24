@@ -1,32 +1,34 @@
 # Azure CLI Authentication Guide
 
 ## Learning Goals
+
 - Check the installed version of Terraform.
 - Understand how to authenticate with Azure using the Azure CLI.
 - Verify successful login and access to Azure resources.
 
 ## Introduction
+
 Authenticating with the Azure CLI is a foundational step in managing Azure resources programmatically. This guide includes preliminary checks and authentication processes necessary for accessing Azure services.
 
-**Note:** 
+**Note:**
 Terraform only supports authenticating to Azure via the Azure CLI. Authenticating using Azure PowerShell isn't supported. Therefore, while you can use the Azure PowerShell module when doing your Terraform work, you first need to authenticate to Azure using the Azure CLI.
 
 ## Step-by-Step Instructions
 
-1. **Check Terraform Version:**
+### 1 Check Terraform Version
 
 Open the terminal on your workstation by right clicking in the File Explorer sidebar on the left side of the screen and select _Open in Integrated Terminal_ , and type the following command to check the installed version of Terraform:
-   
-   `terraform version` 
-   
+
+   `terraform version`
+
    This will display the current version of Terraform installed on your workstation. The output should resemble the example shown below.
 
-```
+```shell
 $ terraform version
 Terraform v1.8.2
 ```
-    
-2. **Authenticate with Azure CLI:**
+
+### 2 Authenticate with Azure CLI
 
    In the integrated terminal on your workstation and type the following command to log in to Azure with your credentials.
 
@@ -34,7 +36,7 @@ Terraform v1.8.2
 
    Replace [username] and [password] with the credentials provided. This command authenticates your session with Azure, allowing you to manage resources.
 
-```
+```shell
 coder@workstation-3 ~/terraform-fundamentals (main)
 $ az login -u workstation-3@eficodetraining.onmicrosoft.com -p <your provided password>
 [
@@ -55,7 +57,7 @@ $ az login -u workstation-3@eficodetraining.onmicrosoft.com -p <your provided pa
 ]
 ```
 
-3. **Verify Azure Account Details:**
+### 3 Verify Azure Account Details
 
 After successfully logging in, verify your account details by running the following command
 
@@ -63,7 +65,7 @@ After successfully logging in, verify your account details by running the follow
 
 The output should resemble the example shown below.
 
-```
+```shell
 $ az account show
 {
   "environmentName": "AzureCloud",
@@ -82,13 +84,13 @@ $ az account show
 
 ```
 
-4. **Login to Azure Portal**
+### 4 Login to Azure Portal
 
 Try typing
 
 `az login`
 
-A window will pop up to warn you that you are about to open an external website. 
+A window will pop up to warn you that you are about to open an external website.
 
 ![image](https://github.com/eficode-academy/terraform-fundamentals/assets/71190161/bd7cf2ab-32cb-4215-b040-b64dc435a2f7)
 
