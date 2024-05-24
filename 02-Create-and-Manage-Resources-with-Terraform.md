@@ -142,7 +142,7 @@ provider "azurerm" {
 ----
 
 
-### 2.Configure `variables.tf` for Input Customization
+### 2. Configure `variables.tf` for Input Customization
 
 The `variables.tf` file is used to define variables that will be used throughout your Terraform configurations, allowing for parameterization and reusability.
 
@@ -243,7 +243,7 @@ Relevant Arguments to Look for in the Documentation:
 Using these arguments, you can define the random_string resource block adhering to Azure's naming requirements.
 
 
-**values to set for each argumnet are below**
+**values to set for each argument are below**
 
 
   - length  = 8
