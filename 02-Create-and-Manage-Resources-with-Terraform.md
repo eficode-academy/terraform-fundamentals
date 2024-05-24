@@ -1,19 +1,21 @@
 # 02-Create and Manage Resources with Terraform
 
 ## Learning Goals
+
 - Deploy an Azure storage account using Terraform to host a static website.
 - Understand the process of configuring Terraform resource blocks, providers block, data sources, outputs, and variables.
 - Learn to manage Azure resources effectively with Terraform.
 
 ## Introduction
-This exercise will guide you through the process of using Terraform to deploy a static website to Azure. 
+
+This exercise will guide you through the process of using Terraform to deploy a static website to Azure.
 
 You will learn how to write, plan, and apply Terraform configurations to create an Azure storage account, enable the static website feature, and upload content.
 
-**Note:** 
+**Note:**
 The `web` directory contains all static files for your website.
 
-### Step-by-Step Instructions:
+### Step-by-Step Instructions
 
 ### 1. Prepare Your Terraform Configuration
 
@@ -26,7 +28,7 @@ Inside, you will find the following empty Terraform files:
 - **outputs.tf** - Contains output blocks that display the results of the resources created.
 - **variables.tf** - Lists the variables used in the configuration.
 
-Let's begin by configuring the Terraform settings and provider configurations in the `providers.tf` file. 
+Let's begin by configuring the Terraform settings and provider configurations in the `providers.tf` file.
 
 In the `providers.tf` file paste the following configuration.
 
@@ -50,14 +52,14 @@ terraform {
 }
 ```
 
-Let's continue adding another option inside the `terraform` block. 
+Let's continue adding another option inside the `terraform` block.
 
 The `required_providers` block lists each provider required by the configuration along with additional details:
 
 - `source`: Indicates where Terraform can find the provider's source code. Typically, this is in the form of `namespace/provider`, and for official providers like Azure and Random, `hashicorp/` is the namespace.
 - `version`: Specifies the version or range of versions of the provider. The version constraint `~> 3.0` means it will use version 3.0 and any subsequent patch versions, but not 4.0 or later.
 
-We are going to configure the Azure and Random providers within the `terraform` block in the `required_providers` block. 
+We are going to configure the Azure and Random providers within the `terraform` block in the `required_providers` block.
 
 This setup is necessary because we'll be using Azure Cloud for our infrastructure and the Random provider to generate unique names for storage accounts on Azure.
 
@@ -95,7 +97,7 @@ terraform {
 
 **What is a Provider Block?**
 
-The `provider` block configures the specified provider, in this case, `azurerm`. 
+The `provider` block configures the specified provider, in this case, `azurerm`.
 
 A provider is a plugin that Terraform uses to create and manage your resources. You can define multiple provider blocks in a Terraform configuration to manage resources from different providers.
 
@@ -139,8 +141,10 @@ provider "azurerm" {
   subscription_id = "769d8f7e-e398-4cbf-8014-0019e1fdee59"
 }
 ```
-----
 
+PRO Tip: you can run `terraform fmt` to apply proper formatting to the file - and that will catch missing curly brackets and some other errors
+
+----
 
 ### 2.Configure `variables.tf` for Input Customization
 
@@ -196,17 +200,17 @@ This variable allow you to specify the name of the container inside storage acco
 
 ### 3. Configure the main.tf File for Azure Resources
 
-In the `main.tf` file, we will define the necessary resources to host a static website on Azure. 
+In the `main.tf` file, we will define the necessary resources to host a static website on Azure.
 
 This setup includes creating a uniquely named storage account and configuring it to serve static content.
 
-**Starting with Data and Resource Blocks**
+#### Starting with Data and Resource Blocks
 
-**Data Block - Azure Client Configuration**
-   
+##### Data Block - Azure Client Configuration
+
 Retrieves the configuration of the client running Terraform. Useful for obtaining properties like the account's subscription and tenant IDs if required.
 
-Add this to your main.tf. 
+Add this to your main.tf.
 
    ```hcl
    data "azurerm_client_config" "current" {}
@@ -215,14 +219,13 @@ Add this to your main.tf.
 Learn more about configuring the  azurerm_client_config data source:
 [Azure Client Config Data Source Documentation](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/client_config)
 
-**Resource Block - Random String for Storage Account Name**
-   
+##### Resource Block - Random String for Storage Account Name
+
 Generates a unique name for the Azure storage account, .
 
-**Task:**
+#### Task
 
 Try to write the random_string resource block adhering to Azure's naming requirements on your own by referring to the Terraform registry. If you need help, you can use the provided code snippet.
-
 
 1. Visit the [Random String Resource Documentation](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string)
 
@@ -242,16 +245,13 @@ Relevant Arguments to Look for in the Documentation:
 
 Using these arguments, you can define the random_string resource block adhering to Azure's naming requirements.
 
+##### values to set for each argumnet are below
 
-**values to set for each argumnet are below**
-
-
-  - length  = 8
-  - lower   = true
-  - numeric = false
-  - special = false
-  - upper   = false
-
+- length  = 8
+- lower   = true
+- numeric = false
+- special = false
+- upper   = false
 
 - Start by defining a new resource block  of type random_string named storage_account_name using the resource keyword.
 
@@ -261,9 +261,7 @@ resource "random_string" "storage_account_name" {}
 
 - Inside the  block define the relevant arguments.
 
-
 If you need help, you can use the provided code snippet.
-
 
    ```hcl
    resource "random_string" "storage_account_name" {
@@ -275,9 +273,8 @@ If you need help, you can use the provided code snippet.
    }
    ```
 
-   
-**Resource Block - Azure Storage Account**
-   
+##### Resource Block - Azure Storage Account
+
   Defines the storage account where the static website will be hosted, specifying type, replication, and static website settings.
 
   Continue by adding this to your main.tf
@@ -300,19 +297,19 @@ If you need help, you can use the provided code snippet.
    }
    ```
 
-   Set the name argument of the storage account using the random_string resource. 
-   
+   Set the name argument of the storage account using the random_string resource.
+
    How do you refer the result of random_string block?
 
-   To refer to the random_string resource within the storage account block, use the syntax <RESOURCE TYPE>.<NAME>.<ATTRIBUTE>. For the name argument, it is:
-   
+   To refer to the random_string resource within the storage account block, use the syntax `<RESOURCE TYPE>.<NAME>.<ATTRIBUTE>`. For the name argument, it is:
+
   `name =random_string.storage_account_name.result`
 
    Learn more about configuring the  azurerm_storage_account resource:
    [Azure Storage Account Resource Documentation](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account)
 
-**Resource Block - Azure Storage Blob**
-   
+Resource Block - Azure Storage Blob**
+
 Uploads the `index.html` file and`image.jpg`into the Azure storage account, placing it in the `$web` container used for static website hosting.
 
 Add it as last in your main.tf configuration file.
@@ -338,18 +335,17 @@ resource "azurerm_storage_blob" "image" {
 
 ```
 
-Set the storage_container_name argument of the storage blob using the variable defined in `variables.tf`. 
+Set the storage_container_name argument of the storage blob using the variable defined in `variables.tf`.
 
 To refer to the variable defined in the variables.tf file within the Azure blob block, use the syntax var.<variable_name>. For the storage_container_name argument, it is var.container_name.
 
 Learn more about configuring the azurerm_storage_blob resource:
    [Azure Storage Blob Resource Documentation](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_blob)
 
-
 **Assembling the Configuration in `main.tf`**
 
-After adding these blocks to your `main.tf` file and configuring some arguments, you'll have a complete configuration for deploying a static website. 
- 
+After adding these blocks to your `main.tf` file and configuring some arguments, you'll have a complete configuration for deploying a static website.
+
 Your `main.tf` should look something like this:
 
 ```hcl
@@ -399,22 +395,21 @@ resource "azurerm_storage_blob" "image" {
   source                 = "${path.root}/web/image.jpg" 
 }
 ```
+
 ----
 
 ### 3.Configure `outputs.tf` for Azure Resources
 
-The `outputs.tf` file defines the output variables that will be displayed after Terraform applies its configurations. 
+The `outputs.tf` file defines the output variables that will be displayed after Terraform applies its configurations.
 
 These outputs can be useful for obtaining direct links or important information regarding the deployed resources.
 
 Insert the code below into `outputs.tf` and save the file.
 
-
 Required Outputs:
 
 Storage Account Name
 Primary Web Endpoint (URL)
-
 
 Task:
 
@@ -428,8 +423,6 @@ Steps to Follow:
 - Look for the attributes section to find details about the storage account name and the primary web endpoint.
 Output Block for Storage Account Name:
 
-
-
 Instructions:
 
 1. output "storage_account_name": This defines a new output block named storage_account_name.
@@ -439,7 +432,6 @@ Instructions:
 3. description = "The name of the storage account.": This provides a brief description of what this output represents.
 
 Here’s the code for the output block:
-
 
 ```hcl
 output "storage_account_name" {
@@ -454,15 +446,11 @@ Now, try to write the output block for the primary web endpoint on your own.
 
 1. Go to the [Azure Storage Account Resource Documentation](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account).
 
-
 2. Look for the attribute that provides the primary web endpoint for the static website. Hint: It might be something related to a web endpoint or URL.
 
 3. Use the example above to help you format your output block.
 
-
-
 If you  still need help, you can use the code snippet below:
-
 
 ```hcl
 output "primary_web_host" {
@@ -473,9 +461,7 @@ output "primary_web_host" {
 
 For more attributes that you can output from any resource, refer to the attributes section of the respective resource documentation.
 
-
 These outputs will provide easy access to the storage account name and the URL of the static website hosted on Azure after deployment.
-
 
 ### 5. Running Terraform Commands
 
@@ -486,6 +472,7 @@ Once your configuration files are set up, follow these steps to deploy your infr
 ```bash
 terraform init
 ```
+
 This command initializes the project, installs the required provider plugins, and prepares your project for deployment.
 
 #### Plan the Deployment
@@ -493,7 +480,8 @@ This command initializes the project, installs the required provider plugins, an
 ```bash
 terraform plan
 ```
-This command shows you what Terraform intends to do before making any changes to your actual resources. 
+
+This command shows you what Terraform intends to do before making any changes to your actual resources.
 
 It's a good practice to review this output to avoid unexpected changes.
 
@@ -502,7 +490,8 @@ It's a good practice to review this output to avoid unexpected changes.
 ```bash
 terraform apply
 ```
-This command applies the configurations. Terraform will prompt you to approve the action before proceeding. 
+
+This command applies the configurations. Terraform will prompt you to approve the action before proceeding.
 
 After approval, it will provision the resources specified in your Terraform files.
 
@@ -511,14 +500,15 @@ After approval, it will provision the resources specified in your Terraform file
 Once the deployment is complete, Terraform will output the `primary_web_host`, which contains the URL to your static website:
 
 The below is example of how the url will look like
+
 ```bash
 Outputs:
 primary_web_host = "https://example.z13.web.core.windows.net/"
 ```
+
 **Open** a web browser and **navigate** to the URL displayed in the outputs to view your deployed static website.
 
 ![image](https://github.com/eficode-academy/terraform-fundamentals/assets/71190161/fbd8ebe2-42c9-4add-9acf-f80e75946752)
-
 
 ### 6. Cleanup Resources
 
@@ -527,14 +517,15 @@ Execute the following command to remove all resources and clean up the infrastru
 ```bash
 terraform destroy
 ```
-This command will prompt you to review and confirm the destruction of the resources defined in your Terraform configuration. 
 
-Once confirmed, Terraform will proceed to safely remove all the resources, effectively cleaning up the deployed infrastructure. 
+This command will prompt you to review and confirm the destruction of the resources defined in your Terraform configuration.
+
+Once confirmed, Terraform will proceed to safely remove all the resources, effectively cleaning up the deployed infrastructure.
 
 This step helps prevent unnecessary costs and ensures that the environment is reset for future exercises.
 
-# Congratulations 🎉
+## Congratulations 🎉
 
-Following these instructions, you've successfully configured, deployed, and cleaned up a static website hosted on Azure using Terraform. 
+Following these instructions, you've successfully configured, deployed, and cleaned up a static website hosted on Azure using Terraform.
 
 This process not only automates your deployments, but also helps manage infrastructure as code efficiently.

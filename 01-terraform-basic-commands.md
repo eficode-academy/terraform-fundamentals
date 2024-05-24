@@ -1,24 +1,28 @@
 # 01-Terraform Basic Commands
 
 ## Learning Goals
+
 - Execute the basic Terraform commands: `terraform init`, `terraform plan`, and `terraform apply`
 - Observe how they function in managing infrastructure
 
 ## Introduction
-This exercise provides an introduction to the basics commands of Terraform through the setup and deployment of a Flask application. 
+
+This exercise provides an introduction to the basics commands of Terraform through the setup and deployment of a Flask application.
 
 You will directly apply the basic Terraform commands, observe the changes each command makes, and understand their roles in the workflow of infrastructure as code.
 
 ### Flask Application
-The application consists of three components: `frontend`, `backend`, and a `database`. 
 
-The frontend and backend are small python Flask webservers that listen for HTTP requests. 
+The application consists of three components: `frontend`, `backend`, and a `database`.
+
+The frontend and backend are small python Flask webservers that listen for HTTP requests.
 For persistent storage, a postgresql database is used.
 
-The basic functionality of the application can be achieved by deploying the frontend alone. 
+The basic functionality of the application can be achieved by deploying the frontend alone.
 The frontend listens for HTTP requests on port `5000` (the default for Flask).
 
 ### Terraform Configuration
+
 The Terraform configuration in the [labs/01-terraform-basic-commands](https://github.com/eficode-academy/terraform-fundamentals/tree/main/labs/01-terraform-basic-commands) directory is set to define and provision the necessary cloud infrastructure to run the Flask application.
 
 It typically includes server setup, networking, and security settings.
@@ -39,7 +43,7 @@ Initialize the Terraform workspace to prepare your environment:
 
 The output should resemble the example shown below.
 
-```
+```shell
 coder@workstation-3 ~/terraform-fundamentals/terraform-basic-commands (main *)
 $ terraform init
 
@@ -88,7 +92,7 @@ Generate an execution plan to preview the actions Terraform will take based on t
 
 The output should resemble the example shown below.
 
-```
+```shell
 coder@workstation-3 ~/terraform-fundamentals/terraform-basic-commands (main *)
 $ terraform plan
 data.azurerm_resource_group.studentrg: Reading...
@@ -204,7 +208,7 @@ Execute the plan to create the infrastructure:
 
 The output should resemble the example shown below.
 
-```
+```shell
 coder@workstation-3 ~/terraform-fundamentals/terraform basic commands (main *)
 $ terraform apply
 data.azurerm_resource_group.studentrg: Reading...
@@ -312,15 +316,15 @@ Do you want to perform these actions?
 
 ```
 
-You will be prompted to approve the action by typing 'yes'. 
+You will be prompted to approve the action by typing 'yes'.
 
-As you will see in the terminal prompt, 'yes' is the only acceptable value here, everything else will cancel the command. 
+As you will see in the terminal prompt, 'yes' is the only acceptable value here, everything else will cancel the command.
 
 Once confirmed, Terraform will apply the specified configurations, provisioning the necessary resources for the Flask application.
 
 The output should resemble the example shown below.
 
-```
+```shell
 random_integer.ri: Creating...
 random_integer.ri: Creation complete after 0s [id=91989]
 azurerm_service_plan.example: Creating...
@@ -355,15 +359,15 @@ Execute the following command to remove all resources and clean up the infrastru
 
 `terraform destroy`
 
-This command will prompt you to review and confirm the destruction of the resources defined in your Terraform configuration. 
+This command will prompt you to review and confirm the destruction of the resources defined in your Terraform configuration.
 
-Once confirmed, Terraform will proceed to safely remove all the resources, effectively cleaning up the deployed infrastructure. 
+Once confirmed, Terraform will proceed to safely remove all the resources, effectively cleaning up the deployed infrastructure.
 
 This step helps prevent unnecessary costs and ensures that the environment is reset for future exercises.
 
 The output should resemble the example shown below.
 
-```
+```shell
 coder@workstation-3 ~/terraform-fundamentals/terraform-basic-commands (main *)
 $ terraform destroy
 random_integer.ri: Refreshing state... [id=91989]

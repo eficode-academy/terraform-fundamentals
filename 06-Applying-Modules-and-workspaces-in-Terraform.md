@@ -1,23 +1,19 @@
-y06-Applying Modules and Workspaces in Terraform.md
-==================================================
+# 06-Applying Modules and Workspaces in Terraform.md
 
-Learning Goals
---------------
+## Learning Goals
 
-This module provides an opportunity to master the use of Terraform modules by creating a scalable and repeatable infrastructure with virtual machines (VMs) in Azure. 
+This module provides an opportunity to master the use of Terraform modules by creating a scalable and repeatable infrastructure with virtual machines (VMs) in Azure.
 
 Learn how to deploy VMs based on YAML configurations, emphasizing the flexibility and reusability of Terraform modules.
 
-Objectives
-----------
+## Objectives
 
-*  Understand the use of Terraform modules for resource deployment.
-*  Learn to interpret and apply configurations from YAML files.
-*  Deploy three virtual machines using the `for_each` construct to loop over configurations.
-*  Clean up resources to prevent unnecessary Azure charges.
+* Understand the use of Terraform modules for resource deployment.
+* Learn to interpret and apply configurations from YAML files.
+* Deploy three virtual machines using the `for_each` construct to loop over configurations.
+* Clean up resources to prevent unnecessary Azure charges.
 
-Step-by-Step Instructions
--------------------------
+## Step-by-Step Instructions
 
 ### 1\. Overview of Modules and Workspaces
 
@@ -29,13 +25,14 @@ Before diving into the actual Terraform configurations, it's crucial to define t
 
 **Variable Definitions:**
 
-``` 
+```hcl
 variable "exercise" {
   type        = string
   description = "This is the exercise number. It is used to make the name of some the resources unique"
 }
 ```
-```
+
+```hcl
 variable "instances_configuration" {
   type        = string
   description = <<EOT
@@ -56,7 +53,8 @@ variable "instances_configuration" {
         EOT
 }
 ```
-```
+
+```hcl
 variable "network_configuration" {
   type        = string
   description = <<EOT
@@ -74,14 +72,16 @@ variable "network_configuration" {
         EOT
 }
 ```
-```
+
+```hcl
 variable "admin_password" {
   type        = string
   sensitive   = true
   description = "default password to connect to the servers we deploy"
 }
 ```
-```
+
+```hcl
 variable "admin_username" {
   type        = string
   sensitive   = true
@@ -95,7 +95,7 @@ Ensure you have the YAML configuration files ready as described:
 
 #### `instances.yaml`
 
-``` 
+```yaml
 data:
   client1:
     size: "Standard_B1ls"
@@ -113,7 +113,7 @@ data:
 
 #### `network.yaml`
 
-``` 
+```yaml
 data:
   ranges:
   - 10.0.0.0/16
@@ -130,22 +130,22 @@ These files are located in the `configuration` folder.
 
 ### 4\. Create Network Resources
 
-#### Creating `00_createnetwork.tf`:
+#### Creating `00_createnetwork.tf`
 
 This file sets up the virtual network and associated subnets using data from `network.yaml`, laying the foundation for the VM deployments.
 
-**Local Block: Network Data**
+**Local Block `Network Data`:**
 
-``` 
+```hcl
 locals {
   yaml_network_data = yamldecode(file("${path.root}/${var.network_configuration}"))
   network           = local.yaml_network_data["data"]
 }
 ```
 
-**Resource Block: Virtual Network**
+**Resource Block: `Virtual Network`:**
 
-``` 
+```hcl
 resource "azurerm_virtual_network" "main" {
   name                = "vnet-${var.exercise}"
   resource_group_name = data.azurerm_resource_group.studentrg.name
@@ -154,9 +154,9 @@ resource "azurerm_virtual_network" "main" {
 }
 ```
 
-**Resource Block: Subnet**
+**Resource Block `Subnet`:**
 
-```
+```hcl
 resource "azurerm_subnet" "main" {
   for_each            = local.network.subnets
   name                = each.key
@@ -170,12 +170,17 @@ resource "azurerm_subnet" "main" {
 
 **Initialize your Terraform environment to prepare the backend and install required providers:**
 
-```terraform init```
+```shell
+terraform init
+```
 
 **Review the planned actions by Terraform without applying them:**
 
-```terraform plan```
+```shell
+terraform plan
 ```
+
+```shell
 terraform plan
 var.admin_password
   default password to connect to the servers we deploy
@@ -231,22 +236,22 @@ Pay attention to the values you have to set manually during the plan step.
 
 ### 6\. Deploy Virtual Machines
 
-#### Creating `01_createinstances.tf`:
+#### Creating `01_createinstances.tf`
 
 This file deploys VMs based on configurations specified in `instances.yaml` using a Terraform module for VM creation.
 
-**Local Block: VM Instances**
+**Local Block: `VM Instances`:**
 
-```
+```hcl
 locals {
   yaml_vms_data = yamldecode(file("${path.root}/${var.instances_configuration}"))
   instances     = local.yaml_vms_data["data"]
 }
 ```
 
-**Resource Block: Public IP**
+**Resource Block:  `Public IP`:**
 
-``` hcl
+```hcl
 resource "azurerm_public_ip" "pip" {
   for_each = { for vm, config in local.instances : vm => config if config.public_ip }
   name                = "${each.key}-public-ip"
@@ -259,9 +264,9 @@ resource "azurerm_public_ip" "pip" {
 }
 ```
 
-**Module Block: Virtual Machine**
+**Module Block: `Virtual Machine`:**
 
-``` 
+```hcl
 module "virtual-machine" {
   for_each = local.instances
 
@@ -298,11 +303,13 @@ module "virtual-machine" {
 }
 ```
 
-**Run Terraform apply** 
+**Run Terraform apply:**
 
-```terraform apply```
+```shell
+terraform apply
+```
 
-You will have to type in the information you gave when you ran `terraform plan` earlier. 
+You will have to type in the information you gave when you ran `terraform plan` earlier.
 
 It will take a bit of time, but after that feel free to go to your Resource Group in the Azure Portal and have a look at the resources you just created! It's that easy! 💪
 
@@ -316,9 +323,8 @@ To manage costs effectively and avoid unnecessary charges in Azure:
 
 This command cleans up all resources deployed during this exercise.
 
-Well done!
-----------
+## Well done
 
-You've successfully utilized Terraform modules to deploy and manage virtual machines in Azure. 
+You've successfully utilized Terraform modules to deploy and manage virtual machines in Azure.
 
 This exercise demonstrates the power of Terraform in managing complex infrastructure setups efficiently and repeatably.

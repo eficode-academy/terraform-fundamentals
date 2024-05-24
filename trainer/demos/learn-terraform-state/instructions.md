@@ -1,32 +1,28 @@
-Apply the initial configuration to create resources:
+# Apply the initial configuration to create resources
 
-```
+```shell
 terraform init
-
 terraform plan
-
 terraform apply
-
 ```
 
 This will create the resource group and virtual network as defined in the configuration.
 
 Delete the terraform.tfstate and terraform.tfstate.backup files to simulate losing the Terraform state.
 
-```
+```shell
 
 rm terraform.tfstate terraform.tfstate.backup
 
 ```
 
-Now if you try to run 
+Now if you try to run
 
-```
+```shell
 terraform plan
-
 ```
 
-you can observe that Terraform will have no knowledge of the already existing resources on Azure and suggest to recreate them. 
+you can observe that Terraform will have no knowledge of the already existing resources on Azure and suggest to recreate them.
 
 But we don't want to recreate them again! So how to fix?
 
@@ -36,7 +32,7 @@ Make sure your main.tf file still contains the resource definitions you used to 
 
 Then, import the resources using the terraform import command.
 
-```
+```shell
 terraform init
 
 terraform import azurerm_resource_group.rg /subscriptions/<subscription_id>/resourceGroups/terraform-simple-rg
@@ -46,7 +42,7 @@ terraform import azurerm_virtual_network.vnet /subscriptions/<subscription_id>/r
 
 Replace <subscription_id> with your actual Azure subscription ID, which you can get by running
 
-```
+```shell
 az account show
 ```
 
@@ -54,6 +50,6 @@ Verify the imported resources:
 
 Run terraform plan to ensure that Terraform recognizes the imported resources correctly. It should not show any changes if the import was successful.
 
-```
+```shell
 terraform plan
 ```
