@@ -1,13 +1,12 @@
-05-Setup VM Using Terraform.md
+# Setup VM Using Terraform
+
 ==============================
 
-Learning Goals
---------------
+## Learning Goals
 
 In this module, you will gain hands-on experience with Terraform to provision a virtual network and deploy virtual machines (VMs) in Azure. This exercise is designed to enhance your understanding of network configurations and VM deployment using Terraform.
 
-Objectives
-----------
+### Objectives
 
 * Create and configure a virtual network and subnets using Terraform.
 * Deploy multiple client VMs with dynamic public IPs.
@@ -15,8 +14,7 @@ Objectives
 * Verify connectivity among deployed resources.
 * Learn to clean up resources to avoid unnecessary charges.
 
-Step-by-Step Instructions
--------------------------
+## Step-by-Step Instructions
 
 ### 1\. Introduction to Virtual Network Setup
 
@@ -28,13 +26,14 @@ Before setting up your network configurations, it is essential to define the var
 
 **Variable Declarations and Descriptions:**
 
-``` 
+``` hcl
 variable "exercise" {
   type        = string
   description = "This is the exercise number. It is used to make the name of some the resources unique"
 }
 ```
-```
+
+```  hcl
 variable "network" {
   type = object({
     ranges = list(string)
@@ -47,7 +46,8 @@ variable "network" {
   description = "Subnet and address range for clients"
 }
 ```
-```
+
+``` hcl
 variable "client_subnet" {
   type = object({
     name   = string
@@ -62,7 +62,8 @@ variable "client_subnet" {
   description = "Subnet and address range for clients"
 }
 ```
-```
+
+``` hcl
 variable "server_subnet" {
   type = object({
     name   = string
@@ -77,21 +78,24 @@ variable "server_subnet" {
   description = "Subnet and address range for servers"
 }
 ```
-```
+
+``` hcl
 variable "admin_password" {
   type        = string
   sensitive   = true
   description = "default password to connect to the servers we deploy"
 }
 ```
-```
+
+``` hcl
 variable "admin_username" {
   type        = string
   sensitive   = false
   description = "default admin user to connect to the servers we deploy"
 }
 ```
-```
+
+``` hcl
 variable "source_image_reference" {
   type = object({
     publisher = string
@@ -113,7 +117,7 @@ variable "source_image_reference" {
 
 **Using `variables.tf`:** Place this file in your Terraform project directory alongside your main configuration files. Reference these variables in your configurations using `var.<variable_name>` to dynamically configure resources based on defined values.
 
-### 2\. Configure Network and Subnets
+### 2. Configure Network and Subnets
 
 #### Creating `00_create_network.tf`:
 
@@ -121,7 +125,7 @@ This configuration sets up the virtual network and associated subnets. This is c
 
 **Resource Block: Virtual Network**
 
-```
+``` hcl
 terraform {}
 
 resource "azurerm_virtual_network" "exercise5" {
@@ -136,7 +140,7 @@ resource "azurerm_virtual_network" "exercise5" {
 
 **Resource Block: Client Subnet**
 
-``` 
+```  hcl
 resource "azurerm_subnet" "client" {
   name                 = var.client_subnet.name
   resource_group_name  = data.azurerm_resource_group.studentrg.name
@@ -168,7 +172,7 @@ This file handles the deployment of client VMs. Dynamic public IPs are assigned 
 
 **Local Value: Clients**
 
-``` 
+```  hcl
 locals {
   clients = toset(["client1", "client2"])
 }
@@ -178,7 +182,7 @@ locals {
 
 **Resource Block: Public IP**
 
-``` 
+```  hcl
 resource "azurerm_public_ip" "client" {
   for_each            = local.clients
   name                = "${each.key}-public-ip"
@@ -215,7 +219,7 @@ resource "azurerm_network_interface" "client" {
 
 **Resource Block: Virtual Machine**
 
-``` 
+```  hcl
 resource "azurerm_linux_virtual_machine" "client" {
   for_each                        = local.clients
   name                            = "vm-${each.key}"
@@ -251,7 +255,7 @@ This configuration sets up a server VM with a static public IP, ensuring that it
 
 **Resource Block: Public IP**
 
-``` 
+```  hcl
 resource "azurerm_public_ip" "server" {
   name                = "server-public-ip"
   location            = data.azurerm_resource_group.studentrg.location
@@ -317,7 +321,7 @@ resource "azurerm_linux_virtual_machine" "server" {
 
 #### Output block that outputs the command to verify SSH connection to your newly created virtual machine
 
-```
+``` hcl
 output "client_connection_string" {
   value = { for client in local.clients : client => "ssh ${azurerm_linux_virtual_machine.client[client].admin_username}@${azurerm_linux_virtual_machine.client[client].public_ip_address}"
   }
@@ -326,11 +330,11 @@ output "client_connection_string" {
 
 **Initialize Terraform**
 
- ```
+``` terminal
 terraform init
  ```
 
-```
+``` terminal
 terraform plan
 ```
 
@@ -340,7 +344,7 @@ The password can be anything, but has to be minimum 6 characters, has to have mi
 
 There are also certain words that are reserved in Terraform, so you can use f.x your workstation name (Workstation-0, etc).
 
-```
+``` terminal
 var.admin_password
   default password to connect to the servers we deploy
 
@@ -359,13 +363,13 @@ var.exercise
 
 **Apply Configuration**
 
-```
+``` terminal
 terraform apply
 ```
 
 There will be a whole lot of resources created, and the output should resemble this:
 
-```
+``` terminal
 Apply complete! Resources: 12 added, 0 changed, 0 destroyed.
 
 Outputs:
@@ -382,15 +386,16 @@ After deploying the resources, verify connectivity by accessing the client VMs u
 
 Utilize the output connection strings provided in the Terraform output.
 
-```
+``` terminal
 ssh Student-0@40.118.57.218
 The authenticity of host '40.118.57.218 (40.118.57.218)' can't be established.
 ECDSA key fingerprint is SHA256:WkvzYvfuAnJ1X6oVH91wxZKaXjp2W1YHiV5blEnCvH8.
 Are you sure you want to continue connecting (yes/no/[fingerprint])?
 ```
+
 Type 'yes'.
 
-```
+``` terminal
 ssh Student-0@40.118.57.218
 The authenticity of host '40.118.57.218 (40.118.57.218)' can't be established.
 ECDSA key fingerprint is SHA256:WkvzYvfuAnJ1X6oVH91wxZKaXjp2W1YHiV5blEnCvH8.
@@ -401,7 +406,7 @@ Student-0@40.118.57.218's password:
 
 Type in the password you have set during the resource creation.
 
-```
+``` terminal
 $ ssh Student-0@40.118.57.218
 The authenticity of host '40.118.57.218 (40.118.57.218)' can't be established.
 ECDSA key fingerprint is SHA256:WkvzYvfuAnJ1X6oVH91wxZKaXjp2W1YHiV5blEnCvH8.
@@ -469,8 +474,10 @@ For those interested in visualizing how Terraform manages dependencies within yo
 
 This will create a `graph.png` file, which visually represents the structure of your Terraform configuration. Open this file to review the relationships and dependencies between your resources.
 
-
-Congratulations!
-----------
+## Congratulations!
 
 By completing this module, you've learned to set up and manage network configurations and VMs in Azure using Terraform, which is crucial for effective cloud infrastructure management.
+
+## Clean up
+
+Please remember to clean up your code deployed with `terraform destroy`.
