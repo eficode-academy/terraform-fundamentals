@@ -2,7 +2,7 @@
 
 ## Learning Goals
 
-In this module, you will learn about the importance of remote state management in Terraform and how to configure a backend using the Azure provider. 
+In this module, you will learn about the importance of remote state management in Terraform and how to configure a backend using the Azure provider.
 This setup enhances your Terraform projects by enabling team collaboration and maintaining state consistency.
 
 ### Objectives
@@ -18,12 +18,12 @@ This setup enhances your Terraform projects by enabling team collaboration and m
 
 ### 1. Introduction to Remote State
 
-Remote state is a feature in Terraform that allows state information to be stored in a remote data store, which supports team collaboration and improves the security of state files. 
+Remote state is a feature in Terraform that allows state information to be stored in a remote data store, which supports team collaboration and improves the security of state files.
 Unlike local state files, remote state enables teams to share access to the state, ensuring everyone is working with the same configuration.
 
 ### 2. Configure the Azure Backend
 
-The Azure backend stores state as a blob in a specified container on an Azure Storage Account. 
+The Azure backend stores state as a blob in a specified container on an Azure Storage Account.
 
 This method is recommended for any sizable infrastructure or team-based projects.
 
@@ -34,7 +34,7 @@ Navigate to the directory `labs/03-Implementing-Remote-State-Management`.
 Inside, you will find both the `00start` and `01start` subdirectories.
 
 **Prepare the Backend**:
-Before configuring your remote backend, proceed to the `00start` subdirectory. 
+Before configuring your remote backend, proceed to the `00start` subdirectory.
 
 Here, execute the following Terraform commands to create a storage account that will house your state file:
 
@@ -54,7 +54,7 @@ During this, observe the local state file that is created in the current directo
 
 The command will output something of the like:
 
-```
+```plaintext
 Apply complete! Resources: 3 added, 0 changed, 0 destroyed.
 
 Outputs:
@@ -66,19 +66,17 @@ resource_group_name = "rg-resourcegrp"
 
 ❗ Take note of `container_name`, `storage_account_name` and `resource_group_name`. ❗
 
-After successfully applying the Terraform configuration, pay close attention to the output. 
+After successfully applying the Terraform configuration, pay close attention to the output.
 
 The names of the storage account ,the container and resource group where the Terraform state will be stored are displayed. Ensure you copy these  accurately for later use.
 
-After setting up the necessary outputs, exit the `00start` subdirectory and enter the `01start` subdirectory. 
+After setting up the necessary outputs, exit the `00start` subdirectory and enter the `01start` subdirectory.
 
 **Configure the Backend:**
 
 The `01start` subdirectory contains all necessary configurations and files for hosting the static website on Azure, including an empty file named backend.tf
 
 An empty file named `backend.tf` is present among them . This file will be used to configure your remote backend.
-
-
 
 **Add Backend Configuration**:
 
@@ -88,32 +86,30 @@ Lets try to write the backend configuration on your own by referring to the Back
 
 **Steps to Follow:**
 
-1. Visit this link to know more about the azurerm backend:
+1. Visit this link to know more about the azurerm backend.
 [Backend type azurem](https://developer.hashicorp.com/terraform/language/settings/backends/azurerm)
 
 2. Begin by defining the terraform block in your backend.tf file. This block is used to specify backend configuration.
 
-```hcl
-terraform {
-  backend "azurerm" {
-    // Backend configuration parameters will go here
-  }
-}
-```
+   ```hcl
+   terraform {
+     backend "azurerm" {
+       // Backend configuration parameters will go here
+     }
+   }
+   ```
 
 3. Required Parameters to define within the backend block:
 
-- resource_group_name: The name of the resource group containing the storage account.
-- storage_account_name: The name of the Azure Storage Account where the state file will be stored.
-- container_name: The container within the storage account where the state file will reside.
-- key: The name of the state file. Ensure this is unique to prevent overlap with other projects.
-- tenant_id and subscription_id: Your Azure account's tenant and subscription identifiers.
-
-
+   - resource_group_name: The name of the resource group containing the storage account.
+   - storage_account_name: The name of the Azure Storage Account where the state file will be stored.
+   - container_name: The container within the storage account where the state file will reside.
+   - key: The name of the state file. Ensure this is unique to prevent overlap with other projects.
+   - tenant_id and subscription_id: Your Azure account's tenant and subscription identifiers.
 
 4. Paste the following configuration into `backend.tf`. This setup specifies the Azure backend for your Terraform state.
 
-   ```
+   ```hcl
    terraform {
      backend "azurerm" {
        resource_group_name   = "<resource-group-name>"
@@ -126,8 +122,8 @@ terraform {
    }
    ```
 
-
 ❗**Important**:
+
 - Replace `<resource group name>` with the name of the Azure Resource Group you have prepared for this configuration.
   
   This must be an existing resource group where you have permissions to create resources.
@@ -146,14 +142,13 @@ terraform {
 
 - Verify that `tenant_id` and `subscription_id` are correctly set to match your Azure tenant and subscription details where you want to manage resources.
 
-
 **Explanation of Parameters**:
-   - `resource_group_name`: The name of the resource group containing the storage account.
-   - `storage_account_name`: The name of the Azure Storage Account where the state file will be stored.
-   - `container_name`: The container within the storage account where the state file will reside.
-   - `key`: The name of the state file. Ensure this is unique to prevent overlap with other projects.
-   - `tenant_id` and `subscription_id`: Your Azure account's tenant and subscription identifiers.
 
+- `resource_group_name`: The name of the resource group containing the storage account.
+- `storage_account_name`: The name of the Azure Storage Account where the state file will be stored.
+- `container_name`: The container within the storage account where the state file will reside.
+- `key`: The name of the state file. Ensure this is unique to prevent overlap with other projects.
+- `tenant_id` and `subscription_id`: Your Azure account's tenant and subscription identifiers.
 
 💡 Save the File 💡
 
@@ -161,7 +156,7 @@ terraform {
 
 Run the following command to initialize the Terraform configuration with your Azure backend:
 
-```
+```shell
 terraform init
 ```
 
@@ -171,16 +166,18 @@ This command prepares your directory for Terraform operations with the specified
 
 #### Verify the Deployment
 
-```bash
+```shell
 terraform plan
 ```
+
 This command shows you what Terraform intends to do before making any changes to your actual resources. It's a good practice to review this output to avoid unexpected changes.
 
 #### Apply the Configuration
 
-```bash
+```shell
 terraform apply
 ```
+
 This command applies the configurations. Terraform will prompt you to approve the action before proceeding. After approval, it will provision the resources specified in your Terraform files.
 
 ### 5. View the Static Website
@@ -200,30 +197,29 @@ Visit this URL in your web browser to view your deployed static website.
 
 ![image](https://github.com/eficode-academy/terraform-fundamentals/assets/71190161/ac55c146-cf98-4a81-9ed0-d92b5a9bb792)
 
-
 - Look into the `tfstate` container to verify that the state file (`<unique-training-key>.terraform.tfstate`) is present.
 
 ### 7. Manipulating Terraform State
 
 **List all resources in the current state file:**
 
-```
+```shell
 terraform state list
 ```
 
 **Display detailed information about a specific resource:**
 
-```
+```shell
 terraform state show <resource_name>
 ```
 
 Replace <resource_name> with one of the resources listed in the previous step.
 
-**Refreshing and Forcing Re-creation of Resources**
+**Refreshing and Forcing Re-creation of Resources:**
 
 Update the state file to match the actual infrastructure:
 
-```
+```shell
 terraform refresh
 ```
 
@@ -233,7 +229,7 @@ To avoid incurring unnecessary charges:
 
 - Run the following command in both the `00start` & `01start` sub directories :
 
-```bash
+```shell
 terraform destroy
 ```
 
@@ -241,6 +237,6 @@ Confirm the action to remove all deployed resources.
 
 ### YAAAYYY 🎆
 
-By completing this module, you have successfully learned how to manage Terraform state remotely using Azure as the backend enhancing your project's security and collaboration capabilities. 
+By completing this module, you have successfully learned how to manage Terraform state remotely using Azure as the backend enhancing your project's security and collaboration capabilities.
 
 This setup not only ensures that your state file is secure and accessible but also facilitates teamwork by maintaining a single source of truth for your Terraform state.

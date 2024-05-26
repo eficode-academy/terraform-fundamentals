@@ -1,15 +1,19 @@
 # webapp
 
-# Python
+## Python
+
 Install Python
 
-# Visual Studio Code
+## Visual Studio Code
+
 Create new environment
 ctrl+shift+p -> Python: Create Environment
 ctrl+shift+p -> Python: Select Interpreter
 
-# Install Requirements
+## Install Requirements
+
 Install requirements
-```
+
+```bash
 cd app && pip install -r requirements.txt
 ```
