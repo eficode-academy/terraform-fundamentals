@@ -6,7 +6,7 @@ In this module, you will gain hands-on experience with Terraform to provision a 
 
 This exercise is designed to enhance your understanding of network configurations and VM deployment using Terraform, as well as giving you an idea around a larger set of terraform files.
 
-### Objectives
+## Objectives
 
 * Create and configure a virtual network and subnets using Terraform.
 * Deploy multiple client VMs with dynamic public IPs.
@@ -42,6 +42,7 @@ variable "exercise" {
   description = "This is the exercise number. It is used to make the name of some the resources unique"
 }
 
+
 variable "network" {
   type = object({
     ranges = list(string)
@@ -53,6 +54,7 @@ variable "network" {
   }
   description = "Subnet and address range for clients"
 }
+
 
 variable "client_subnet" {
   type = object({
@@ -67,6 +69,7 @@ variable "client_subnet" {
   }
   description = "Subnet and address range for clients"
 }
+
 
 variable "server_subnet" {
   type = object({
@@ -94,6 +97,7 @@ variable "admin_username" {
   description = "default admin user to connect to the servers we deploy"
 }
 
+
 variable "source_image_reference" {
   type = object({
     publisher = string
@@ -119,13 +123,15 @@ variable "source_image_reference" {
 
 Reference these variables in your future configurations using `var.<variable_name>` to dynamically configure resources based on defined values.
 
+
 ### 2. Configure Network and Subnets
 
-#### Creating `00_create_network.tf`:
+#### Creating `00_create_network.tf`
 
 This configuration sets up the virtual network and associated subnets. This is crucial as it forms the foundational network infrastructure in which the VMs will operate.
 
 ``` hcl
+
 terraform {}
 
 resource "azurerm_virtual_network" "exercise5" {  #defines the virtual network in Azure where all your network resources will reside.
@@ -221,7 +227,7 @@ resource "azurerm_linux_virtual_machine" "client" { #The actual VM configuration
 
 ### 4\. Deploy Server VM
 
-#### Creating `01_deployserver.tf`:
+#### Creating `01_deployserver.tf`
 
 This configuration sets up a server VM with a static public IP, ensuring that it has a fixed entry point for network communications, which is essential for server roles.
 
@@ -250,6 +256,7 @@ resource "azurerm_network_interface" "server" { #Creates the network interface f
   }
   depends_on = [azurerm_subnet.server]
 }
+
 
 resource "azurerm_linux_virtual_machine" "server" {
   name                            = "vm-server"
@@ -285,22 +292,19 @@ Last, but not least, we want our code to output some of the information we will 
 
 * Add the block below to the buttom of `01_deployserver.tf`
 
-``` hcl
+```hcl
 output "client_connection_string" {
   value = { for client in local.clients : client => "ssh ${azurerm_linux_virtual_machine.client[client].admin_username}@${azurerm_linux_virtual_machine.client[client].public_ip_address}"
   }
 }
 ```
 
-**Initialize Terraform**
+**Initialize Terraform:**
 
 In order for us to apply this into Azure we need to first initialize Terraform and see the plan:
 
 ``` terminal
 terraform init
- ```
-
-``` terminal
 terraform plan
 ```
 
@@ -310,7 +314,7 @@ The password has to be minimum 6 characters, has to have min 1 lower and 1 upper
 
 There are also certain words that are reserved in Terraform, so you can use f.x your workstation name (Workstation-0, etc).
 
-``` terminal
+```plaintext
 var.admin_password
   default password to connect to the servers we deploy
 
@@ -331,7 +335,7 @@ Now run `terraform apply` to apply the configuration code you made.
 
 There will be a whole lot of resources created, and the output part should resemble this:
 
-``` terminal
+```plaintext
 Apply complete! Resources: 12 added, 0 changed, 0 destroyed.
 
 Outputs:
@@ -344,11 +348,11 @@ client_connection_string = {
 
 ### 5. Verify Connectivity and Clean Up
 
-After deploying the resources, verify connectivity by accessing the client VMs using SSH and ensure they can connect to the server VM. 
+After deploying the resources, verify connectivity by accessing the client VMs using SSH and ensure they can connect to the server VM.
 
 Utilize the output connection strings provided in the Terraform output.
 
-``` terminal
+```plaintext
 ssh Student-0@40.118.57.218
 The authenticity of host '40.118.57.218 (40.118.57.218)' can't be established.
 ECDSA key fingerprint is SHA256:WkvzYvfuAnJ1X6oVH91wxZKaXjp2W1YHiV5blEnCvH8.
@@ -357,7 +361,7 @@ Are you sure you want to continue connecting (yes/no/[fingerprint])?
 
 Type 'yes'.
 
-``` terminal
+```plaintext
 ssh Student-0@40.118.57.218
 The authenticity of host '40.118.57.218 (40.118.57.218)' can't be established.
 ECDSA key fingerprint is SHA256:WkvzYvfuAnJ1X6oVH91wxZKaXjp2W1YHiV5blEnCvH8.
@@ -368,7 +372,7 @@ Student-0@40.118.57.218's password:
 
 Type in the password you have set during the resource creation.
 
-``` terminal
+```plaintext
 $ ssh Student-0@40.118.57.218
 The authenticity of host '40.118.57.218 (40.118.57.218)' can't be established.
 ECDSA key fingerprint is SHA256:WkvzYvfuAnJ1X6oVH91wxZKaXjp2W1YHiV5blEnCvH8.
@@ -416,7 +420,7 @@ Student-0@vm-client1:~$
 
 Et voila, you are now connected to a virtual machine on Azure you just created with Terraform! You are awesome! 🎉
 
-You can exit by either typing 'exit', or pressing Ctrl+D. 
+You can exit by either typing 'exit', or pressing Ctrl+D.
 
 As the last thing, please remember to clean up your code deployed with `terraform destroy`.
 
@@ -425,17 +429,19 @@ As the last thing, please remember to clean up your code deployed with `terrafor
 For those interested in visualizing how Terraform manages dependencies within your configuration, you can generate and view the dependency graph using the following commands:
 
 1. Generate the graph in DOT format and save it to a file:
-   ```bash
+
+   ```shell
    terraform graph > graph.dot
    ```
 
 2. Use GraphViz to convert the DOT file to a PNG image:
-   ```bash
+
+   ```shell
    dot -Tpng graph.dot -o graph.png
    ```
 
 This will create a `graph.png` file, which visually represents the structure of your Terraform configuration. Open this file to review the relationships and dependencies between your resources.
 
-## Congratulations!
+## Congratulations
 
 By completing this module, you've learned to set up and manage network configurations and VMs in Azure using Terraform, which is crucial for effective cloud infrastructure management.
