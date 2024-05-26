@@ -1,4 +1,4 @@
-# 06-Applying Modules and Workspaces in Terraform.md
+# 06-Applying Modules in Terraform.md
 
 ## Learning Goals
 
