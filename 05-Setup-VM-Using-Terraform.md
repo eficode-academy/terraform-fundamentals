@@ -117,7 +117,7 @@ variable "source_image_reference" {
 
 Place this file in your Terraform project directory alongside your main configuration files. Reference these variables in your configurations using `var.<variable_name>` to dynamically configure resources based on defined values.
 
-### 2\. Configure Network and Subnets
+### 2. Configure Network and Subnets
 
 #### Creating `00_create_network.tf`
 
@@ -332,7 +332,6 @@ output "client_connection_string" {
 
  ```shell
 terraform init
- 
 terraform plan
 ```
 
@@ -477,3 +476,7 @@ This will create a `graph.png` file, which visually represents the structure of 
 ## Congratulations
 
 By completing this module, you've learned to set up and manage network configurations and VMs in Azure using Terraform, which is crucial for effective cloud infrastructure management.
+
+## Clean up
+
+Please remember to clean up your code deployed with `terraform destroy`.
