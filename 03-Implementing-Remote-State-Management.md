@@ -10,7 +10,7 @@ This setup enhances your Terraform projects by enabling team collaboration and m
 - Understand and implement remote state management.
 - Configure an Azure backend for Terraform state.
 - Verify the state file in Azure.
-- View the deployed static website
+- View the deployed static website.
 - Clean up resources to prevent unnecessary charges.
 - Manipulate Terraform state file.
 
