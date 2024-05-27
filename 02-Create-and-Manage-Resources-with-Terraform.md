@@ -268,6 +268,9 @@ resource "random_string" "storage_account_name" {}
 
 If you need help, you can use the provided code snippet.
 
+<details open>
+  <summary> Click me! </summary>
+
    ```hcl
    resource "random_string" "storage_account_name" {
      length  = 8
@@ -277,6 +280,7 @@ If you need help, you can use the provided code snippet.
      upper   = false
    }
    ```
+</details>
 
 ##### Resource Block - Azure Storage Account
 
