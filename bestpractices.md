@@ -60,13 +60,13 @@ A sample structure is as follows:
 
 ├── 01_network.tf
 ├── 02_frontend.tf
-├── FRONTEND_SERVERS
-├── FRONTEND_NSG
-├── FRONTEND_KEYVAULT
+  ├── FRONTEND_SERVERS
+  ├── FRONTEND_NSG
+  ├── FRONTEND_KEYVAULT
 ├── 03_backend.tf
-├── BACKEND_SERVERS
-├── BACKEND_NSG
-├── BACKEND_KEYVAULT
+  ├── BACKEND_SERVERS
+  ├── BACKEND_NSG
+  ├── BACKEND_KEYVAULT
 ├── 04_backup.tf
 
 ```
