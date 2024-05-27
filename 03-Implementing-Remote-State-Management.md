@@ -160,7 +160,9 @@ Run the following command to initialize the Terraform configuration with your Az
 terraform init
 ```
 
-This command prepares your directory for Terraform operations with the specified backend. It ensures that Terraform is configured to manage your infrastructure remotely.
+This command prepares your directory for Terraform operations with the specified backend. 
+
+It ensures that Terraform is configured to manage your infrastructure remotely.
 
 ### 4. Verify and Apply Configuration
 
@@ -170,7 +172,9 @@ This command prepares your directory for Terraform operations with the specified
 terraform plan
 ```
 
-This command shows you what Terraform intends to do before making any changes to your actual resources. It's a good practice to review this output to avoid unexpected changes.
+This command shows you what Terraform intends to do before making any changes to your actual resources. 
+
+It's a good practice to review this output to avoid unexpected changes.
 
 #### Apply the Configuration
 
@@ -178,7 +182,9 @@ This command shows you what Terraform intends to do before making any changes to
 terraform apply
 ```
 
-This command applies the configurations. Terraform will prompt you to approve the action before proceeding. After approval, it will provision the resources specified in your Terraform files.
+This command applies the configurations. Terraform will prompt you to approve the action before proceeding. 
+
+After approval, it will provision the resources specified in your Terraform files.
 
 ### 5. View the Static Website
 
