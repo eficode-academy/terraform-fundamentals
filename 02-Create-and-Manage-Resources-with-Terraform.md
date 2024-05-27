@@ -250,8 +250,7 @@ Relevant Arguments to Look for in the Documentation:
 
 Using these arguments, you can define the random_string resource block adhering to Azure's naming requirements.
 
-##### values to set for each argument are below
-
+##### Values to set for each argument
 - length  = 8
 - lower   = true
 - numeric = false
@@ -317,7 +316,7 @@ If you need help, you can use the provided code snippet.
    Learn more about configuring the  azurerm_storage_account resource:
    [Azure Storage Account Resource Documentation](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account)
 
-Resource Block - Azure Storage Blob**
+**Resource Block - Azure Storage Blob**
 
 Uploads the `index.html` file and`image.jpg`into the Azure storage account, placing it in the `$web` container used for static website hosting.
 
