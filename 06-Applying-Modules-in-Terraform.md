@@ -2,9 +2,25 @@
 
 ## Learning Goals
 
-This module provides an opportunity to master the use of Terraform modules by creating a scalable and repeatable infrastructure with virtual machines (VMs) in Azure.
+This module provides an opportunity to use Terraform modules by creating a scalable and repeatable infrastructure with virtual machines (VMs) in Azure.
 
-Learn how to deploy VMs based on YAML configurations, emphasizing the flexibility and reusability of Terraform modules.
+Modules are a good way to encapsulating configurations of related resources into reusable, shareable units. 
+
+Both teams internal in a company, as well as providers can create them.
+
+In this exercise, we are going to use the module [virtual-machine](https://registry.terraform.io/modules/Azure/virtual-machine/azurerm/latest) to simplifying creating a virtual machine in Azure.
+
+This module defines 8 resources.
+
+* azurerm_linux_virtual_machine.vm_linux
+* azurerm_managed_disk.disk
+* azurerm_network_interface.vm
+* azurerm_storage_account.boot_diagnostics
+* azurerm_virtual_machine_data_disk_attachment.attachment
+* azurerm_virtual_machine_extension.extensions
+* azurerm_windows_virtual_machine.vm_windows
+* random_id.vm_sa
+
 
 ## Objectives
 
@@ -15,24 +31,18 @@ Learn how to deploy VMs based on YAML configurations, emphasizing the flexibilit
 
 ## Step-by-Step Instructions
 
-### 1\. Overview of Modules and Workspaces
+* Go to the folder `labs/06-Applying-Modules-in-Terraform/start`. That is where your exercise files should be created.
 
-Terraform modules allow you to encapsulate and reuse code for creating groups of related resources. Workspaces enable you to maintain state files separately for the same configuration, providing a way to manage different environments (like staging and production) from the same configuration.
+### Define Variables in `variables.tf`
 
-### 2\. Define Variables in `variables.tf`
-
-Before diving into the actual Terraform configurations, it's crucial to define the variables that will be used throughout your project. This setup enhances modularity and flexibility, allowing parameters to be easily adjusted or reused across different environments.
-
-**Variable Definitions:**
+Before diving into the actual Terraform configurations, we start by adding `variables.tf` file to our project like last exercise. 
 
 ```hcl
 variable "exercise" {
   type        = string
   description = "This is the exercise number. It is used to make the name of some the resources unique"
 }
-```
 
-```hcl
 variable "instances_configuration" {
   type        = string
   description = <<EOT
@@ -52,9 +62,7 @@ variable "instances_configuration" {
                 subnet: server
         EOT
 }
-```
 
-```hcl
 variable "network_configuration" {
   type        = string
   description = <<EOT
@@ -71,17 +79,13 @@ variable "network_configuration" {
                     - 10.0.1.0/24
         EOT
 }
-```
 
-```hcl
 variable "admin_password" {
   type        = string
   sensitive   = true
   description = "default password to connect to the servers we deploy"
 }
-```
 
-```hcl
 variable "admin_username" {
   type        = string
   sensitive   = true
@@ -89,11 +93,11 @@ variable "admin_username" {
 }
 ```
 
-### 3\. Prepare Configuration Files
+* Paste the content above into the file `variables.tf` and save it
 
-Ensure you have the YAML configuration files ready as described:
+### Prepare Configuration Files
 
-#### `instances.yaml`
+* Paste the below YAML snippit into the file called `configuration/instances.yaml`
 
 ```yaml
 data:
@@ -111,7 +115,7 @@ data:
     subnet: server
 ```
 
-#### `network.yaml`
+* Paste the below YAML snippit into the file called `configuration/network.yaml`
 
 ```yaml
 data:
@@ -126,37 +130,23 @@ data:
       - 10.0.1.0/24
 ```
 
-These files are located in the `configuration` folder.
+### Create Network Resources
 
-### 4\. Create Network Resources
-
-#### Creating `00_createnetwork.tf`
-
-This file sets up the virtual network and associated subnets using data from `network.yaml`, laying the foundation for the VM deployments.
-
-**Local Block `Network Data`:**
+The file `00_createnetwork.tf` will set up the virtual network and associated subnets using data from `network.yaml`, laying the foundation for the VM deployments.
 
 ```hcl
 locals {
   yaml_network_data = yamldecode(file("${path.root}/${var.network_configuration}"))
   network           = local.yaml_network_data["data"]
 }
-```
 
-**Resource Block: `Virtual Network`:**
-
-```hcl
 resource "azurerm_virtual_network" "main" {
   name                = "vnet-${var.exercise}"
   resource_group_name = data.azurerm_resource_group.studentrg.name
   location            = data.azurerm_resource_group.studentrg.location
   address_space       = local.network.ranges
 }
-```
 
-**Resource Block `Subnet`:**
-
-```hcl
 resource "azurerm_subnet" "main" {
   for_each            = local.network.subnets
   name                = each.key
@@ -166,19 +156,17 @@ resource "azurerm_subnet" "main" {
 }
 ```
 
-### 5\. Initialize and Plan Deployment
+* Paste the above configuration into the file `00_create_network.tf`.
 
-**Initialize your Terraform environment to prepare the backend and install required providers:**
+### Initialize and Plan Deployment
+
+* Initialize your Terraform environment to prepare the backend and install required providers: 
 
 ```shell
 terraform init
 ```
 
-**Review the planned actions by Terraform without applying them:**
-
-```shell
-terraform plan
-```
+* Review the planned actions by Terraform without applying them:
 
 ```shell
 terraform plan
@@ -232,26 +220,18 @@ var.network_configuration
 
 ```
 
-Pay attention to the values you have to set manually during the plan step.
+* Pay attention to the values you have to set manually during the plan step.
 
-### 6\. Deploy Virtual Machines
+### Deploy Virtual Machines
 
-#### Creating `01_createinstances.tf`
-
-This file deploys VMs based on configurations specified in `instances.yaml` using a Terraform module for VM creation.
-
-**Local Block: `VM Instances`:**
+Thie file `01_createinstances.tf` deploys VMs based on configurations specified in `instances.yaml` using a Terraform module for VM creation.
 
 ```hcl
 locals {
   yaml_vms_data = yamldecode(file("${path.root}/${var.instances_configuration}"))
   instances     = local.yaml_vms_data["data"]
 }
-```
 
-**Resource Block:  `Public IP`:**
-
-```hcl
 resource "azurerm_public_ip" "pip" {
   for_each = { for vm, config in local.instances : vm => config if config.public_ip }
   name                = "${each.key}-public-ip"
@@ -262,11 +242,7 @@ resource "azurerm_public_ip" "pip" {
     environment = each.key
   }
 }
-```
 
-**Module Block: `Virtual Machine`:**
-
-```hcl
 module "virtual-machine" {
   for_each = local.instances
 
@@ -303,17 +279,17 @@ module "virtual-machine" {
 }
 ```
 
-**Run Terraform apply:**
+* Run Terraform apply:
 
 ```shell
 terraform apply
 ```
 
-You will have to type in the information you gave when you ran `terraform plan` earlier.
+* You will have to type in the information you gave when you ran `terraform plan` earlier.
 
-It will take a bit of time, but after that feel free to go to your Resource Group in the Azure Portal and have a look at the resources you just created! It's that easy! 💪
+It will take a bit of time, but after that feel free to go to your Resource Group in the Azure Portal and have a look at the resources you just created! 
 
-### 7\. Verify and Clean Up
+### Verify and Clean Up
 
 After deploying the resources, verify the VMs' functionality by accessing them as needed. Ensure they are operating within the correct network and accessible per your configuration
 
