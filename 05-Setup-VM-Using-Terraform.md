@@ -2,7 +2,7 @@
 
 ## Learning Goals
 
-In this module, you will gain hands-on experience with Terraform to provision a virtual network and deploy virtual machines (VMs) in Azure. 
+In this module, you will gain hands-on experience with Terraform to provision a virtual network and deploy virtual machines (VMs) in Azure.
 
 This exercise is designed to enhance your understanding of network configurations and VM deployment using Terraform, as well as giving you an idea around a larger set of terraform files.
 
@@ -22,7 +22,7 @@ This will help in managing configurations effectively and maintaining modularity
 Some of the variables we are going to set are:
 
 * `exercise` for prefixing some of our objects to they are easy to manage together
-* `admin_username ` and `admin_password` for setting up a user on the new VM's
+* `admin_username` and `admin_password` for setting up a user on the new VM's
 * `source_image_reference` for the image the VM's a going to use for provisioning.
 
 ## Step-by-Step Instructions
@@ -34,7 +34,6 @@ Some of the variables we are going to set are:
 A virtual network allows VMs and other resources to communicate with each other. Let's start with creating that.
 
 **Variable Declarations and Descriptions:**
-
 
 ``` hcl
 variable "exercise" {
@@ -123,7 +122,6 @@ variable "source_image_reference" {
 
 Reference these variables in your future configurations using `var.<variable_name>` to dynamically configure resources based on defined values.
 
-
 ### 2. Configure Network and Subnets
 
 #### Creating `00_create_network.tf`
@@ -163,7 +161,7 @@ resource "azurerm_subnet" "server" { # Subnet config for the client VM
 
 Now with the network created, we can focus on creating the configuration for the client.
 
-#### Creating `01_deployclients.tf`:
+#### Creating `01_deployclients.tf`
 
 This file handles the deployment of client VMs. Dynamic public IPs are assigned to these VMs, allowing external access and connectivity tests.
 
@@ -285,7 +283,6 @@ resource "azurerm_linux_virtual_machine" "server" {
 * Create a file called `01_deployserver.tf`
 * Paste the above configuration into the file.
 
-
 ### Add output block to 01_deployclients.tf
 
 Last, but not least, we want our code to output some of the information we will get when deploying this, like IP address for the clients to connect to.
@@ -310,7 +307,7 @@ terraform plan
 
 You will see the prompt where you have to enter some values manually:
 
-The password has to be minimum 6 characters, has to have min 1 lower and 1 upper character, has a number in it, and one special condition other than "_". 
+The password has to be minimum 6 characters, has to have min 1 lower and 1 upper character, has a number in it, and one special condition other than "_".
 
 There are also certain words that are reserved in Terraform, so you can use f.x your workstation name (Workstation-0, etc).
 
