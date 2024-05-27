@@ -4,7 +4,7 @@
 
 - Check the installed version of Terraform.
 - Understand how to authenticate Terraform with Azure using the Azure CLI.
-- Verify successful login and access to Azure resources.
+- Verify successful login and access the Azure UI portal.
 
 ## Introduction
 
