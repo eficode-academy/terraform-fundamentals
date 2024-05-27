@@ -188,13 +188,18 @@ variable "container_name{}
 
 If you need help, you can use the provided code snippet.
 
-```hcl
+<details open>
+  <summary> Click me! </summary>
+  
+  ```hcl
 variable "container_name" {
   type        = string
   description = "name of the container in the storage account."
   default     = "$web"
 }
 ```
+</details>
+
 
 This variable allow you to specify the name of the container inside storage account, which can be overridden at runtime if needed.
 
