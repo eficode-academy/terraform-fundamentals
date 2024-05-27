@@ -414,22 +414,22 @@ These outputs can be useful for obtaining direct links or important information 
 
 Insert the code below into `outputs.tf` and save the file.
 
-Required Outputs:
+**Required Outputs:**
 
-Storage Account Name
-Primary Web Endpoint (URL)
+- Storage Account Name
+- Primary Web Endpoint (URL)
 
-Task:
+#### Task
 
 First, we will write the output block for the storage account name. Then, you will try to find the appropriate attribute for the primary web endpoint and create the corresponding output block.
 
 Steps to Follow:
 
 - Visit the [Azure Storage Account Resource Documentation](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account).
-.
 
 - Look for the attributes section to find details about the storage account name and the primary web endpoint.
-Output Block for Storage Account Name:
+
+#### Output Block for Storage Account Name:
 
 Instructions:
 
@@ -448,7 +448,7 @@ output "storage_account_name" {
 }
 ```
 
-**Your Task:**
+#### Task
 
 Now, try to write the output block for the primary web endpoint on your own.
 
@@ -460,12 +460,16 @@ Now, try to write the output block for the primary web endpoint on your own.
 
 If you  still need help, you can use the code snippet below:
 
+<details open>
+  <summary> Click me! </summary>
+   
 ```hcl
 output "primary_web_host" {
   value = azurerm_storage_account.storage_account.primary_web_endpoint
   description = "The primary web endpoint for the static website."
 }
 ```
+</details>
 
 For more attributes that you can output from any resource, refer to the attributes section of the respective resource documentation.
 
