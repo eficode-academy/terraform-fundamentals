@@ -201,7 +201,7 @@ variable "container_name" {
 </details>
 
 
-This variable allow you to specify the name of the container inside storage account, which can be overridden at runtime if needed.
+This variable allow you to specify the name of the container inside storage account, which can be overwritten at runtime, if needed.
 
 ### 3. Configure the main.tf file for Azure Resources
 
