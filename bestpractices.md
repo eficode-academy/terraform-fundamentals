@@ -1,4 +1,3 @@
-```markdown
 # Terraform Best Practices
 
 ## Version Control
