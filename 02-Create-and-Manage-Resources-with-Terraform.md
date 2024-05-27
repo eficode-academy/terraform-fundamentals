@@ -142,7 +142,7 @@ provider "azurerm" {
 }
 ```
 
-PRO Tip: you can run `terraform fmt` to apply proper formatting to the file - and that will catch missing curly brackets and some other errors
+💡 PRO Tip: you can run `terraform fmt` to apply proper formatting to the file - and that will catch missing curly brackets and some other errors 💡
 
 ----
 
