@@ -3,7 +3,7 @@
 ## Learning Goals
 
 - Check the installed version of Terraform.
-- Understand how to authenticate with Azure using the Azure CLI.
+- Understand how to authenticate Terraform with Azure using the Azure CLI.
 - Verify successful login and access to Azure resources.
 
 ## Introduction
