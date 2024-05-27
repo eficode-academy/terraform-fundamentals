@@ -246,7 +246,7 @@ resource "random_string" "randomname" {
    terraform get
    ```
 
-  - **`terraform graph`**:
+- **`terraform graph`**:
 
 In a subsequent exercise, you will have the opportunity to explore the `terraform graph` command. This command produces a visual representation of either a configuration or execution plan. The output is in DOT format, which can be used by GraphViz to generate charts. This visual tool can be incredibly helpful for understanding the relationships between resources in your Terraform configurations and for identifying dependencies and their execution order.
 
