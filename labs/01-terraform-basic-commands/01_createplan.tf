@@ -9,5 +9,5 @@ resource "azurerm_service_plan" "example" {
   resource_group_name = data.azurerm_resource_group.studentrg.name
   location            = data.azurerm_resource_group.studentrg.location
   os_type             = "Linux"
-  sku_name            = "F1"
+  sku_name            = "B1"
 }
