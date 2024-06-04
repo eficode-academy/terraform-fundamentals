@@ -6,6 +6,9 @@ In this module, you will gain hands-on experience with Terraform to provision a 
 
 This exercise is designed to enhance your understanding of network configurations and VM deployment using Terraform, as well as giving you an idea around a larger set of terraform files.
 
+![exercise5](https://github.com/eficode-academy/terraform-fundamentals/assets/71190161/113df4c0-67aa-4d70-a9ad-f3504a7fe878)
+
+
 ## Objectives
 
 * Create and configure a virtual network and subnets using Terraform.
