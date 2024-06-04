@@ -65,11 +65,7 @@ resource "azurerm_linux_virtual_machine" "client" {
   }
 }
 
-/*
-output "client_connection_string" {
-  value = "ssh ${azurerm_linux_virtual_machine.client.admin_username}@${azurerm_public_ip.client.ip_address}"  
-}
-*/
+
 output "client_connection_string" {
   value = { for client in local.clients : client => "ssh ${azurerm_linux_virtual_machine.client[client].admin_username}@${azurerm_linux_virtual_machine.client[client].public_ip_address}"
   }
