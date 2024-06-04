@@ -174,19 +174,6 @@ Now with the network created, we can focus on creating the configuration for the
 
 This file handles the deployment of client VMs. Dynamic public IPs are assigned to these VMs, allowing external access and connectivity tests.
 
-``` hcl
-locals {
-  clients = toset(["client1", "client2"]) #defining a list of what is going to be two clients.
-}
-
-resource "azurerm_public_ip" "client" { #Creates a dynamic public IP for each client VM
-  for_each            = local.clients # Using the for_each construct to loop over the clients.
-  name                = "${each.key}-public-ip"
-  location            = data.azurerm_resource_group.studentrg.location
-  resource_group_name = data.azurerm_resource_group.studentrg.name
-  allocation_method   = "Dynamic"
-  tags = {**Task Instructions:**
-
 1. **Go to the project directory**:
    - Navigate to `labs/05-Setup-VM-Using-Terraform/start` where your exercise files should be created.
 
@@ -195,8 +182,6 @@ resource "azurerm_public_ip" "client" { #Creates a dynamic public IP for each cl
    - Create a new file named `01_deployclients.tf` in the `labs/05-Setup-VM-Using-Terraform/start` directory.
 
 ### 3. Configuration Steps for `01_deployclients.tf`
-
-**Detailed Tasks:**
 
 1. **Define Local Variables**:
    - Begin by defining a local variable `clients` that contains a set of client names. The `locals` block is used to define these local values that are constant within the module and can be referenced elsewhere in the configuration. This helps in managing reusable values. The `clients` variable specifies the list of clients that need to be created.
@@ -207,11 +192,9 @@ resource "azurerm_public_ip" "client" { #Creates a dynamic public IP for each cl
      }
      ```
 
-
 2. **Create Public IP Resources**:
 
 Refer to the [AzureRM Public IP documentation](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/public_ip).
-
 
    - Define the `azurerm_public_ip` resource block.
    - Use `for_each` to loop over the `clients` local variable.
@@ -220,14 +203,17 @@ Refer to the [AzureRM Public IP documentation](https://registry.terraform.io/pro
    - Set the `allocation_method` to `"Dynamic"`.
    - Add tags with an `environment` set to `"Production"`.
 
-     
-
    ```hcl
+  resource "azurerm_public_ip" "client" { #Creates a dynamic public IP for each client VM
+  for_each            = local.clients # Using the for_each construct to loop over the clients.
+  name                = "${each.key}-public-ip"
+  location            = data.azurerm_resource_group.studentrg.location
+  resource_group_name = data.azurerm_resource_group.studentrg.name
+  allocation_method   = "Dynamic"
    tags = {
     environment = "Production"
   }
   ```
-
 
 3. **Create Network Interface Resources**:
 
@@ -544,6 +530,6 @@ For those interested in visualizing how Terraform manages dependencies within yo
 
 This will create a `graph.png` file, which visually represents the structure of your Terraform configuration. Open this file to review the relationships and dependencies between your resources.
 
-## Congratulations
+## Congratulations 🎉 🎉
 
 By completing this module, you've learned to set up and manage network configurations and VMs in Azure using Terraform, which is crucial for effective cloud infrastructure management.
