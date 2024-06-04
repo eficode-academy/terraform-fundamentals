@@ -22,6 +22,10 @@ This module defines 8 resources.
 * random_id.vm_sa
 
 
+![exercise6(1)](https://github.com/eficode-academy/terraform-fundamentals/assets/71190161/1b3a6c71-9d40-4b62-acbd-03bf6e2a1c73)
+
+
+
 ## Objectives
 
 * Understand the use of Terraform modules for resource deployment.
