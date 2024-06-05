@@ -1,4 +1,4 @@
-# Setup VM Using Terraform
+# 05-Setup VM Using Terraform
 
 ## Learning Goals
 
