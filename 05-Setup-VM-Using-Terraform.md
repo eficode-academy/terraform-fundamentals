@@ -309,65 +309,68 @@ Refer to the [AzureRM Linux Virtual Machine documentation](https://registry.terr
    - Ensure the configuration is correctly formatted and saved.
 
 
-### 4\. Deploy Server VM
+### 4. Deploy Server VM
 
 #### Creating `01_deployserver.tf`
 
 This configuration sets up a server VM with a static public IP, ensuring that it has a fixed entry point for network communications, which is essential for server roles.
 
-In this configuration, we are using many of the same resources as above, as it's essentially a different instance of a VM.
+**Task Instructions:**
 
-```  hcl
-resource "azurerm_public_ip" "server" { #Creates a static public IP for the server VM, ensuring it remains consistent across restarts and redeployments.
-  name                = "server-public-ip"
-  location            = data.azurerm_resource_group.studentrg.location
-  resource_group_name = data.azurerm_resource_group.studentrg.name
-  allocation_method   = "Static"
-  tags = {
-    environment = "Production"
-  }
-}
+1. **Go to the project directory**:
+   - Navigate to `labs/05-Setup-VM-Using-Terraform/start` where your exercise files should be created.
 
-resource "azurerm_network_interface" "server" { #Creates the network interface for the server
-  name                = "nic-server"
-  location            = data.azurerm_resource_group.studentrg.location
-  resource_group_name = data.azurerm_resource_group.studentrg.name
-  ip_configuration {
-    name                          = "internal"
-    subnet_id                     = azurerm_subnet.server.id
-    private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.server.id #reference the resource above for linking of the static IP
-  }
-  depends_on = [azurerm_subnet.server]
-}
+2. **Create the `01_deployserver.tf` file**:
+   - Create a new file named `01_deployserver.tf` in the `labs/05-Setup-VM-Using-Terraform/start` directory.
 
+### 3. Configuration Steps for `01_deployserver.tf`
 
-resource "azurerm_linux_virtual_machine" "server" {
-  name                            = "vm-server"
-  location                        = data.azurerm_resource_group.studentrg.location
-  resource_group_name             = data.azurerm_resource_group.studentrg.name
-  size                            = "Standard_B1ls"
-  admin_username                  = var.admin_username
-  disable_password_authentication = false
-  admin_password                  = var.admin_password
-  network_interface_ids           = [azurerm_network_interface.server.id]
-  identity { type = "SystemAssigned" }
-  boot_diagnostics { storage_account_uri = "" }
-  source_image_reference {
-    publisher = var.source_image_reference.publisher
-    offer     = var.source_image_reference.offer
-    sku       = var.source_image_reference.sku
-    version   = var.source_image_reference.version
-  }
-  os_disk {
-    storage_account_type = "Standard_LRS"
-    caching              = "ReadWrite"
-  }
-}
-```
+**Detailed Tasks:**
 
-* Create a file called `01_deployserver.tf`
-* Paste the above configuration into the file.
+1. **Define a Static Public IP for the Server**:
+   - Create a `resource` block for `azurerm_public_ip` named `server`.
+   - Set the `name` property to `"server-public-ip"` to clearly identify this IP as belonging to the server.
+   - Set the `location` and `resource_group_name` properties to the same values used for other resources, ensuring consistency.
+   - Use the `allocation_method` property set to `"Static"` to ensure the IP address remains consistent across restarts and redeployments.
+   - Optionally, add tags such as `environment` with the value `"Production"` for organizational purposes.
+
+2. **Create the Network Interface for the Server**:
+   - Create a `resource` block for `azurerm_network_interface` named `server`.
+   - Set the `name` property to `"nic-server"` to clearly identify this NIC as belonging to the server.
+   - Set the `location` and `resource_group_name` properties to the same values used for other resources.
+   - Within the `ip_configuration` nested block:
+     - Set the `name` property to `"internal"` for the internal configuration.
+     - Reference the `subnet_id` from the previously created server subnet (`azurerm_subnet.server.id`).
+     - Set `private_ip_address_allocation` to `"Dynamic"`.
+     - Reference the `public_ip_address_id` from the static public IP created earlier (`azurerm_public_ip.server.id`).
+   - Add a `depends_on` property to ensure the subnet resource is created before the network interface. Use `[azurerm_subnet.server]` as the dependency.
+
+3. **Create the Server VM**:
+   - Create a `resource` block for `azurerm_linux_virtual_machine` named `server`.
+   - Set the `name` property to `"vm-server"` to clearly identify this VM as the server.
+   - Set the `location` and `resource_group_name` properties to the same values used for other resources.
+   - Set the `size` property to `"Standard_B1ls"` or any appropriate VM size.
+   - Use `var.admin_username` for the `admin_username` property to dynamically set the admin username.
+   - Set `disable_password_authentication` to `false` to enable password authentication.
+   - Use `var.admin_password` for the `admin_password` property to dynamically set the admin password.
+   - Set the `network_interface_ids` property to the ID of the network interface created earlier (`azurerm_network_interface.server.id`).
+
+4. **Configure VM Identity**:
+   - Add an `identity` nested block within the VM resource.
+   - Set the `type` property to `"SystemAssigned"` to assign a system-managed identity to the VM.
+
+5. **Configure Boot Diagnostics**:
+   - Add a `boot_diagnostics` nested block within the VM resource.
+   - Set the `storage_account_uri` property to an empty string, or specify a storage account URI if required for boot diagnostics.
+
+6. **Specify the Source Image**:
+   - Add a `source_image_reference` nested block within the VM resource.
+   - Set the `publisher`, `offer`, `sku`, and `version` properties to reference the source image for the VM, using variables defined in `variables.tf` (e.g., `var.source_image_reference.publisher`, `var.source_image_reference.offer`, etc.).
+
+7. **Configure the OS Disk**:
+   - Add an `os_disk` nested block within the VM resource.
+   - Set the `storage_account_type` property to `"Standard_LRS"` for standard locally redundant storage.
+   - Set the `caching` property to `"ReadWrite"` for read-write caching on the OS disk.
 
 ### Add output block
 

@@ -4,9 +4,7 @@
 
 This module provides an opportunity to use Terraform modules by creating a scalable and repeatable infrastructure with virtual machines (VMs) in Azure.
 
-Modules are a good way to encapsulating configurations of related resources into reusable, shareable units. 
-
-Both teams internal in a company, as well as providers can create them.
+Modules are a good way to encapsulating configurations of related resources into reusable, shareable units. Both teams internal in a company, as well as providers can create them.
 
 In this exercise, we are going to use the module [virtual-machine](https://registry.terraform.io/modules/Azure/virtual-machine/azurerm/latest) to simplifying creating a virtual machine in Azure.
 
@@ -41,257 +39,237 @@ This module defines 8 resources.
 
 Before diving into the actual Terraform configurations, we start by adding `variables.tf` file to our project like last exercise. 
 
-```hcl
-variable "exercise" {
-  type        = string
-  description = "This is the exercise number. It is used to make the name of some the resources unique"
-}
 
-variable "instances_configuration" {
-  type        = string
-  description = <<EOT
-        "Should point to a yaml file, structured as:"
-        data:
-            VMNAME:
-                size: "VM SKU"
-                public_ip: true/false
-                subnet: client
-            client2:
-                size: "VM SKU"
-                public_ip: true
-                subnet: client
-            server:
-                size: "VM SKU"
-                public_ip: false
-                subnet: server
-        EOT
-}
+**Task Instructions:**
 
-variable "network_configuration" {
-  type        = string
-  description = <<EOT
-        "Should point to a yaml file, structured as:"
-            data:
-            ranges:
-            - 10.0.0.0/16
-            subnets:
-                client:
-                    ranges:
-                    - 10.0.0.0/24
-                server:
-                    ranges:
-                    - 10.0.1.0/24
-        EOT
-}
+1. **Create the `variables.tf` file**:
+   - Navigate to `labs/06-Applying-Modules-in-Terraform/start`.
+   - Create a new file named `variables.tf`.
 
-variable "admin_password" {
-  type        = string
-  sensitive   = true
-  description = "default password to connect to the servers we deploy"
-}
+2. **Define the following variables**:
 
-variable "admin_username" {
-  type        = string
-  sensitive   = true
-  description = "default admin user to connect to the servers we deploy"
-}
-```
+   - `exercise`: A string variable used to make the name of some of the resources unique.
 
-* Paste the content above into the file `variables.tf` and save it
+   - `instances_configuration`: A string variable pointing to a YAML file structured with VM configurations.
+     ```hcl
+     variable "instances_configuration" {
+       type        = string
+       description = <<EOT
+             "Should point to a yaml file, structured as:"
+             data:
+                 VMNAME:
+                     size: "VM SKU"
+                     public_ip: true/false
+                     subnet: client
+                 client2:
+                     size: "VM SKU"
+                     public_ip: true
+                     subnet: client
+                 server:
+                     size: "VM SKU"
+                     public_ip: false
+                     subnet: server
+             EOT
+     }
+     ```
+   - `network_configuration`: A string variable pointing to a YAML file structured with network configurations.
+     ```hcl
+     variable "network_configuration" {
+       type        = string
+       description = <<EOT
+             "Should point to a yaml file, structured as:"
+                 data:
+                 ranges:
+                 - 10.0.0.0/16
+                 subnets:
+                     client:
+                         ranges:
+                         - 10.0.0.0/24
+                     server:
+                         ranges:
+                         - 10.0.1.0/24
+             EOT
+     }
+     ```
+   - `admin_password`: A sensitive string variable for the default password to connect to the servers.
 
-### Prepare Configuration Files
+     ```hcl
+     variable "admin_password" {
+       type        = string
+       sensitive   = true
+       description = "default password to connect to the servers we deploy"
+     }
+     ```
 
-* Paste the below YAML snippit into the file called `configuration/instances.yaml`
+   - `admin_username`: A sensitive string variable for the default admin user to connect to the servers.
 
-```yaml
-data:
-  client1:
-    size: "Standard_B1ls"
-    public_ip: true
-    subnet: client
-  client2:
-    size: "Standard_B1ls"
-    public_ip: true
-    subnet: client
-  server:
-    size: "Standard_B1ls"
-    public_ip: false
-    subnet: server
-```
+     ```hcl
+     variable "admin_username" {
+       type        = string
+       sensitive   = true
+       description = "default admin user to connect to the servers we deploy"
+     }
+     ```
 
-* Paste the below YAML snippit into the file called `configuration/network.yaml`
+If you encounter any issues or need to verify your configurations, refer to the `done` folder in the same directory for the solution.
 
-```yaml
-data:
-  ranges:
-  - 10.0.0.0/16
-  subnets:
-    client:
-      ranges:
-      - 10.0.0.0/24
-    server:
-      ranges:
-      - 10.0.1.0/24
-```
+
+### Define Configuration Values in `_config.auto.tfvars`
+
+Create a `_config.auto.tfvars` file to automatically provide values for your variables during Terraform runs.
+
+**Task Instructions:**
+
+1. **Create the `_config.auto.tfvars` file**:
+   - Navigate to `labs/06-Applying-Modules-in-Terraform/start`.
+   - Create a new file named `_config.auto.tfvars`.
+
+2. **Define the following values**:
+   - `exercise`: Assign a unique identifier for your exercise.
+   - `instances_configuration`: Provide the relative path to your `instances.yaml` file.
+   - `network_configuration`: Provide the relative path to your `network.yaml` file.
+   - `admin_username`: Assign a value for the admin username.
+   - `admin_password`: Assign a value for the admin password.
+
+   ```hcl
+   exercise                = "exercise6"
+   instances_configuration = "configuration/instances.yaml"
+   network_configuration   = "configuration/network.yaml"
+   admin_password          = "aflk89!nknvlknglkvgew"
+   admin_username          = "adminuser"
+   ```
+
+If you encounter any issues or need to verify your configurations, refer to the `done` folder in the same directory for the solution.
 
 ### Create Network Resources
 
-The file `00_createnetwork.tf` will set up the virtual network and associated subnets using data from `network.yaml`, laying the foundation for the VM deployments.
+Create a file `00_create_network.tf` to set up the virtual network and associated subnets using data from `network.yaml`.
 
-```hcl
-locals {
-  yaml_network_data = yamldecode(file("${path.root}/${var.network_configuration}"))
-  network           = local.yaml_network_data["data"]
-}
+**Task Instructions:**
 
-resource "azurerm_virtual_network" "main" {
-  name                = "vnet-${var.exercise}"
-  resource_group_name = data.azurerm_resource_group.studentrg.name
-  location            = data.azurerm_resource_group.studentrg.location
-  address_space       = local.network.ranges
-}
+1. **Create the `00_create_network.tf` file**:
+   - Navigate to the `labs/06-Applying-Modules-in-Terraform/start` directory.
+   - Create a new file named `00_create_network.tf`.
 
-resource "azurerm_subnet" "main" {
-  for_each            = local.network.subnets
-  name                = each.key
-  resource_group_name = data.azurerm_resource_group.studentrg.name
-  virtual_network_name = azurerm_virtual_network.main.name
-  address_prefixes    = each.value.ranges
-}
-```
+2. **Define Local Variables to Read YAML Data**:
+   - Inside the `00_create_network.tf` file, define a `locals` block.
+   - Use the `file` function to read the content of the `network.yaml` file. Reference the file path using the `${path.root}/${var.network_configuration}` syntax.
+   - Use the `yamldecode` function to convert the YAML file content into a data structure.
+   - Store the decoded YAML data in a local variable named `yaml_network_data`.
+   - Extract the `data` section from `yaml_network_data` and store it in another local variable named `network`.
 
-* Paste the above configuration into the file `00_create_network.tf`.
+3. **Create the Virtual Network**:
+   - Define a `resource` block for the `azurerm_virtual_network` resource.
+   - Name the resource block `main`.
+   - Set the `name` property to `"vnet-${var.exercise}"` to include the exercise number for uniqueness.
+   - Set the `resource_group_name` property to `data.azurerm_resource_group.studentrg.name`.
+   - Set the `location` property to `data.azurerm_resource_group.studentrg.location`.
+   - Set the `address_space` property to the value of `local.network.ranges`.
+
+4. **Create Subnets**:
+   - Define a `resource` block for the `azurerm_subnet` resource.
+   - Name the resource block `main`.
+   - Use the `for_each` expression to loop over the subnets defined in the `network` local variable.
+   - Set the `name` property to the key of each subnet in the loop. Use `each.key` to reference the key.
+   - Set the `resource_group_name` property to `data.azurerm_resource_group.studentrg.name`.
+   - Set the `virtual_network_name` property to `azurerm_virtual_network.main.name`.
+   - Set the `address_prefixes` property to the address ranges defined for each subnet. Use `each.value.ranges` to reference the ranges.
+
+If you encounter any issues or need to verify your configurations, refer to the `done` folder in the same directory for the solution.
 
 ### Initialize and Plan Deployment
 
-* Initialize your Terraform environment to prepare the backend and install required providers: 
+**Task Instructions:**
 
-```shell
-terraform init
-```
+1. **Initialize Terraform**:
+   - Run `terraform init` to prepare the backend and install required providers.
 
-* Review the planned actions by Terraform without applying them:
-
-```shell
-terraform plan
-var.admin_password
-  default password to connect to the servers we deploy
-
-  Enter a value: 
-
-var.admin_username
-  default admin user to connect to the servers we deploy
-
-  Enter a value: 
-
-var.exercise
-  This is the exercise number. It is used to make the name of some the resources unique
-
-  Enter a value: 9
-
-var.instances_configuration
-          "Should point to a yaml file, structured as:"
-          data:
-              VMNAME:
-                  size: "VM SKU"
-                  public_ip: true/false
-                  subnet: client
-              client2:
-                  size: "VM SKU"
-                  public_ip: true
-                  subnet: client
-              server:
-                  size: "VM SKU"
-                  public_ip: false
-                  subnet: server
-
-  Enter a value: configuration/instances.yaml
-
-var.network_configuration
-          "Should point to a yaml file, structured as:"
-              data:
-              ranges:
-              - 10.0.0.0/16
-              subnets:
-                  client:
-                      ranges:
-                      - 10.0.0.0/24
-                  server:
-                      ranges:
-                      - 10.0.1.0/24
-
-  Enter a value: configuration/network.yaml
-
-```
-
-* Pay attention to the values you have to set manually during the plan step.
+2. **Plan the Deployment**:
+   - Run `terraform plan` to review the planned actions by Terraform.
+   - Terraform will automatically use the values provided in `_config.auto.tfvars` file.
 
 ### Deploy Virtual Machines
 
-Thie file `01_createinstances.tf` deploys VMs based on configurations specified in `instances.yaml` using a Terraform module for VM creation.
+Create a file `01_createinstances.tf` to deploy VMs based on configurations specified in `instances.yaml` using a Terraform module for VM creation.
 
-```hcl
-locals {
-  yaml_vms_data = yamldecode(file("${path.root}/${var.instances_configuration}"))
-  instances     = local.yaml_vms_data["data"]
-}
+**Task Instructions:**
 
-resource "azurerm_public_ip" "pip" {
-  for_each = { for vm, config in local.instances : vm => config if config.public_ip }
-  name                = "${each.key}-public-ip"
-  location            = data.azurerm_resource_group.studentrg.location
-  resource_group_name = data.azurerm_resource_group.studentrg.name
-  allocation_method   = "Dynamic"
-  tags = {
-    environment = each.key
-  }
-}
+1. **Create the `01_createinstances.tf` file**:
+   - Navigate to the `labs/06-Applying-Modules-in-Terraform/start` directory.
+   - Create a new file named `01_createinstances.tf`.
 
-module "virtual-machine" {
-  for_each = local.instances
+2. **Define Local Variables to Read YAML Data**:
+   - Inside the `01_createinstances.tf` file, define a `locals` block.
+   - Use the `file` function to read the content of the `instances.yaml` file.
+   - Use the `yamldecode` function to convert the YAML file content into a data structure.
+   - Store the decoded YAML data in a local variable named `yaml_vms_data`.
+   - Extract the `data` section from `yaml_vms_data` and store it in another local variable named `instances`.
 
-  source                     = "Azure/virtual-machine/azurerm"
-  version                    = "1.1.0"
-  location                   = data.azurerm_resource_group.studentrg.location
-  resource_group_name        = data.azurerm_resource_group.studentrg.name
-  image_os                   = "linux"
-  allow_extension_operations = false
-  new_boot_diagnostics_storage_account = {}
-  new_network_interface = {
-    ip_forwarding_enabled = false
-    ip_configurations = [
-      {
-        public_ip_address_id = try(azurerm_public_ip.pip[each.key].id, null)
-        primary              = true
-      }
-    ]
-  }
-  admin_username                  = var.admin_username
-  disable_password_authentication = false
-  admin_password                  = var.admin_password
-  name                            = each.key
-  os_disk = {
-    caching              = "ReadWrite"
-    storage_account_type = "Standard_LRS"
-  }
-  os_simple = "UbuntuServer"
-  size      = each.value.size
-  subnet_id = azurerm_subnet.main[each.value.subnet].id
-  tags = {
-    environment = each.key
-  }
-}
-```
+3. **Create Public IP Resources**:
+   - Define a `resource` block for the `azurerm_public_ip` resource.
+   - Name the resource block `pip`.
+   - Use the `for_each` expression to create public IPs for VMs that require them, based on the YAML configuration.
+   - Set the `name` property to `"${each.key}-public-ip"` to create a unique name for each public IP.
+   - Set the `location` property to `data.azurerm_resource_group.studentrg.location`.
+   - Set the `resource_group_name` property to `data.azurerm_resource_group.studentrg.name`.
+   - Set the `allocation_method` property to `"Dynamic"`.
+   - Add any necessary tags using the `tags` property.
 
-* Run Terraform apply:
+4. **Use the Virtual Machine Module**:
+   - Define a `module` block to utilize the `Azure/virtual-machine/azurerm` module.
+   - Use the `for_each` expression to loop over VM configurations.
+   - Set the `source` parameter to `"Azure/virtual-machine/azurerm"`.
+   - Set the `version` parameter to `"1.1.0"`.
+   - Configure the module with the following parameters:
+     - `location`: Set to `data.azurerm_resource_group.studentrg.location`.
+     - `resource_group_name`: Set to `data.azurerm_resource_group.studentrg.name`.
+     - `image_os`: Set to `"linux"`.
+     - `admin_username`: Set to `var.admin_username`.
+     - `admin_password`: Set to `var.admin_password`.
+     - `name`: Set to `each.key`.
+     - `size`: Set to `each.value.size`.
+     - `subnet_id`: Set to `azurerm_subnet.main[each.value.subnet].id`.
+     - Add any necessary tags using the `tags` property.
 
-```shell
-terraform apply
-```
+5. **Define Network Interface Configuration**:
+   - Set the `new_network_interface` parameter within the module block.
+   - Configure the `new_network_interface` with the following properties:
+     - `ip_forwarding_enabled`: Set to `false`.
+     - `ip_configurations`: Define an array with the following properties:
+       - `public_ip_address_id`: Reference the public IP created by the `azurerm_public_ip` resource block.
+       - `primary`: Set to `true`.
 
-* You will have to type in the information you gave when you ran `terraform plan` earlier.
+6. **Define OS Disk Configuration**:
+   - Set the `os_disk` parameter within the module block.
+   - Configure the `os_disk` with the following properties:
+     - `caching`: Set to `ReadWrite`.
+     - `storage_account_type`: Set to `Standard_LRS`.
 
-It will take a bit of time, but after that feel free to go to your Resource Group in the Azure Portal and have a look at the resources you just created! 
+7. **Define Boot Diagnostics Configuration**:
+   - Set the `new_boot_diagnostics_storage_account` parameter within the module block.
+   - Configure the `new_boot_diagnostics_storage_account` to an empty object.
+
+If you encounter any issues or need to verify your configurations, refer to the `done` folder in the same directory for the solution.
+
+### Apply the Configuration
+
+**Task Instructions:**
+
+1. **Initialize Terraform**:
+   - Run `terraform init` to prepare the backend and install required providers.
+
+2. **Plan the Deployment**:
+   - Run `terraform plan` to review the planned actions by Terraform.
+   - Terraform will automatically use the values provided in `_config.auto.tfvars` file.
+
+
+3. **Apply Terraform Configuration**:
+   - Run `terraform apply`.
+   - Terraform will automatically use the values provided in `_config.auto.tfvars` file.
+
+4. **Verify the Deployment**:
+   - Check the Azure portal to view the resources created in your resource group.
+
 
 ### Verify and Clean Up
 
@@ -299,7 +277,7 @@ After deploying the resources, verify the VMs' functionality by accessing them a
 
 To manage costs effectively and avoid unnecessary charges in Azure:
 
-```terraform destroy```
+- Run `terraform destroy` to clean up all resources deployed during this exercise.
 
 This command cleans up all resources deployed during this exercise.
 
