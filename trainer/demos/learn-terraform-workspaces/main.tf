@@ -1,7 +1,3 @@
-provider "azurerm" {
-  features {}
-}
-
 locals {
   resource_group_name = "${terraform.workspace}-rg"
   location            = "West Europe"
