@@ -372,6 +372,7 @@ This configuration sets up a server VM with a static public IP, ensuring that it
    - Set the `storage_account_type` property to `"Standard_LRS"` for standard locally redundant storage.
    - Set the `caching` property to `"ReadWrite"` for read-write caching on the OS disk.
 
+
 ### Add output block
 
 Last, but not least, we want our code to output some of the information we will get when deploying this, like IP address for the clients to connect to.
@@ -392,6 +393,10 @@ output "server_connection_string" {
   value = "ssh ${azurerm_linux_virtual_machine.server.admin_username}@${azurerm_linux_virtual_machine.server.private_ip_address}"
 }
 ```
+
+## Solution: 
+
+If you encounter any issues or need to verify your configurations, refer to the `done` folder in the same directory for the solution.
 
 **Initialize Terraform:**
 

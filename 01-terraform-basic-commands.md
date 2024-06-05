@@ -29,6 +29,9 @@ It typically includes server setup, networking, and security settings.
 
 In this exercise, we will only be deploying the frontend of the Flask app.
 
+
+These are the resources that will be created as part of this exercise: an Azure service plan, a random string, and an Azure Linux web app.
+
 ## Step-by-Step Instructions
 
 ### 1. Initialize Your Terraform Workspace

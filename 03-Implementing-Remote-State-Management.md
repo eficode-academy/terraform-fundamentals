@@ -14,6 +14,9 @@ This setup enhances your Terraform projects by enabling team collaboration and m
 - Clean up resources to prevent unnecessary charges.
 - Manipulate Terraform state file.
 
+
+These are the resources that will be created as part of this exercise: a random string, two Azure storage accounts, Azure storage blobs for `index.html` and `image.jpeg` files, an Azure storage container, and Terraform state.
+
 ## Step-by-Step Instructions
 
 ### 1. Introduction to Remote State
