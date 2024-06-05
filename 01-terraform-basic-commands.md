@@ -29,6 +29,8 @@ It typically includes server setup, networking, and security settings.
 
 In this exercise, we will only be deploying the frontend of the Flask app.
 
+<img width="988" alt="img1" src="https://github.com/eficode-academy/terraform-fundamentals/assets/149589536/6c32657c-0d0f-429e-8e8b-0986b81c0247">
+
 
 These are the resources that will be created as part of this exercise: an Azure service plan, a random string, and an Azure Linux web app.
 
