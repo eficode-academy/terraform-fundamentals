@@ -13,6 +13,9 @@ This exercise will guide you through the process of using Terraform to deploy a 
 You will learn how to write, plan, and apply Terraform configurations to create an Azure storage account, enable the static website feature, and upload content.
 
 
+<img width="779" alt="img3" src="https://github.com/eficode-academy/terraform-fundamentals/assets/149589536/c6ec4f56-32a9-4358-8d3d-bafca12ac30d">
+
+
 These are the resources that will be created as part of this exercise:  a random string, an Azure storage account, and Azure storage blobs for `index.html` and `image.jpeg` files.
 
 **Note:**
