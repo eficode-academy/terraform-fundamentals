@@ -269,7 +269,7 @@ Create a file `01_createinstances.tf` to deploy VMs based on configurations spec
     -  `image_os`: Set to `"linux"`.
     -  `allow_extension_operations`: Set to `false`.
     -  `new_boot_diagnostics_storage_account`: Set to `{}`.
-    -  `new_network_interface`: Configure with:
+    -  `new_network_interface`: Configure the nested block with:
         -  `ip_forwarding_enabled`: Set to `false`.
         -  `ip_configurations`: Define an array with:
             -  `public_ip_address_id`: Use `try(azurerm_public_ip.pip[each.key].id, null)`.
@@ -278,7 +278,7 @@ Create a file `01_createinstances.tf` to deploy VMs based on configurations spec
     -  `disable_password_authentication`: Set to `false`.
     -  `admin_password`: Set to `var.admin_password`.
     -  `name`: Set to `each.key`.
-    -  `os_disk`: Configure with:
+    -  `os_disk`: Configure the nested block with:
         -  `caching`: Set to `ReadWrite`.
         -  `storage_account_type`: Set to `Standard_LRS`.
     -  `os_simple`: Set to `"UbuntuServer"`.

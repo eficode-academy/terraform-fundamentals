@@ -43,7 +43,7 @@ Some of the variables we are going to set are:
    - Provide a description that explains its purpose.
 
 3. **Define the `network` variable**:
-   - This variable should be an object with a property named `ranges` which is a list of strings.
+   - This variable should be an object containing two properties: `name` (a string) and `ranges` (a list of strings)
    - Set a default value with a typical network range, for example, `"10.0.0.0/16"`.
    - Provide a description that explains it is the subnet and address range for clients.
 
@@ -68,7 +68,14 @@ Some of the variables we are going to set are:
 
 8. **Define the `source_image_reference` variable**:
    - This variable should be an object with four properties: `publisher`, `offer`, `sku`, and `version` (all strings).
-   - Set default values for each property. For example, use `"Canonical"` for `publisher`, a relevant `offer`, `sku`, and `"latest"` for `version`.
+   - Set default values for each property: 
+
+      - publisher: Use "Canonical".
+      - offer: Use "0001-com-ubuntu-server-jammy".
+      - sku: Use "22_04-lts-gen2".
+      - version: Use "latest".
+
+
    - Provide a multi-line description explaining it is the SKU details for the image to be deployed.
   
    To define a variable that is an object with properties that are lists of strings, you can use the object type with the appropriate property types.
@@ -169,14 +176,6 @@ This configuration sets up the virtual network and associated subnets. This is c
    - Set the `location` property to `data.azurerm_resource_group.studentrg.location`.
    - Reference the `address_space` property to the variable you created earlier for network range like `var.network.ranges`.
   
-     ```hcl
-     resource "azurerm_virtual_network" "exercise5" {
-        name                = "vnet-${var.exercise}"
-        resource_group_name = data.azurerm_resource_group.studentrg.name
-        location            = data.azurerm_resource_group.studentrg.location
-        address_space       = var.network.ranges
-      }
-     ```
 
 6. **Define the Client Subnet Resource**:
    - Add the `azurerm_subnet` resource block for the client subnet.
@@ -186,14 +185,6 @@ This configuration sets up the virtual network and associated subnets. This is c
    - Set the `virtual_network_name` property to `azurerm_virtual_network.exercise5.name`.
    - Reference the  `address_prefixes` to  the variable you created earlier for client subnet ranges like `var.client_subnet.ranges`.
   
-   ```hcl
-     resource "azurerm_subnet" "client" {
-        name                 = var.client_subnet.name
-        resource_group_name  = data.azurerm_resource_group.studentrg.name
-        virtual_network_name = azurerm_virtual_network.exercise5.name
-        address_prefixes     = var.client_subnet.ranges
-      }
-   ```
 
 7. **Define the Server Subnet Resource**:
    - Add the `azurerm_subnet` resource block for the server subnet.
@@ -203,14 +194,6 @@ This configuration sets up the virtual network and associated subnets. This is c
    - Set the `virtual_network_name` property to `azurerm_virtual_network.exercise5.name`.
    - Reference the `address_prefixes` property to  the variable you created earlier for server subnet range like `var.server_subnet.ranges`.
 
-   ```hcl
-     resource "azurerm_subnet" "server" {
-        name                 = var.server_subnet.name
-        resource_group_name  = data.azurerm_resource_group.studentrg.name
-        virtual_network_name = azurerm_virtual_network.exercise5.name
-        address_prefixes     = var.server_subnet.ranges
-      }
-   ```
 
 8. **Save the `00_create_network.tf` file**:
    - Ensure all configurations are correctly formatted.
@@ -249,24 +232,20 @@ This helps in managing reusable values. The `clients` variable specifies the lis
 
 Refer to the [AzureRM Public IP documentation](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/public_ip).
 
-   - Define the `azurerm_public_ip` resource block.
+   - Define the `azurerm_public_ip` resource block named client.
    - Use `for_each` to loop over the `clients` local variable.
-   - Set the `name` property to include the client name.
+  
+    ```hcl
+     for_each = local.clients
+     ```
+
+   - Set the name property to ${each.key}-public-ip to include the client name..
    - Set the `location` and `resource_group_name` properties to use values from the Azure Resource Group data source.
+      - (data.azurerm_resource_group.studentrg.location).
+      - (data.azurerm_resource_group.studentrg.name).
    - Set the `allocation_method` to `"Dynamic"`.
    - Add tags with an `environment` set to `"Production"`.
 
-   ```hcl
-  resource "azurerm_public_ip" "client" { #Creates a dynamic public IP for each client VM
-  for_each            = local.clients # Using the for_each construct to loop over the clients.
-  name                = "${each.key}-public-ip"
-  location            = data.azurerm_resource_group.studentrg.location
-  resource_group_name = data.azurerm_resource_group.studentrg.name
-  allocation_method   = "Dynamic"
-   tags = {
-    environment = "Production"
-  }
-  ```
 
 3. **Create Network Interface Resources**:
 
@@ -290,22 +269,6 @@ Refer to the [AzureRM Network Interface documentation](https://registry.terrafor
      - `public_ip_address_id`: reference the public IP created by the resource above by referencing the resource value `azurerm_public_ip.client[each.key].id`
    - Set the dependency between subnet and network interface resource explicitly by using the `depends_on` expression.
 
-```hcl
-  resource "azurerm_network_interface" "client" {
-  for_each            = local.clients
-  name                = "nic-${each.key}"
-  location            = data.azurerm_resource_group.studentrg.location
-  resource_group_name = data.azurerm_resource_group.studentrg.name
-
-  ip_configuration {
-    name                          = "internal"
-    subnet_id                     = azurerm_subnet.client.id
-    private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.client[each.key].id
-  }
-  depends_on = [azurerm_subnet.client]
-}
-  ```
 
 4. **Create Virtual Machine Resources**:
 
@@ -326,19 +289,6 @@ Refer to the [AzureRM Linux Virtual Machine documentation](https://registry.terr
    - Set the `disable_password_authentication` property to `false`.
    - Set the `admin_password` property to `var.admin_password`.
    - Set the `network_interface_ids` property to `[azurerm_network_interface.client[each.key].id]`.
-
-   ```hcl
-     resource "azurerm_linux_virtual_machine" "client" {
-        for_each                        = local.clients
-        name                            = "vm-${each.key}"
-        location                        = data.azurerm_resource_group.studentrg.location
-        resource_group_name             = data.azurerm_resource_group.studentrg.name
-        size                            = "Standard_B1ls"
-        admin_username                  = var.admin_username
-        disable_password_authentication = false
-        admin_password                  = var.admin_password
-        network_interface_ids           = [azurerm_network_interface.client[each.key].id]
-   ```
 
    - Configure the `identity` block:
      - **`type`**: Set to `"SystemAssigned"`.
@@ -410,19 +360,6 @@ This configuration sets up a server VM with a static public IP, ensuring that it
    - Set the `location` and `resource_group_name` properties to the same values used for other resources, ensuring consistency.
    - Use the `allocation_method` property set to `"Static"` to ensure the IP address remains consistent across restarts and redeployments.
    - Optionally, add tags such as `environment` with the value `"Production"` for organizational purposes.
-  
-     ```hcl
-     resource "azurerm_public_ip" "server" {
-        name                = "server-public-ip"
-        location            = data.azurerm_resource_group.studentrg.location
-        resource_group_name = data.azurerm_resource_group.studentrg.name
-        allocation_method   = "Static"
-
-        tags = {
-        environment = "Production"
-        }
-      }
-     ```
 
 2. **Create the Network Interface for the Server**:
    - Create a `resource` block for `azurerm_network_interface` named `server`.
@@ -435,21 +372,6 @@ This configuration sets up a server VM with a static public IP, ensuring that it
      - Reference the `public_ip_address_id` from the static public IP created earlier (`azurerm_public_ip.server.id`).
    - Add a `depends_on` property to ensure the subnet resource is created before the network interface. Use `[azurerm_subnet.server]` as the dependency.
   
-     ```hcl
-     resource "azurerm_network_interface" "server" {
-        name                = "nic-server"
-        location            = data.azurerm_resource_group.studentrg.location
-        resource_group_name = data.azurerm_resource_group.studentrg.name
-
-        ip_configuration {
-           name                          = "internal"
-           subnet_id                     = azurerm_subnet.server.id
-           private_ip_address_allocation = "Dynamic"
-           public_ip_address_id          = azurerm_public_ip.server.id
-        }
-        depends_on = [azurerm_subnet.server]
-      }
-     ```
 
 3. **Create the Server VM**:
    - Create a `resource` block for `azurerm_linux_virtual_machine` named `server`.
@@ -478,38 +400,6 @@ This configuration sets up a server VM with a static public IP, ensuring that it
    - Set the `storage_account_type` property to `"Standard_LRS"` for standard locally redundant storage.
    - Set the `caching` property to `"ReadWrite"` for read-write caching on the OS disk.
 
-     ```hcl
-     resource "azurerm_linux_virtual_machine" "server" {
-        name                            = "vm-server"
-        location                        = data.azurerm_resource_group.studentrg.location
-        resource_group_name             = data.azurerm_resource_group.studentrg.name
-        size                            = "Standard_B1ls"
-        admin_username                  = var.admin_username
-        disable_password_authentication = false
-        admin_password                  = var.admin_password
-        network_interface_ids           = [azurerm_network_interface.server.id]
-
-        identity {
-          type = "SystemAssigned"
-        }
-
-        boot_diagnostics {
-           storage_account_uri = ""
-        }
-
-        source_image_reference {
-          publisher = var.source_image_reference.publisher
-          offer     = var.source_image_reference.offer
-          sku       = var.source_image_reference.sku
-          version   = var.source_image_reference.version
-        }
-
-        os_disk {
-          storage_account_type = "Standard_LRS"
-          caching              = "ReadWrite"
-        }
-      }
-     ```
 
 ### Add output block
 
