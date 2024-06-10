@@ -37,20 +37,20 @@ This module defines 8 resources.
 
 ### Define Variables in `variables.tf`
 
-Before diving into the actual Terraform configurations, we start by adding `variables.tf` file to our project like last exercise. 
-
+Before diving into the actual Terraform configurations, we start by defining the variables in the`variables.tf` file to our project like last exercise. 
 
 **Task Instructions:**
 
-1. **Create the `variables.tf` file**:
+1. **Navigate to the `variables.tf` file**:
    - Navigate to `labs/06-Applying-Modules-in-Terraform/start`.
-   - Create a new file named `variables.tf`.
+   - A file called `variables.tf`should already be created.
 
 2. **Define the following variables**:
 
    - `exercise`: A string variable used to make the name of some of the resources unique.
 
    - `instances_configuration`: A string variable pointing to a YAML file structured with VM configurations.
+     
      ```hcl
      variable "instances_configuration" {
        type        = string
@@ -72,6 +72,7 @@ Before diving into the actual Terraform configurations, we start by adding `vari
              EOT
      }
      ```
+     
    - `network_configuration`: A string variable pointing to a YAML file structured with network configurations.
      ```hcl
      variable "network_configuration" {
@@ -141,6 +142,48 @@ Create a `_config.auto.tfvars` file to automatically provide values for your var
 
 If you encounter any issues or need to verify your configurations, refer to the `done` folder in the same directory for the solution.
 
+### Create YAML Configuration Files
+
+1. **Create the instances.yaml file**:
+   - Navigate to labs/06-Applying-Modules-in-Terraform/start/configuration.
+   - A file named instances.yaml should already be created there.
+
+2. **Define the VM configurations in instances.yaml**:
+
+```yaml
+data:
+  client1:
+    size: "Standard_B1ls"
+    public_ip: true
+    subnet: client
+  client2:
+    size: "Standard_B1ls"
+    public_ip: true
+    subnet: client
+  server:
+    size: "Standard_B1ls"
+    public_ip: false
+    subnet: server
+   ```
+3. **Create the network.yaml file**:
+   - Navigate to labs/06-Applying-Modules-in-Terraform/start/configuration.
+   - A file named network.yaml should already be created there.
+
+4. **Define the VM configurations in instances.yaml**:
+
+```yaml
+data:
+  ranges: 
+  - 10.0.0.0/16
+  subnets:
+    client: 
+      ranges: 
+      - 10.0.0.0/24
+    server:
+      ranges: 
+      - 10.0.1.0/24
+   ```
+
 ### Create Network Resources
 
 Create a file `00_create_network.tf` to set up the virtual network and associated subnets using data from `network.yaml`.
@@ -149,7 +192,7 @@ Create a file `00_create_network.tf` to set up the virtual network and associate
 
 1. **Create the `00_create_network.tf` file**:
    - Navigate to the `labs/06-Applying-Modules-in-Terraform/start` directory.
-   - Create a new file named `00_create_network.tf`.
+   - A file named `00_create_network.tf` should already be created there.
 
 2. **Define Local Variables to Read YAML Data**:
    - Inside the `00_create_network.tf` file, define a `locals` block.
@@ -216,20 +259,32 @@ Create a file `01_createinstances.tf` to deploy VMs based on configurations spec
    - Add any necessary tags using the `tags` property.
 
 4. **Use the Virtual Machine Module**:
-   - Define a `module` block to utilize the `Azure/virtual-machine/azurerm` module.
-   - Use the `for_each` expression to loop over VM configurations.
-   - Set the `source` parameter to `"Azure/virtual-machine/azurerm"`.
-   - Set the `version` parameter to `"1.1.0"`.
-   - Configure the module with the following parameters:
-     - `location`: Set to `data.azurerm_resource_group.studentrg.location`.
-     - `resource_group_name`: Set to `data.azurerm_resource_group.studentrg.name`.
-     - `image_os`: Set to `"linux"`.
-     - `admin_username`: Set to `var.admin_username`.
-     - `admin_password`: Set to `var.admin_password`.
-     - `name`: Set to `each.key`.
-     - `size`: Set to `each.value.size`.
-     - `subnet_id`: Set to `azurerm_subnet.main[each.value.subnet].id`.
-     - Add any necessary tags using the `tags` property.
+-  Define a `module` block to utilize the `Azure/virtual-machine/azurerm` module.
+-  Use the `for_each` expression to loop over VM configurations.
+-  Set the `source` parameter to `"Azure/virtual-machine/azurerm"`.
+-  Set the `version` parameter to `"1.1.0"`.
+-  Configure the module with the following parameters:
+    -  `location`: Set to `data.azurerm_resource_group.studentrg.location`.
+    -  `resource_group_name`: Set to `data.azurerm_resource_group.studentrg.name`.
+    -  `image_os`: Set to `"linux"`.
+    -  `allow_extension_operations`: Set to `false`.
+    -  `new_boot_diagnostics_storage_account`: Set to `{}`.
+    -  `new_network_interface`: Configure with:
+        -  `ip_forwarding_enabled`: Set to `false`.
+        -  `ip_configurations`: Define an array with:
+            -  `public_ip_address_id`: Use `try(azurerm_public_ip.pip[each.key].id, null)`.
+            -  `primary`: Set to `true`.
+    -  `admin_username`: Set to `var.admin_username`.
+    -  `disable_password_authentication`: Set to `false`.
+    -  `admin_password`: Set to `var.admin_password`.
+    -  `name`: Set to `each.key`.
+    -  `os_disk`: Configure with:
+        -  `caching`: Set to `ReadWrite`.
+        -  `storage_account_type`: Set to `Standard_LRS`.
+    -  `os_simple`: Set to `"UbuntuServer"`.
+    -  `size`: Set to `each.value.size`.
+    -  `subnet_id`: Set to `azurerm_subnet.main[each.value.subnet].id`.
+    -  Add any necessary tags using the `tags` property.
 
 5. **Define Network Interface Configuration**:
    - Set the `new_network_interface` parameter within the module block.
