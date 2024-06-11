@@ -34,39 +34,45 @@ Some of the variables we are going to set are:
 
 **Variable Declarations and Descriptions:**
 
-1. **Create a file named `variables.tf`**:
-   - This file will hold all your variable definitions.
+1. **Go to the project directory**:
+   - Navigate to `labs/05-Setup-VM-Using-Terraform/start` where your exercise files should be created.
 
-2. **Define the `exercise` variable**:
+2. **Create the `variables.tf` file**:
+   - Create a new file named `variables.tf` in the `labs/05-Setup-VM-Using-Terraform/start` directory.
+
+3. **Open the `variables.tf` file**:
+   - Open the file you just created (`variables.tf`).
+
+4. **Define the `exercise` variable**:
    - This variable should be of type `string`.
    - It will be used to make the names of some resources unique.
    - Provide a description that explains its purpose.
 
-3. **Define the `network` variable**:
+5. **Define the `network` variable**:
    - This variable should be an object containing two properties: `name` (a string) and `ranges` (a list of strings)
    - Set a default value with a typical network range, for example, `"10.0.0.0/16"`.
    - Provide a description that explains it is the subnet and address range for clients.
 
-4. **Define the `client_subnet` variable**:
+6. **Define the `client_subnet` variable**:
    - This variable should be an object with two properties: `name` (a string) and `ranges` (a list of strings).
    - Set default values for `name` and `ranges` (e.g., `"client"` and `"10.0.0.0/24"` respectively).
    - Provide a description that explains it is the subnet and address range for clients.
 
-5. **Define the `server_subnet` variable**:
+7. **Define the `server_subnet` variable**:
    - This variable should be an object with two properties: `name` (a string) and `ranges` (a list of strings).
    - Set default values for `name` and `ranges` (e.g., `"server"` and `"10.0.3.0/24"` respectively).
    - Provide a description that explains it is the subnet and address range for servers.
 
-6. **Define the `admin_password` variable**:
+8. **Define the `admin_password` variable**:
    - This variable should be of type `string`.
    - Mark it as sensitive.
    - Provide a description that it is the default password to connect to the servers we deploy.
 
-7. **Define the `admin_username` variable**:
+9. **Define the `admin_username` variable**:
    - This variable should be of type `string`.
    - Provide a description that it is the default admin user to connect to the servers we deploy.
 
-8. **Define the `source_image_reference` variable**:
+10. **Define the `source_image_reference` variable**:
    - This variable should be an object with four properties: `publisher`, `offer`, `sku`, and `version` (all strings).
    - Set default values for each property: 
 
@@ -77,6 +83,9 @@ Some of the variables we are going to set are:
 
 
    - Provide a multi-line description explaining it is the SKU details for the image to be deployed.
+
+
+   **Example for object with properties that are lists of strings:**
   
    To define a variable that is an object with properties that are lists of strings, you can use the object type with the appropriate property types.
    Consider this example:
