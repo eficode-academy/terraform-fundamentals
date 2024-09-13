@@ -112,8 +112,6 @@ Before diving into the actual Terraform configurations, we start by defining the
      }
      ```
 
-If you encounter any issues or need to verify your configurations, refer to the `done` folder in the same directory for the solution.
-
 
 ### Define Configuration Values in `_config.auto.tfvars`
 
@@ -140,7 +138,6 @@ Create a `_config.auto.tfvars` file to automatically provide values for your var
    admin_username          = "adminuser"
    ```
 
-If you encounter any issues or need to verify your configurations, refer to the `done` folder in the same directory for the solution.
 
 ### Create YAML Configuration Files
 
@@ -184,6 +181,16 @@ data:
       - 10.0.1.0/24
    ```
 
+### **Checkpoint 1**: Initialize and Plan After Defining Configurations
+
+Once you've defined your variables in `variables.tf`, set your configuration values in `_config.auto.tfvars`, and created the YAML files, you can initialize and plan Terraform to ensure all configurations are correctly set up.
+
+```bash
+terraform init
+terraform plan
+```
+
+
 ### Create Network Resources
 
 Create a file `00_create_network.tf` to set up the virtual network and associated subnets using data from `network.yaml`.
@@ -220,16 +227,18 @@ Create a file `00_create_network.tf` to set up the virtual network and associate
 
 If you encounter any issues or need to verify your configurations, refer to the `done` folder in the same directory for the solution.
 
-### Initialize and Plan Deployment
 
-**Task Instructions:**
+### **Checkpoint 2**: Initialize, Plan, and Apply Network Resources
 
-1. **Initialize Terraform**:
-   - Run `terraform init` to prepare the backend and install required providers.
+After defining the network and subnet resources, initialize Terraform again, plan the configuration, and apply it to create the network and subnets.
 
-2. **Plan the Deployment**:
-   - Run `terraform plan` to review the planned actions by Terraform.
-   - Terraform will automatically use the values provided in `_config.auto.tfvars` file.
+```bash
+terraform init
+terraform plan
+terraform apply
+```
+
+---
 
 ### Deploy Virtual Machines
 

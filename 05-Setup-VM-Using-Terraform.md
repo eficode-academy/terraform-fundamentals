@@ -148,6 +148,18 @@ Reference these variables in your future configurations using `var.<variable_nam
    - Ensure the values are correctly formatted and saved.
 
 
+### **Checkpoint 1**: Initialize Terraform
+
+After defining your variables, initialize Terraform to ensure everything is set up correctly.
+
+```bash
+terraform init
+terraform plan
+```
+
+This will ensure that your Terraform configuration is initialized and will allow you to verify that the variable setup is correct.
+
+
 ### 1. Introduction to Virtual Network Setup
 
 A virtual network allows VMs and other resources to communicate with each other. Let's start with creating that.
@@ -208,7 +220,23 @@ This configuration sets up the virtual network and associated subnets. This is c
    - Ensure all configurations are correctly formatted.
    - Save the file in the `labs/05-Setup-VM-Using-Terraform/start` directory.
 
-### 3\. Deploy Client VMs
+### **Checkpoint 2**: Plan and Apply Network Configuration
+
+After defining the network and subnets, initialize Terraform again to make sure it's ready for the new resources and then validate your setup by running the following:
+
+```bash
+terraform init
+terraform plan
+```
+
+If the plan looks correct, apply the configuration to create the network and subnets:
+
+```bash
+terraform apply
+```
+
+
+### 3. Deploy Client VMs
 
 Now with the network created, we can focus on creating the configuration for the client.
 
@@ -347,6 +375,21 @@ Refer to the [AzureRM Linux Virtual Machine documentation](https://registry.terr
    - Ensure the configuration is correctly formatted and saved.
 
 
+### **Checkpoint 3**: Initialize, Plan, and Apply Client VM Deployment
+
+Once you've configured the client VMs, initialize Terraform to include the new VM resources, then run the Terraform plan to verify the setup:
+
+```bash
+terraform init
+terraform plan
+```
+
+After confirming the setup, deploy the client VMs:
+
+```bash
+terraform apply
+```
+
 ### 4. Deploy Server VM
 
 #### Creating `01_deployserver.tf`
@@ -431,9 +474,6 @@ output "server_connection_string" {
 }
 ```
 
-## Solution: 
-
-If you encounter any issues or need to verify your configurations, refer to the `done` folder in the same directory for the solution.
 
 **Initialize Terraform:**
 
