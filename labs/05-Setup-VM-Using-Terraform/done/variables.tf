@@ -13,7 +13,7 @@ variable "network" {
     ]
   }
 
-  description = "Subnet and address range for clients"
+  description = "virtual address range"
 }
 
 
@@ -75,4 +75,9 @@ variable "source_image_reference" {
   description = <<EOT
     "SKU details for the image to be deployed"
     EOT
+}
+
+
+variable "subnet_client" {
+  
 }

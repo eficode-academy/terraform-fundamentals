@@ -2,7 +2,7 @@
 
 ## Learning Goals
 
-In this module, you will learn about the importance of remote state management in Terraform and how to configure a backend using the Azure provider.
+In this exercise, you will learn about the importance of remote state management in Terraform and how to configure a backend using the Azure provider.
 This setup enhances your Terraform projects by enabling team collaboration and maintaining state consistency.
 
 ### Objectives
@@ -250,6 +250,6 @@ Confirm the action to remove all deployed resources.
 
 ### YAAAYYY 🎆
 
-By completing this module, you have successfully learned how to manage Terraform state remotely using Azure as the backend enhancing your project's security and collaboration capabilities.
+By completing this exercise, you have successfully learned how to manage Terraform state remotely using Azure as the backend enhancing your project's security and collaboration capabilities.
 
 This setup not only ensures that your state file is secure and accessible but also facilitates teamwork by maintaining a single source of truth for your Terraform state.

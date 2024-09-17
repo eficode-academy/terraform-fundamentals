@@ -2,11 +2,11 @@
 
 ## Learning Goals
 
-This module provides an opportunity to use Terraform modules by creating a scalable and repeatable infrastructure with virtual machines (VMs) in Azure.
+This exercise provides an opportunity to use Terraform modules by creating a scalable and repeatable infrastructure with virtual machines (VMs) in Azure.
 
 Modules are a good way to encapsulating configurations of related resources into reusable, shareable units. Both teams internal in a company, as well as providers can create them.
 
-In this exercise, we are going to use the module [virtual-machine](https://registry.terraform.io/modules/Azure/virtual-machine/azurerm/latest) to simplifying creating a virtual machine in Azure.
+In this exercise, we are going to use the module [virtual-machine](https://registry.terraform.io/modules/Azure/virtual-machine/azurerm/latest) to simplify creating a virtual machine in Azure.
 
 This module defines 8 resources.
 
@@ -21,8 +21,6 @@ This module defines 8 resources.
 
 
 ![exercise6(1)](https://github.com/eficode-academy/terraform-fundamentals/assets/71190161/1b3a6c71-9d40-4b62-acbd-03bf6e2a1c73)
-
-
 
 ## Objectives
 
