@@ -2,7 +2,7 @@
 
 ## Learning Goals
 
-The 5th exercise is designed to be deployed in two parts - you have set up the network configurations as part of the previous exercise. Now you will deploy VMs over the netweork you proviosioned using Terraform.
+The 5th exercise is designed to be deployed in two parts - you have set up the network configurations as part of the previous exercise. Now you will deploy VMs over the network you provisioned using Terraform.
 
 In this exercise, you will gain hands-on experience with Terraform to provision virtual machines (VMs) in Azure.
 
@@ -158,7 +158,7 @@ Refer to the [AzureRM Linux Virtual Machine documentation](https://registry.terr
    - Ensure the configuration is correctly formatted and saved.
 
 
-### **Checkpoint 3**: Initialize, Plan, and Apply Client VM Deployment
+### **Checkpoint **: Initialize, Plan, and Apply Client VM Deployment
 
 Once you've configured the client VMs, initialize Terraform to include the new VM resources, then run the Terraform plan to verify the setup:
 
@@ -175,7 +175,7 @@ terraform apply
 
 ### 2. Deploy Server VM
 
-#### Creating `01_deployserver.tf`
+#### a. Creating `01_deployserver.tf`
 
 This configuration sets up a server VM with a static public IP, ensuring that it has a fixed entry point for network communications, which is essential for server roles.
 
@@ -187,7 +187,7 @@ This configuration sets up a server VM with a static public IP, ensuring that it
 2. **Create the `01_deployserver.tf` file**:
    - Create a new file named `01_deployserver.tf` in the `labs/05-Setup-VM-Using-Terraform/start` directory.
 
-### a. Configuration Steps for `01_deployserver.tf`
+#### b. Configuration Steps for `01_deployserver.tf`
 
 1. **Define a Static Public IP for the Server**:
    - Create a `resource` block for `azurerm_public_ip` named `server`.
@@ -236,7 +236,7 @@ This configuration sets up a server VM with a static public IP, ensuring that it
    - Set the `caching` property to `"ReadWrite"` for read-write caching on the OS disk.
 
 
-### Add output block
+### 3.Add output block
 
 Last, but not least, we want our code to output some of the information we will get when deploying this, like IP address for the clients to connect to.
 
@@ -282,7 +282,7 @@ client_connection_string = {
 }
 ```
 
-### 5. Verify Connectivity and then Clean Up
+### 4. Verify Connectivity and then Clean Up
 
 After deploying the resources, verify connectivity by accessing the client VMs using SSH and ensure they can connect to the server VM.
 
