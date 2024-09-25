@@ -86,9 +86,7 @@ $ az account show
 
 ### 4 Login to Azure Portal
 
-Try typing
-
-`az login`
+Open `portal.azure.com` in your browser
 
 A window will pop up to warn you that you are about to open an external website.
 
