@@ -1,10 +1,10 @@
-# 05(b)-Setup VM using Terraform
+# 05-Setup VM using Terraform
 
 ## Learning Goals
 
-The 5th exercise is designed to be deployed in two parts - you have set up the network configurations as part of the previous exercise. Now you will deploy VMs over the network you provisioned using Terraform.
+In this exercise you will gain hands-on experience with Terraform to provision virtual machines (VMs) in Azure.
 
-In this exercise, you will gain hands-on experience with Terraform to provision virtual machines (VMs) in Azure.
+This exercise is designed to enhance your understanding of network configurations and VM deployment using Terraform, as well as giving you an idea around a larger set of Terraform files.
 
 ![exercise5(1)](https://github.com/eficode-academy/terraform-fundamentals/assets/71190161/4d1be400-4d33-46ac-a41c-d216605fb670)
 
@@ -19,7 +19,35 @@ In this exercise, you will gain hands-on experience with Terraform to provision 
 
 * Go to the folder `labs/05-Setup-VM-Using-Terraform/start`. That is where your exercise files should be created.
 
-### 1. Deploy Client VMs
+**Note:** The network configuration and variables are already available in their respective files,take a moment to review them to see how the network is set up and how the variables are declared.
+
+### 1. Create the Network
+
+Before we deploy the client VMs, we need to set up the network that they will connect to. The network configuration is already provided in the `00_create_network.tf` file, so your task is to apply this configuration. Follow these steps to create the network:
+
+1. **Initialize Terraform**: This will download any required provider plugins and prepare the working directory for the configuration.
+
+   ```bash
+   terraform init
+   ```
+
+2. **Run Terraform Plan**: This command allows you to preview the changes that Terraform will make to your infrastructure. Review the output to ensure everything looks correct before proceeding.
+
+   ```bash
+   terraform plan
+   ```
+
+3. **Apply the Network Configuration**: Once you're happy with the plan, apply the configuration to actually create the network resources. This will set up the VPC, subnets.
+
+   ```bash
+   terraform apply
+   ```
+
+4. **Verify the Network**: After applying the configuration, you can verify that the network has been successfully created by checking the output or logging into the azure console.
+
+Now that the network infrastructure is in place, you're ready to move on to the next step—deploying the client VMs.
+
+### 2. Deploy Client VMs
 
 Now with the network created, we can focus on creating the configuration for the client.
 
@@ -173,7 +201,7 @@ After confirming the setup, deploy the client VMs:
 terraform apply
 ```
 
-### 2. Deploy Server VM
+### 3. Deploy Server VM
 
 #### a. Creating `01_deployserver.tf`
 
