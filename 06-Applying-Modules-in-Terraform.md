@@ -164,7 +164,7 @@ data:
    - Navigate to labs/06-Applying-Modules-in-Terraform/start/configuration.
    - A file named network.yaml should already be created there.
 
-4. **Define the VM configurations in instances.yaml**:
+4. **Define the VM configurations in network.yaml**:
 
 ```yaml
 data:
