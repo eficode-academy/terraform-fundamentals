@@ -25,14 +25,14 @@ Open the terminal on your workstation by right clicking in the File Explorer sid
 
 ```shell
 $ terraform version
-Terraform v1.8.2
+Terraform 1.10.4
 ```
 
 ### 2 Authenticate with Azure CLI
 
    In the integrated terminal on your workstation and type the following command to log in to Azure with your credentials.
 
- `$ az login -u [username]`
+ `$ az login -u [username] -p[password]`
 
    Replace [username] and [password] with the credentials provided. This command authenticates your session with Azure, allowing you to manage resources.
 
