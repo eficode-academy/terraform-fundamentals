@@ -34,6 +34,7 @@ In the integrated terminal on your workstation and type the following command to
 
 ```bash
 az login --use-device-code
+```
 
   You will see a message like this:
  
