@@ -25,37 +25,43 @@ Open the terminal on your workstation by right clicking in the File Explorer sid
 
 ```shell
 $ terraform version
-Terraform 1.10.4
+Terraform 1.13.2
 ```
 
 ### 2 Authenticate with Azure CLI
 
-   In the integrated terminal on your workstation and type the following command to log in to Azure with your credentials.
+In the integrated terminal on your workstation and type the following command to log in to Azure with your credentials.
 
- `$ az login -u [username] -p[password]`
+```bash
+az login --use-device-code
 
-   Replace [username] and [password] with the credentials provided. This command authenticates your session with Azure, allowing you to manage resources.
+  You will see a message like this:
+ 
+To sign in, use a web browser to open the page https://microsoft.com/devicelogin 
+and enter the code ABCD-1234 to authenticate.
 
-```shell
-coder@workstation-3 ~/terraform-fundamentals (main)
-$ az login -u workstation-3@eficodetraining.onmicrosoft.com -p <your provided password>
-[
-  {
-    "cloudName": "AzureCloud",
-    "homeTenantId": "ce98c903-f521-4028-89dc-13227927e323",
-    "id": "769d8f7e-e398-4cbf-8014-0019e1fdee59",
-    "isDefault": true,
-    "managedByTenants": [],
-    "name": "Eficode Training Subscription",
-    "state": "Enabled",
-    "tenantId": "ce98c903-f521-4028-89dc-13227927e323",
-    "user": {
-      "name": "workstation-3@eficodetraining.onmicrosoft.com",
-      "type": "user"
-    }
-  }
-]
-```
+
+#### Step-by-step authentication flow:
+
+1. Copy the code shown in your terminal.  
+
+2. Open a browser on your workstation and go to [https://microsoft.com/devicelogin](https://microsoft.com/devicelogin).  
+
+3. Paste the code when prompted and click **Next**.  
+
+4. Enter your Azure account email and password.  
+
+5. Set up the **Microsoft Authenticator app**.  
+
+6. Approve the sign-in request in the Authenticator app.  
+
+7. After successful authentication, return to your terminal.  
+
+8. Azure CLI will confirm that you are signed in and display your active subscription(s).
+   - If multiple subscriptions are available, you may be prompted to choose which one to set as default.  
+   - Press **Enter** to accept the suggested default, or choose a different subscription if prompted. 
+
+
 
 ### 3 Verify Azure Account Details
 
